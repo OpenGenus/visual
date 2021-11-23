@@ -13,7 +13,7 @@ const genRandom = (maxVal) => {
 
 const createNode = (row, col, weight) => {
 	var node = document.createElement("div");
-	node.setAttribute("id", "beforeStart");
+	node.setAttribute("class", "beforeStart");
 	node.setAttribute("row", row);
 	node.setAttribute("col", col);
 	node.setAttribute("wall", 0);
@@ -27,8 +27,8 @@ const createNode = (row, col, weight) => {
 const updateNode = (node, row, col, weight, wall) => {
 	node.setAttribute("row", row);
 	node.setAttribute("col", col);
-	node.setAttribute("class", "beforeStart");
 	node.setAttribute("parent", null);
+	node.setAttribute("class", "beforeStart");
 	node.setAttribute("cost", Number.POSITIVE_INFINITY);
 	node.setAttribute("weight", weight);
 	node.innerText = weight.toString();
@@ -43,11 +43,11 @@ const updateNode = (node, row, col, weight, wall) => {
 
 const createEmptyNode = (row, col) => {
 	var node = document.createElement("div");
-	node.setAttribute("class", "beforeStart");
 	node.setAttribute("row", row);
 	node.setAttribute("col", col);
 	node.setAttribute("wall", 0);
 	node.setAttribute("parent", null);
+	node.setAttribute("class", "beforeStart");
 	node.setAttribute("border", "1px solid #000");
 	node.setAttribute("cost", Number.POSITIVE_INFINITY);
 	return node;
@@ -56,6 +56,7 @@ const createEmptyNode = (row, col) => {
 const updateEmptyNode = (node, row, col, wall) => {
 	node.setAttribute("row", row);
 	node.setAttribute("col", col);
+	node.setAttribute("class", "beforeStart");
 	node.setAttribute("parent", null);
 	node.setAttribute("border", "1px solid #000");
 	node.setAttribute("cost", Number.POSITIVE_INFINITY);
@@ -69,13 +70,28 @@ const updateEmptyNode = (node, row, col, wall) => {
 	return node;
 };
 
+// function updateEmptyNode(node, row, col, wall) {
+// 	node.setAttribute("row", row);
+// 	node.setAttribute("col", col);
+// 	node.setAttribute("cost", Number.POSITIVE_INFINITY);
+// 	node.setAttribute("parent", null);
+// 	node.setAttribute("border", "1px solid black");
+// 	node.setAttribute("class", "beforeStart");
+// 	node.innerText = "";
+// 	if (wall == 1) {
+// 		node.setAttribute("wall", 1);
+// 		node.className += " wall";
+// 	} else node.setAttribute("wall", 0);
+// 	return node;
+// }
+
 export const createBoard = () => {
 	var grid = document.querySelector("#gridContainer");
 	grid.innerHTML = "";
 	for (var i = 0; i < rowSize; i++) {
 		for (var j = 0; j < colSize; j++) {
 			let weight = Math.round(genRandom(5));
-			let newNode = createEmptyNode(i, j, weight);
+			let newNode = createNode(i, j, weight);
 			grid.appendChild(newNode);
 		}
 	}
@@ -86,7 +102,6 @@ export const createEmptyBoard = () => {
 	grid.innerHTML = "";
 	for (var i = 0; i < rowSize; i++) {
 		for (var j = 0; j < colSize; j++) {
-			let weight = 0;
 			let newNode = createEmptyNode(i, j);
 			grid.appendChild(newNode);
 		}
