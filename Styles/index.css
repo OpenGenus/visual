@@ -37,3 +37,11 @@
 	align-items: center;
 	border: none;
 }
+
+/* path styling */
+.pathColor {
+	background-color: teal;
+}
+.chosenPath {
+	background-color: tomato;
+}

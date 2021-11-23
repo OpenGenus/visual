@@ -1,29 +1,29 @@
-import { rowSize, colSize } from "../GridAlgorithms/index.js";
-import { setWall } from "../GridAlgorithms/createWalls,js";
+import { rowSize, colSize, weightType } from "../GridAlgorithms/index.js";
+import { setWall } from "../GridAlgorithms/createWalls.js";
 
 const gridContainer = document.querySelector("#gridContainer");
-var time = slider.value;
+var time = 10;
 
 const changeColor = (node, count, cost) => {
 	setTimeout(() => {
-		node.setAttribute("class", "pathColor");
+		node.setAttribute("class", "chosenPath");
 		if (cost) {
 			node.innerHTML = cost;
 		}
 	}, count * time);
 	setTimeout(() => {
-		node.setAttribute("class", "chosenPath");
+		node.setAttribute("class", "pathColor");
 	}, count * time + 100);
 };
 
 const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 	if (row >= 0 && col >= 0 && row < rowSize && col < colSize) {
-		var node = document.querySelector();
+		var node = document.querySelector(`div[row="${row}"][col="${col}"]`);
 		let wall = parseInt(node.getAttribute("wall"));
 		if (wall == 1) return;
 		let prow = parseInt(curr.getAttribute("row"));
 		let pcol = parseInt(curr.getAttribute("col"));
-		if (weighttype == "weighted") {
+		if (weightType == "weighted") {
 			var cost = Math.min(
 				parseInt(curr.getAttribute("cost")) +
 					parseInt(node.getAttribute("weight")),
@@ -58,7 +58,7 @@ const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 
 //algorithm implementation - bfs for unweighted, dijkstras for weighted
 export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
-	time = slider.value;
+	// time = slider.value;
 	time = 40 + (time - 1) * -2;
 	gridContainer.removeEventListener("mousedown", setWall);
 	gridContainer.removeEventListener("mouseover", setWall);
@@ -93,7 +93,7 @@ export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 		let curr = checker.pop();
 		let row = parseInt(curr.getAttribute("row"));
 		let col = parseInt(curr.getAttribute("col"));
-		if (weighttype == "Unweighted" && row == x2 && col == y2) break;
+		if (weightType == "Unweighted" && row == x2 && col == y2) break;
 		let wall = parseInt(curr.getAttribute("wall"));
 		if (wall == 1) continue;
 
@@ -112,9 +112,9 @@ export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 	//draw route
 	setTimeout(() => {
 		startNode.setAttribute("class", "pathNode");
-		while (endNode.getAttribute("parent") != null) {
-			endNode.setAttribute("class", "pathColor");
-			var color = endNode.getAttribute("parent").split("|");
+		while (endNode.getAttribute("parent") != "null") {
+			endNode.setAttribute("class", "chosenPath");
+			var coor = endNode.getAttribute("parent").split("|");
 			var prow = parseInt(coor[0]);
 			var pcol = parseInt(coor[1]);
 			endNode = document.querySelector(
