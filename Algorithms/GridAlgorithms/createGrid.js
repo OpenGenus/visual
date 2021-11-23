@@ -55,7 +55,7 @@ export const createEmptyBoard = () => {
 };
 
 export const createStartNode = (x1 = 0, y1 = 0) => {
-	var startNode = document.querySelector(`div[row='${x1}'][col='${y2}']`);
+	var startNode = document.querySelector(`div[row='${x1}'][col='${y1}']`);
 	startNode.setAttribute("class", "pathNode");
 	startNode.innerHTML = "A";
 };
