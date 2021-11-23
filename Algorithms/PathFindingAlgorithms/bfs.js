@@ -2,7 +2,7 @@ import { rowSize, colSize, weightType } from "../GridAlgorithms/index.js";
 import { setWall } from "../GridAlgorithms/createWalls.js";
 
 const gridContainer = document.querySelector("#gridContainer");
-var time = 10;
+var time = 20;
 
 const changeColor = (node, count, cost) => {
 	setTimeout(() => {
