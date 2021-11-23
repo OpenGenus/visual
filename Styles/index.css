@@ -17,6 +17,7 @@
 	justify-content: center;
 	cursor: pointer;
 }
+/* start and end node styling */
 .pathNode {
 	background: red;
 	color: #fff;
@@ -25,4 +26,8 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+/* wall styling */
+.wall {
+	background-color: #333;
 }

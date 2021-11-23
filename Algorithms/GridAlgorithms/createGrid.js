@@ -21,6 +21,20 @@ const createNode = (row, col) => {
 	return node;
 };
 
+const updateNode = (node, row, col, wall) => {
+	node.setAttribute("row", row);
+	node.setAttribute("col", col);
+	node.setAttribute("parent", null);
+	node.setAttribute("class", beforeStart);
+	if (wall == 1) {
+		node.setAttribute("wall", 1);
+		node.className += " wall";
+	} else {
+		node.setAttribute("wall", 0);
+	}
+	return node;
+};
+
 const createEmptyNode = (row, col) => {
 	var node = document.createElement("div");
 	node.setAttribute("class", "beforeStart");
@@ -29,6 +43,21 @@ const createEmptyNode = (row, col) => {
 	node.setAttribute("wall", 0);
 	node.setAttribute("parent", null);
 	node.setAttribute("border", "1px solid #000");
+	return node;
+};
+
+const updateEmptyNode = (node, row, col, wall) => {
+	node.setAttribute("row", row);
+	node.setAttribute("col", col);
+	node.setAttribute("parent", null);
+	node.setAttribute("border", "1px solid #000");
+	node.innerText = "";
+	if (wall == 1) {
+		node.setAttribute("wall", 1);
+		node.className += " wall";
+	} else {
+		node.setAttribute("wall", 0);
+	}
 	return node;
 };
 
