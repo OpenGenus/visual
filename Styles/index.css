@@ -35,13 +35,21 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border: none;
+	/* border: none; */
 }
 
 /* path styling */
 .pathColor {
-	background-color: teal;
+	background: teal;
+	color: black;
+	text-align: center;
+	display: flex;
+	justify-content: center;
 }
 .chosenPath {
-	background-color: tomato;
+	background: tomato;
+	color: white;
+	text-align: center;
+	display: flex;
+	justify-content: center;
 }
