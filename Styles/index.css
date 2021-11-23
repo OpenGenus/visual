@@ -1,0 +1,28 @@
+#gridContainer {
+	height: 80vh;
+	display: grid;
+	grid-template-rows: repeat(20, 20px);
+	grid-template-columns: repeat(40, 20px);
+	grid-row-gap: 5px;
+	grid-column-gap: 5px;
+	/* border: 1px solid red; */
+	margin: 0 auto;
+}
+.beforeStart {
+	border: 1px solid #000;
+	background: transparent;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+.pathNode {
+	background: red;
+	color: #fff;
+	font-weight: bolder;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
