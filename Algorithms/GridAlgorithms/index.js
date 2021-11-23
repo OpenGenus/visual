@@ -47,14 +47,10 @@ const refresh = () => {
 	} else {
 		refreshBoard();
 	}
-	startBtn.style.visibilifty = "visible";
+	startBtn.style.visibility = "visible";
 };
 
-const reset = () => {
-	location.reload();
-};
-
-resetBtn.addEventListener("click", reset);
+resetBtn.addEventListener("click", () => location.reload());
 refreshBtn.addEventListener("click", refresh);
 
 const updateWeight = () => {
@@ -92,7 +88,6 @@ const updateAlgo = () => {
 algoBtn.addEventListener("change", updateAlgo);
 
 const startVisualization = () => {
-	console.log(algorithm);
 	if (algorithm === "bfs") {
 		bfs(startRow, startCol, endRow, endCol);
 	}
