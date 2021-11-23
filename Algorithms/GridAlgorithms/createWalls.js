@@ -12,7 +12,7 @@ export const setWall = (e) => {
 				window.alert("Make wall inside the grid");
 			} else {
 				e.target.classList.toggle("wall");
-				if (e.target.classList.conatins("wall")) {
+				if (e.target.classList.contains("wall")) {
 					e.target.setAttribute("wall", 1);
 				} else {
 					e.target.setAttribute("wall", 0);

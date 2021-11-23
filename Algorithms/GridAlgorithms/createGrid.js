@@ -25,7 +25,7 @@ const updateNode = (node, row, col, wall) => {
 	node.setAttribute("row", row);
 	node.setAttribute("col", col);
 	node.setAttribute("parent", null);
-	node.setAttribute("class", beforeStart);
+	node.setAttribute("class", "beforeStart");
 	if (wall == 1) {
 		node.setAttribute("wall", 1);
 		node.className += " wall";
@@ -93,4 +93,34 @@ export const createEndNode = (x2 = rowSize - 1, y2 = colSize - 1) => {
 	var endNode = document.querySelector(`div[row='${x2}'][col='${y2}']`);
 	endNode.setAttribute("class", "pathNode");
 	endNode.innerHTML = "B";
+};
+
+export const refreshBoard = () => {
+	for (var i = 0; i < rowSize; i++) {
+		for (var j = 0; j < colSize; j++) {
+			var node = document.querySelector(`div[row="${i}"][col="${j}"]`);
+			if (node.getAttribute("wall") == 1) {
+				updateNode(node, i, j, 1);
+			} else {
+				updateNode(node, i, j, 0);
+			}
+		}
+	}
+	createStartNode(startRow, startCol);
+	createEndNode(endRow, endCol);
+};
+
+export const refreshEmptyBoard = () => {
+	for (var i = 0; i < rowSize; i++) {
+		for (var j = 0; j < colSize; j++) {
+			var node = document.querySelector(`div[row="${i}"][col="${j}"]`);
+			if (node.getAttribute("wall") == 1) {
+				updateEmptyNode(node, i, j, 1);
+			} else {
+				updateEmptyNode(node, i, j, 0);
+			}
+		}
+	}
+	createStartNode(startRow, startCol);
+	createEndNode(endRow, endCol);
 };

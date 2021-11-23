@@ -30,4 +30,10 @@
 /* wall styling */
 .wall {
 	background-color: #333;
+	color: blue;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: none;
 }
