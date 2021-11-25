@@ -70,21 +70,6 @@ const updateEmptyNode = (node, row, col, wall) => {
 	return node;
 };
 
-// function updateEmptyNode(node, row, col, wall) {
-// 	node.setAttribute("row", row);
-// 	node.setAttribute("col", col);
-// 	node.setAttribute("cost", Number.POSITIVE_INFINITY);
-// 	node.setAttribute("parent", null);
-// 	node.setAttribute("border", "1px solid black");
-// 	node.setAttribute("class", "beforeStart");
-// 	node.innerText = "";
-// 	if (wall == 1) {
-// 		node.setAttribute("wall", 1);
-// 		node.className += " wall";
-// 	} else node.setAttribute("wall", 0);
-// 	return node;
-// }
-
 export const createBoard = () => {
 	var grid = document.querySelector("#gridContainer");
 	grid.innerHTML = "";
@@ -120,6 +105,12 @@ export const createEndNode = (x2 = rowSize - 1, y2 = colSize - 1) => {
 	endNode.setAttribute("class", "pathNode");
 	endNode.innerHTML = "B";
 };
+
+const jump = (x1 = 0, y1 = 0) => {
+	var node = document.querySelector(`div[row='${x1}'][col='${y1}']`);
+	console.log(node);
+};
+jump();
 
 export const refreshBoard = () => {
 	for (var i = 0; i < rowSize; i++) {
