@@ -2,7 +2,8 @@ import { rowSize, colSize, weightType } from "../GridAlgorithms/index.js";
 import { setWall } from "../GridAlgorithms/createWalls.js";
 
 const gridContainer = document.querySelector("#gridContainer");
-var time = 20;
+const speedSlider = document.querySelector(".speedSlider");
+var time = speedSlider.value;
 
 const changeColor = (node, count, cost) => {
 	setTimeout(() => {
@@ -58,7 +59,7 @@ const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 
 //algorithm implementation - bfs for unweighted, dijkstras for weighted
 export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
-	// time = slider.value;
+	time = speedSlider.value;
 	time = 40 + (time - 1) * -2;
 	gridContainer.removeEventListener("mousedown", setWall);
 	gridContainer.removeEventListener("mouseover", setWall);

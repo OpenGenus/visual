@@ -8,14 +8,16 @@ import {
 } from "./createGrid.js";
 import { setWall } from "./createWalls.js";
 import { bfs } from "../PathFindingAlgorithms/bfs.js";
+import { setObstacles } from "./generateObstacles.js";
 
 // get dom elements
-var gridContainer = document.querySelector("#gridContainer");
-var refreshBtn = document.querySelector(".refresh");
-var resetBtn = document.querySelector(".reset");
-var weightBtn = document.querySelector(".weight");
-var algoBtn = document.querySelector(".algo");
-var startBtn = document.querySelector(".start");
+const gridContainer = document.querySelector("#gridContainer");
+const refreshBtn = document.querySelector(".refresh");
+const resetBtn = document.querySelector(".reset");
+const weightBtn = document.querySelector(".weight");
+const algoBtn = document.querySelector(".algo");
+const startBtn = document.querySelector(".start");
+const wallBtn = document.querySelector(".setWalls");
 
 export var rowSize = 20;
 export var colSize = 40;
@@ -37,6 +39,7 @@ gridContainer.addEventListener("mouseup", () => {
 gridContainer.addEventListener("mouseover", () => {
 	setWall;
 });
+wallBtn.addEventListener("click", setObstacles);
 
 const refresh = () => {
 	gridContainer.addEventListener("mousedown", setWall);
