@@ -23,10 +23,10 @@ const algorithmType = document.querySelector(".algorithm");
 
 export var rowSize = 20;
 export var colSize = 40;
-export var startRow = 10;
-export var startCol = 10;
-export var endRow = 10;
-export var endCol = 30;
+export var startRow = 4;
+export var startCol = 5;
+export var endRow = 15;
+export var endCol = 32;
 export var mouseDown = false;
 export var weightType = weightBtn.options[weightBtn.selectedIndex].value;
 export var algorithm = algoBtn.options[algoBtn.selectedIndex].value;
@@ -69,8 +69,8 @@ const updateWeight = () => {
 		}
 		refreshBoard();
 	}
-	createStartNode(10, 10);
-	createEndNode(10, 30);
+	createStartNode(startRow, startCol);
+	createEndNode(endRow, endCol);
 };
 weightBtn.addEventListener("change", updateWeight);
 
@@ -87,8 +87,8 @@ const updateAlgo = () => {
 			refreshBoard();
 		}
 	}
-	createStartNode(10, 10);
-	createEndNode(10, 30);
+	createStartNode(startRow, startCol);
+	createEndNode(endRow, endCol);
 };
 algoBtn.addEventListener("change", updateAlgo);
 
@@ -111,6 +111,6 @@ window.onload = () => {
 	} else {
 		createBoard();
 	}
-	createStartNode(10, 10);
-	createEndNode(10, 30);
+	createStartNode(startRow, startCol);
+	createEndNode(endRow, endCol);
 };
