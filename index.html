@@ -8,65 +8,11 @@
 		<title>Algorithms Visualizer</title>
 	</head>
 	<body>
-		<header>
-			<div class="heading">
-				<h4>Algorithms visualizer</h4>
-			</div>
-			<div class="controlsContainer">
-				<div class="visualControls">
-					<div class="visualSpeed">
-						<p>Speed</p>
-						<input
-							type="range"
-							min="1"
-							max="20"
-							value="10"
-							class="speedSlider"
-						/>
-					</div>
-					<div class="obstacles">
-						<p>Obstacles</p>
-						<div class="obstaclesElements">
-							<input
-								type="range"
-								min="1"
-								value="50"
-								class="obstacleSlider"
-							/>
-							&nbsp;
-							<button class="setWalls">walls</button>
-						</div>
-					</div>
-				</div>
-
-				<div class="controls">
-					<div class="algorithms">
-						<select name="" class="algo">
-							<option value="bfs">BFS</option>
-							<option value="dijkstras">Dijkstra's</option>
-						</select>
-					</div>
-					<div class="weights">
-						<select name="" class="weight">
-							<option value="Unweighted">Unweighted</option>
-							<option value="Weighted">Weighted</option>
-						</select>
-					</div>
-				</div>
-			</div>
-		</header>
-		<main>
-			<div class="controlBtns">
-				<button class="start">start</button>
-				<button class="refresh">clear path</button>
-				<button class="reset">reload</button>
-			</div>
-			<div id="gridContainer"></div>
-		</main>
-		<footer>algorithms visualizer</footer>
-		<script
-			type="module"
-			src="./Algorithms/GridAlgorithms/index.js"
-		></script>
+		<nav>
+			<a href="index.html">home</a>
+			<a href="./Pages/bfs.html">bfs</a>
+			<a href="./Pages/dfs.html">dfs</a>
+		</nav>
+		<p>algorithms visualizer @ 2021</p>
 	</body>
 </html>
