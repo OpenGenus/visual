@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="../Styles/index.css" />
+		<title>Depth first search path finding algorithm.</title>
+	</head>
+	<body>
+		<nav>
+			<a href="../index.html">home</a>
+			<a href="./bfs.html">bfs</a>
+			<a href="./dfs.html">dfs</a>
+		</nav>
+		<header>
+			<div class="heading">
+				<h4>Depth first search</h4>
+			</div>
+			<div class="controlsContainer">
+				<div class="visualControls">
+					<div class="visualSpeed">
+						<p>Speed</p>
+						<input
+							type="range"
+							min="1"
+							max="20"
+							value="10"
+							class="speedSlider"
+						/>
+					</div>
+					<div class="obstacles">
+						<p>Obstacles</p>
+						<div class="obstaclesElements">
+							<input
+								type="range"
+								min="1"
+								value="50"
+								class="obstacleSlider"
+							/>
+							&nbsp;
+							<button class="setWalls">walls</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="controls">
+					<div class="algorithms">
+						<select name="" class="algo">
+							<option value="bfs">BFS</option>
+							<option value="dijkstras">Dijkstra's</option>
+						</select>
+					</div>
+					<div class="weights">
+						<select name="" class="weight">
+							<option value="Unweighted">Unweighted</option>
+							<option value="Weighted">Weighted</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</header>
+		<main>
+			<div class="controlBtns">
+				<button class="start">start</button>
+				<button class="refresh">clear path</button>
+				<button class="reset">reload</button>
+			</div>
+			<div id="gridContainer"></div>
+		</main>
+		<footer>algorithms visualizer</footer>
+		<script
+			type="module"
+			src="../Algorithms/GridAlgorithms/index.js"
+		></script>
+	</body>
+</html>

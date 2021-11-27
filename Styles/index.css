@@ -22,7 +22,7 @@ header {
 	height: 50%;
 }
 .controls {
-	display: flex;
+	display: none;
 }
 .visualControls {
 	display: flex;
