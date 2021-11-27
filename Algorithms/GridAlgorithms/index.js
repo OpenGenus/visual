@@ -7,8 +7,9 @@ import {
 	refreshEmptyBoard,
 } from "./createGrid.js";
 import { setWall } from "./createWalls.js";
-import { bfs } from "../PathFindingAlgorithms/bfs.js";
 import { setObstacles } from "./generateObstacles.js";
+import { dfs } from "../PathFindingAlgorithms/dfs.js";
+import { bfs } from "../PathFindingAlgorithms/bfs.js";
 
 // get dom elements
 const gridContainer = document.querySelector("#gridContainer");
@@ -18,6 +19,7 @@ const weightBtn = document.querySelector(".weight");
 const algoBtn = document.querySelector(".algo");
 const startBtn = document.querySelector(".start");
 const wallBtn = document.querySelector(".setWalls");
+const algorithmType = document.querySelector(".algorithm");
 
 export var rowSize = 20;
 export var colSize = 40;
@@ -91,8 +93,10 @@ const updateAlgo = () => {
 algoBtn.addEventListener("change", updateAlgo);
 
 const startVisualization = () => {
-	if (algorithm === "bfs") {
+	if (algorithmType.classList.contains("bfs")) {
 		bfs(startRow, startCol, endRow, endCol);
+	} else if (algorithmType.classList.contains("dfs")) {
+		dfs(startRow, startCol, endRow, endCol);
 	}
 };
 startBtn.addEventListener("click", startVisualization);
