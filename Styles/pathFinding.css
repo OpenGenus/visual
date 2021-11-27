@@ -1,0 +1,266 @@
+header {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	height: 10vh;
+	margin-top: 6rem;
+}
+.heading {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.heading hr {
+	background-color: #2ecc71;
+	width: 10%;
+	height: 4px;
+	border-radius: 20px;
+	border: none;
+}
+/* visual container styling */
+/* .visualizationContainer {
+	display: flex;
+	flex-direction: row;
+	margin: 0 2rem;
+}
+.algoInfo {
+	margin-top: 3rem;
+	height: 66vh;
+	overflow-y: scroll;
+	padding: 0 1rem;
+} */
+.obstacles {
+	margin-left: 2rem;
+}
+.obstaclesElements {
+	display: flex;
+	align-items: center;
+}
+.controlBtns {
+	margin: 1rem 0;
+}
+#gridContainer {
+	display: grid;
+	grid-template-rows: repeat(20, 20px);
+	grid-template-columns: repeat(40, 20px);
+	grid-row-gap: 5px;
+	grid-column-gap: 5px;
+	margin-top: 3rem !important;
+}
+.beforeStart {
+	border: 1px solid #000;
+	background: transparent;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	border-radius: 50%;
+}
+/* start and end node styling */
+.pathNode {
+	background: #000;
+	color: #fff;
+	font-weight: bolder;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	font-size: 12px;
+}
+/* wall styling */
+.wall {
+	background-color: #e74c3c;
+	color: blue;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* border: none; */
+}
+.setWalls {
+	cursor: pointer;
+}
+
+/* path styling */
+.pathColor {
+	background: teal;
+	color: black;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	font-size: 10px;
+	font-weight: bold;
+}
+.chosenPath {
+	background: #2ecc71;
+	color: #000;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	border: 1px solid #000;
+	font-size: 10px;
+	font-weight: bold;
+}
+
+/* end visual container styling */
+.infoHeading {
+	padding-bottom: 1rem;
+}
+.title {
+	color: #3498db;
+	text-align: center;
+}
+.subtitle {
+	color: #2ecc71;
+	text-align: center;
+	text-decoration: underline;
+}
+.nest1 {
+	padding-left: 1rem;
+}
+.reference a {
+	color: #2ecc71;
+}
+.nest2 {
+	padding-left: 2rem;
+}
+/* end visual container styling */
+/* controls styling */
+.controlsContainer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 50%;
+	margin-left: 2rem;
+}
+.controls {
+	display: none;
+}
+.controlBtns {
+	margin-left: 4rem !important;
+}
+.start {
+	background-color: #2ecc71 !important;
+	border: none !important;
+}
+.btn {
+	padding: 3px 10px;
+	background-color: transparent;
+	border: 1px solid #000;
+	border: none;
+	border-radius: 10px;
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+		rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+		rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+.btn:hover {
+	cursor: pointer;
+}
+.footer {
+	text-align: center;
+	margin: 3rem 0;
+}
+
+@media (max-width: 575.98px) {
+	.algoInfo {
+		margin: 0 1rem;
+		padding-top: 4rem;
+	}
+	.controlsContainer {
+		margin-left: 0;
+	}
+	.visualControls {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+	}
+	.controlBtns {
+		padding-left: 0;
+		margin-left: 0 !important;
+	}
+	#gridContainer {
+		padding-top: 3rem !important;
+	}
+}
+@media (min-width: 575.98px) {
+	.algoInfo {
+		margin: 0 3rem;
+		padding-top: 2rem;
+	}
+}
+
+/* Small devices (landscape phones, less than 768px) */
+@media (min-width: 767.98px) {
+	.visualizationContainer {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin: 0 2rem;
+	}
+	.algoInfo {
+		margin-top: 3rem;
+		width: 80%;
+	}
+}
+
+/* Medium devices (tablets, less than 992px) */
+@media (max-width: 991.98px) {
+	.heading {
+		padding-bottom: 4rem;
+	}
+	#gridContainer {
+		overflow-x: scroll;
+		margin: 0 1rem;
+		margin-top: 6rem !important;
+	}
+	.visualControls {
+		display: flex;
+		padding-top: 2rem;
+	}
+}
+
+@media (min-width: 991.98px) {
+	.visualControls {
+		display: flex;
+		padding-top: 2rem;
+	}
+	.visualizationContainer {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin: 0 2rem;
+	}
+	.algoInfo {
+		margin-top: 3rem;
+		width: 60%;
+	}
+}
+
+/* Large devices (desktops, less than 1200px) */
+@media (min-width: 1199.98px) {
+	.visualControls {
+		display: flex;
+		padding-top: 2rem;
+	}
+	.visualizationContainer {
+		display: flex;
+		flex-direction: row;
+		margin: 0 2rem;
+	}
+	.algoInfo {
+		margin-top: 3rem;
+		height: 66vh;
+		overflow-y: scroll;
+		padding: 0 1rem;
+	}
+}
