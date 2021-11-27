@@ -12,7 +12,7 @@ import { setObstacles } from "./generateObstacles.js";
 
 // get dom elements
 const gridContainer = document.querySelector("#gridContainer");
-const refreshBtn = document.querySelector(".refresh");
+const clearPathBtn = document.querySelector(".clearPath");
 const resetBtn = document.querySelector(".reset");
 const weightBtn = document.querySelector(".weight");
 const algoBtn = document.querySelector(".algo");
@@ -41,7 +41,7 @@ gridContainer.addEventListener("mouseover", () => {
 });
 wallBtn.addEventListener("click", setObstacles);
 
-const refresh = () => {
+const clearPath = () => {
 	gridContainer.addEventListener("mousedown", setWall);
 	gridContainer.addEventListener("mouseup", setWall);
 	gridContainer.addEventListener("mouseover", setWall);
@@ -54,7 +54,7 @@ const refresh = () => {
 };
 
 resetBtn.addEventListener("click", () => location.reload());
-refreshBtn.addEventListener("click", refresh);
+clearPathBtn.addEventListener("click", clearPath);
 
 const updateWeight = () => {
 	weightType = weightBtn.options[weightBtn.selectedIndex].value;
