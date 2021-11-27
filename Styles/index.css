@@ -3,95 +3,34 @@
 	padding: 0;
 	box-sizing: border-box;
 }
-header {
-	display: flex;
-	flex-direction: column;
-	text-align: center;
+body {
+	font-family: "M PLUS 1 Code", sans-serif;
+}
+/* navbar styling */
+nav {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	background-color: #3498db;
 	height: 10vh;
-}
-.heading {
-	height: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.controlsContainer {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
-	height: 50%;
 }
-.controls {
-	display: flex;
-}
-.visualControls {
-	display: flex;
-}
-.obstacles {
+nav a {
+	font-size: 1.2rem;
+	text-decoration: none;
 	margin-left: 2rem;
+	color: #000;
+	font-weight: 600;
 }
-.obstaclesElements {
-	display: flex;
-	align-items: center;
+nav a:hover {
+	transition: all 0.5s ease-in-out;
+	cursor: pointer;
 }
-.controlBtns {
-	margin: 1rem 0;
-}
-#gridContainer {
+/* end navbar styling */
+.mainHome {
 	height: 80vh;
-	display: grid;
-	grid-template-rows: repeat(20, 20px);
-	grid-template-columns: repeat(40, 20px);
-	grid-row-gap: 5px;
-	grid-column-gap: 5px;
-	/* border: 1px solid red; */
-	margin: 0 auto;
 }
-.beforeStart {
-	border: 1px solid #000;
-	background: transparent;
-	text-align: center;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	cursor: pointer;
-}
-/* start and end node styling */
-.pathNode {
-	background: red;
-	color: #fff;
-	font-weight: bolder;
-	text-align: center;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-/* wall styling */
-.wall {
-	background-color: #333;
-	color: blue;
-	text-align: center;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	/* border: none; */
-}
-.setWalls {
-	cursor: pointer;
-}
-
-/* path styling */
-.pathColor {
-	background: teal;
-	color: black;
-	text-align: center;
-	display: flex;
-	justify-content: center;
-}
-.chosenPath {
-	background: tomato;
-	color: white;
-	text-align: center;
-	display: flex;
-	justify-content: center;
+.landingText {
+	margin-top: 4rem;
 }

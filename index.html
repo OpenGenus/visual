@@ -4,69 +4,33 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="path finding algorithms, depth first search, breadth first search."
+		/>
+		<meta
+			name="keywords"
+			content="breadth first search, breadth first algorithm, depth first search, depth first traversal, breadth first traversal, path finding, graph algorithms, graphs, algorithms, visualization, visual, graphs, graph traversal, traversal"
+		/>
+		<meta name="author" content="lumunge" />
 		<link rel="stylesheet" href="./Styles/index.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@500&display=swap"
+			rel="stylesheet"
+		/>
 		<title>Algorithms Visualizer</title>
 	</head>
 	<body>
-		<header>
-			<div class="heading">
-				<h4>Algorithms visualizer</h4>
-			</div>
-			<div class="controlsContainer">
-				<div class="visualControls">
-					<div class="visualSpeed">
-						<p>Speed</p>
-						<input
-							type="range"
-							min="1"
-							max="20"
-							value="10"
-							class="speedSlider"
-						/>
-					</div>
-					<div class="obstacles">
-						<p>Obstacles</p>
-						<div class="obstaclesElements">
-							<input
-								type="range"
-								min="1"
-								value="50"
-								class="obstacleSlider"
-							/>
-							&nbsp;
-							<button class="setWalls">walls</button>
-						</div>
-					</div>
-				</div>
-
-				<div class="controls">
-					<div class="algorithms">
-						<select name="" class="algo">
-							<option value="bfs">BFS</option>
-							<option value="dijkstras">Dijkstra's</option>
-						</select>
-					</div>
-					<div class="weights">
-						<select name="" class="weight">
-							<option value="Unweighted">Unweighted</option>
-							<option value="Weighted">Weighted</option>
-						</select>
-					</div>
-				</div>
-			</div>
-		</header>
-		<main>
-			<div class="controlBtns">
-				<button class="start">start</button>
-				<button class="refresh">clear path</button>
-				<button class="reset">reload</button>
-			</div>
-			<div id="gridContainer"></div>
+		<nav>
+			<a href="index.html">Visual Algo</a>
+			<a href="./Pages/bfs.html">bfs</a>
+			<a href="./Pages/dfs.html">dfs</a>
+		</nav>
+		<main class="mainHome">
+			<h1 class="landingText">Algorithms visualzation</h1>
 		</main>
-		<footer>algorithms visualizer</footer>
-		<script
-			type="module"
-			src="./Algorithms/GridAlgorithms/index.js"
-		></script>
+		<p>algorithms visualizer @ 2021</p>
 	</body>
 </html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="breadth first search path finding algorithm">
+		<meta name="keywords" content="breadth first search, breadth first algorithm, breadth first traversal path finding, graph algorithms, algorithms, visualization, visual, graphs, graph traversal, traversal">
+		<meta name="author" content="lumunge">
+		<link rel="stylesheet" href="../Styles/index.css">
+		<link rel="stylesheet" href="../Styles/pathFinding.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@500&display=swap" rel="stylesheet"> 
+		<title>Breadth first search path finding algorithm.</title>
+	</head>
+	<body>
+		<nav>
+			<a href="../index.html">Visual Algo</a>
+			<a href="./bfs.html">bfs</a>
+			<a href="./dfs.html">dfs</a>
+		</nav>
+		<header>
+			<div class="heading">
+				<h2 class="algorithm bfs">Breadth first search</h2>
+				<hr>
+			</div>
+			<div class="controlsContainer">
+				<div class="visualControls">
+					<div class="visualSpeed">
+						<p>Speed</p>
+						<input
+							type="range"
+							min="1"
+							max="20"
+							value="10"
+							class="speedSlider"
+						/>
+					</div>
+					<div class="obstacles">
+						<p>Obstacles</p>
+						<div class="obstaclesElements">
+							<input
+								type="range"
+								min="1"
+								value="50"
+								class="obstacleSlider"
+							/>
+							&nbsp;
+							<button class="setWalls btn">walls</button>
+						</div>
+					</div>
+					<div class="controlBtns">
+						<button class="start btn">start</button>
+						<button class="clearPath btn">clear path</button>
+						<button class="reset btn">reload</button>
+					</div>
+				</div>
+				<!-- not displayed -->
+				<div class="controls">
+					<div class="algorithms">
+						<select name="" class="algo">
+							<option value="bfs">BFS</option>
+							<option value="dijkstras">Dijkstra's</option>
+						</select>
+					</div>
+					<div class="weights">
+						<select name="" class="weight">
+							<option value="Unweighted">Unweighted</option>
+							<option value="Weighted">Weighted</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</header>
+		<main>
+			<div class="visualizationContainer">
+				<div id="gridContainer"></div>
+				<div class="algoInfo">
+					<div>
+						<div class="infoHeading">
+						<h3 class="title">Breadth first traversal</h3>
+					</div>
+						This algorithm starts from a chosen node(source) and examines
+						all its neighbors, then it examines all the neighbors of
+						the neighbors, and etcetera. <br />
+						The algorithm can be understood as a
+						<em>"fire spreading"</em> on the graph, at the 0th step
+						only the source is on fire. At each step, the buring
+						fire at each vertex spreads to all its neighbors. <br />
+						The <em>ring of fire</em> is expanded at each iteration.
+						We use a <b><em>queue</em></b> data structure.
+						<div>
+							<p class="subtitle">Algorithm</p>
+							<p>
+								1. Add root node to the queue, and mark it as
+								visited(already explored).
+							</p>
+							<p>
+								2. Loop through the queue as long as it's not empty
+								do the following.
+							</p>
+							<p class="nest1">
+								1. Get and remove the node at the top of the
+								queue(current).
+							</p>
+							<p class="nest1">
+								2. For every non-visited child of the current
+								node, do the following:
+							</p>
+							<p class="nest2">1. Mark it as visited.</p>
+							<p class="nest2">
+								2. Check if it's the destination node, If so, then
+								return and terminate.
+							</p>
+							<p class="nest2">
+								3. Otherwise, push it to the queue.
+							</p>
+							<p>
+								3. If queue is empty, then no path exists!
+							</p>
+						</div>
+						<div>
+							<p class="subtitle">Computational complexity</p>
+							This algorithm takes <b><em>O(V + E)</em></b> where V is the number of
+							vertices and E is the number of edges.
+						</div>
+						<div class="applications"> 
+							<p class="subtitle">Applications</p>
+							<ul>
+								<li>peer to peer networking</li>
+								<li>search engine crawlers</li>
+								<li>social networking websites</li>
+								<li>maps and gps navigation software</li>
+								<li>cycle detection in undirected graph</li>
+								<li>bipartite graph testing</li>
+								<li>spotting connected components</li>
+							</ul>
+						</div>
+						<div class="reference">
+							<a href="https://iq.opengenus.org/bfs-graph-traversal/">reference</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		<p class="footer">algorithms visualizer @ 2021</footer>
+		<script
+			type="module"
+			src="../Algorithms/GridAlgorithms/index.js"
+		></script>
+	</body>
+</html>

@@ -69,8 +69,8 @@ export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 	//disable start and refresh btn
 	var startBtn = document.querySelector(".start");
 	startBtn.style.visibility = "hidden";
-	var refreshBtn = document.querySelector(".refresh");
-	refreshBtn.style.visibility = "hidden";
+	var clearPathBtn = document.querySelector(".clearPath");
+	clearPathBtn.style.visibility = "hidden";
 
 	//start algorithm
 	var visited = [startNode];
@@ -127,6 +127,6 @@ export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 	}, count * time + 100);
 
 	setTimeout(() => {
-		refreshBtn.style.visibility = "visible";
+		clearPathBtn.style.visibility = "visible";
 	}, count * time + 100);
 };

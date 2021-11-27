@@ -7,24 +7,26 @@ import {
 	refreshEmptyBoard,
 } from "./createGrid.js";
 import { setWall } from "./createWalls.js";
-import { bfs } from "../PathFindingAlgorithms/bfs.js";
 import { setObstacles } from "./generateObstacles.js";
+import { dfs } from "../PathFindingAlgorithms/dfs.js";
+import { bfs } from "../PathFindingAlgorithms/bfs.js";
 
 // get dom elements
 const gridContainer = document.querySelector("#gridContainer");
-const refreshBtn = document.querySelector(".refresh");
+const clearPathBtn = document.querySelector(".clearPath");
 const resetBtn = document.querySelector(".reset");
 const weightBtn = document.querySelector(".weight");
 const algoBtn = document.querySelector(".algo");
 const startBtn = document.querySelector(".start");
 const wallBtn = document.querySelector(".setWalls");
+const algorithmType = document.querySelector(".algorithm");
 
 export var rowSize = 20;
 export var colSize = 40;
-export var startRow = 10;
-export var startCol = 10;
-export var endRow = 10;
-export var endCol = 30;
+export var startRow = 4;
+export var startCol = 5;
+export var endRow = 15;
+export var endCol = 32;
 export var mouseDown = false;
 export var weightType = weightBtn.options[weightBtn.selectedIndex].value;
 export var algorithm = algoBtn.options[algoBtn.selectedIndex].value;
@@ -41,7 +43,7 @@ gridContainer.addEventListener("mouseover", () => {
 });
 wallBtn.addEventListener("click", setObstacles);
 
-const refresh = () => {
+const clearPath = () => {
 	gridContainer.addEventListener("mousedown", setWall);
 	gridContainer.addEventListener("mouseup", setWall);
 	gridContainer.addEventListener("mouseover", setWall);
@@ -54,7 +56,7 @@ const refresh = () => {
 };
 
 resetBtn.addEventListener("click", () => location.reload());
-refreshBtn.addEventListener("click", refresh);
+clearPathBtn.addEventListener("click", clearPath);
 
 const updateWeight = () => {
 	weightType = weightBtn.options[weightBtn.selectedIndex].value;
@@ -67,8 +69,8 @@ const updateWeight = () => {
 		}
 		refreshBoard();
 	}
-	createStartNode(10, 10);
-	createEndNode(10, 30);
+	createStartNode(startRow, startCol);
+	createEndNode(endRow, endCol);
 };
 weightBtn.addEventListener("change", updateWeight);
 
@@ -79,20 +81,22 @@ const updateAlgo = () => {
 		weightType = weightBtn.options[weightBtn.selectedIndex].value;
 		refreshEmptyBoard();
 	} else if (algorithm == "Dijkstras") {
-		if (weightBtn.valu == "Unweighted") {
+		if (weightBtn.value == "Unweighted") {
 			refreshEmptyBoard();
 		} else {
 			refreshBoard();
 		}
 	}
-	createStartNode(10, 10);
-	createEndNode(10, 30);
+	createStartNode(startRow, startCol);
+	createEndNode(endRow, endCol);
 };
 algoBtn.addEventListener("change", updateAlgo);
 
 const startVisualization = () => {
-	if (algorithm === "bfs") {
+	if (algorithmType.classList.contains("bfs")) {
 		bfs(startRow, startCol, endRow, endCol);
+	} else if (algorithmType.classList.contains("dfs")) {
+		dfs(startRow, startCol, endRow, endCol);
 	}
 };
 startBtn.addEventListener("click", startVisualization);
@@ -107,6 +111,6 @@ window.onload = () => {
 	} else {
 		createBoard();
 	}
-	createStartNode(10, 10);
-	createEndNode(10, 30);
+	createStartNode(startRow, startCol);
+	createEndNode(endRow, endCol);
 };
