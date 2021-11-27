@@ -66,9 +66,75 @@
 				<button class="clearPath">clear path</button>
 				<button class="reset">reload</button>
 			</div>
-			<div id="gridContainer"></div>
+			<div class="visualizationContainer">
+				<div id="gridContainer"></div>
+				<div class="algoInfo">
+					<div>
+						<div class="heading">
+						<p class="title">Breadth first search</p>
+						<hr>
+					</div>
+						This algorithm starts from a chosen node(source) and examines
+						all its neighbors, then it examines all the neighbors of
+						the neighbors, and etcetera. <br />
+						The algorithm can be understood as a
+						<em>"fire spreading"</em> on the graph, at the 0th step
+						only the soource is on fire. At each step, the buring
+						fire at each vertex spreads to all its neighbors. <br />
+						The <em>ring of fire</em> is expanded at each iteration.
+						We use a <b><em>queue</em></b> data structure.
+						<div>
+							<p class="subtitle">Algorithm</p>
+							<p>
+								1. Add root node to the queue, and mark it as
+								visited(already explored).
+							</p>
+							<p>
+								2. Loop through the queue as long as it's not empty
+								do the following.
+							</p>
+							<p class="nest1">
+								1. Get and remove the node at the top of the
+								queue(current).
+							</p>
+							<p class="nest1">
+								2. For every non-visited child of the current
+								node, do the following:
+							</p>
+							<p class="nest2">1. Mark it as visited.</p>
+							<p class="nest2">
+								2. Check if it's the destination node, If so, then
+								return and terminate.
+							</p>
+							<p class="nest3">
+								3. Otherwise, push it to the queue.
+							</p>
+							<p>
+								3. If queue is empty, then no path exists!
+							</p>
+						</div>
+						<div>
+							<p class="subtitle">Computational complexity</p>
+							This algorithm takes <b>O(V + E)</b> where V is the number of
+							vertices and E is the number of edges.
+						</div>
+						<div class="applications"> 
+							<p class="subtitle">Applications</p>
+							<ul>
+								<li>peer to peer networking</li>
+								<li>search engine crawlers</li>
+								<li>social networking websites</li>
+								<li>maps and gps navigation software</li>
+								<li>cycle detection in undirected graph</li>
+								<li>bipartite graph testing</li>
+								<li>spotting connected components</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
 		</main>
-		<footer>algorithms visualizer</footer>
+		<p class="footer">algorithms visualizer @ 2021</footer>
 		<script
 			type="module"
 			src="../Algorithms/GridAlgorithms/index.js"
