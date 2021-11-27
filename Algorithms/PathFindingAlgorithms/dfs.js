@@ -11,6 +11,17 @@ const checker = (row, col) => {
 	return false;
 };
 
+// visualize algorithm
+const changeColor = (node, count) => {
+	setTimeout(() => {
+		node.setAttribute("class", "chosenPath");
+		node.innerHTML = count;
+	}, count * time);
+	setTimeout(() => {
+		node.setAttribute("class", "pathColor");
+	}, count * time + 100);
+};
+
 //traverse grid
 const traverse = (node, visited, count, endNode) => {
 	let row = parseInt(node.getAttribute("row"));
@@ -50,17 +61,6 @@ const traverse = (node, visited, count, endNode) => {
 	}
 };
 
-// visualize algorithm
-const changeColor = (node, count) => {
-	setTimeout(() => {
-		node.setAttribute("class", "pathNode");
-		node.innerHTML = count;
-	}, count * time);
-	setTimeout(() => {
-		node.setAttribute("class", "chosenPath");
-	}, count * time + 100);
-}; // End changeColor
-
 export const dfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 	time = speedSlider.value;
 	time = 40 + (time - 1) * -2;
@@ -93,7 +93,7 @@ export const dfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 			);
 		}
 		endNode = document.querySelector(`div[row="${x2}"][col="${y2}"]`);
-		endNode.setAttribute("class", "ends");
+		endNode.setAttribute("class", "pathNode");
 	}, count * time + 100);
 	setTimeout(() => {
 		clearPathBtn.style.visibility = "visible";
