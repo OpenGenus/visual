@@ -3,12 +3,32 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+/* navbar styling */
+nav {
+	background-color: #3498db;
+	height: 10vh;
+	display: flex;
+	align-items: center;
+}
+nav a {
+	font-size: 1.2rem;
+	text-decoration: none;
+	margin-left: 2rem;
+	color: #000;
+	font-weight: 600;
+}
+nav a:hover {
+	transition: all 0.5s ease-in-out;
+	cursor: pointer;
+}
+/* end navbar styling */
 header {
 	display: flex;
 	flex-direction: column;
 	text-align: center;
 	height: 10vh;
 }
+
 .heading {
 	height: 50%;
 	display: flex;
