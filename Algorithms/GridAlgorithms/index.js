@@ -81,7 +81,7 @@ const updateAlgo = () => {
 		weightType = weightBtn.options[weightBtn.selectedIndex].value;
 		refreshEmptyBoard();
 	} else if (algorithm == "Dijkstras") {
-		if (weightBtn.valu == "Unweighted") {
+		if (weightBtn.value == "Unweighted") {
 			refreshEmptyBoard();
 		} else {
 			refreshBoard();
