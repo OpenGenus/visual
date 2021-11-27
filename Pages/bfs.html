@@ -8,6 +8,10 @@
 		<meta name="keywords" content="breadth first search, breadth first algorithm, path finding, graph algorithms, graphs, algorithms, visualization, visual">
 		<meta name="author" content="lumunge">
 		<link rel="stylesheet" href="../Styles/index.css" />
+		<link rel="stylesheet" href="../Styles/pathfinding.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@500&display=swap" rel="stylesheet"> 
 		<title>Breadth first search path finding algorithm.</title>
 	</head>
 	<body>
@@ -18,7 +22,8 @@
 		</nav>
 		<header>
 			<div class="heading">
-				<h4 class="algorithm bfs">Breadth first search</h4>
+				<h2 class="algorithm bfs">Breadth first search</h2>
+				<hr>
 			</div>
 			<div class="controlsContainer">
 				<div class="visualControls">
@@ -42,8 +47,13 @@
 								class="obstacleSlider"
 							/>
 							&nbsp;
-							<button class="setWalls">walls</button>
+							<button class="setWalls btn">walls</button>
 						</div>
+					</div>
+					<div class="controlBtns">
+						<button class="start btn">start</button>
+						<button class="clearPath btn">clear path</button>
+						<button class="reset btn">reload</button>
 					</div>
 				</div>
 				<!-- not displayed -->
@@ -64,18 +74,12 @@
 			</div>
 		</header>
 		<main>
-			<div class="controlBtns">
-				<button class="start">start</button>
-				<button class="clearPath">clear path</button>
-				<button class="reset">reload</button>
-			</div>
 			<div class="visualizationContainer">
 				<div id="gridContainer"></div>
 				<div class="algoInfo">
 					<div>
 						<div class="heading">
-						<p class="title">Breadth first search</p>
-						<hr>
+						<h3 class="title">Breadth first traversal</h3>
 					</div>
 						This algorithm starts from a chosen node(source) and examines
 						all its neighbors, then it examines all the neighbors of
@@ -109,7 +113,7 @@
 								2. Check if it's the destination node, If so, then
 								return and terminate.
 							</p>
-							<p class="nest3">
+							<p class="nest2">
 								3. Otherwise, push it to the queue.
 							</p>
 							<p>
@@ -118,7 +122,7 @@
 						</div>
 						<div>
 							<p class="subtitle">Computational complexity</p>
-							This algorithm takes <b>O(V + E)</b> where V is the number of
+							This algorithm takes <b><em>O(V + E)</em></b> where V is the number of
 							vertices and E is the number of edges.
 						</div>
 						<div class="applications"> 
@@ -132,6 +136,9 @@
 								<li>bipartite graph testing</li>
 								<li>spotting connected components</li>
 							</ul>
+						</div>
+						<div class="reference">
+							<a href="https://iq.opengenus.org/bfs-graph-traversal/">reference</a>
 						</div>
 					</div>
 				</div>

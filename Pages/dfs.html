@@ -8,6 +8,10 @@
 		<meta name="keywords" content="depth first search, depth first algorithm, path finding, graph algorithms, graphs, algorithms, visualization, visual">
 		<meta name="author" content="lumunge">
 		<link rel="stylesheet" href="../Styles/index.css" />
+		<link rel="stylesheet" href="../Styles/pathfinding.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@500&display=swap" rel="stylesheet"> 
 		<title>Depth first search path finding algorithm.</title>
 	</head>
 	<body>
@@ -18,7 +22,8 @@
 		</nav>
 		<header>
 			<div class="heading">
-				<h4 class="algorithm dfs">Depth first search</h4>
+				<h2 class="algorithm dfs">Depth first search</h2>
+				<hr>
 			</div>
 			<div class="controlsContainer">
 				<div class="visualControls">
@@ -42,11 +47,16 @@
 								class="obstacleSlider"
 							/>
 							&nbsp;
-							<button class="setWalls">walls</button>
+							<button class="setWalls btn">walls</button>
 						</div>
 					</div>
-				</div>
-
+					<div class="controlBtns">
+						<button class="start btn">start</button>
+						<button class="clearPath btn">clear path</button>
+						<button class="reset btn">reload</button>
+					</div>
+				</div>				
+				<!-- not displayed -->
 				<div class="controls">
 					<div class="algorithms">
 						<select name="" class="algo">
@@ -64,17 +74,12 @@
 			</div>
 		</header>
 		<main>
-			<div class="controlBtns">
-				<button class="start">start</button>
-				<button class="clearPath">clear path</button>
-				<button class="reset">reload</button>
-			</div>
 			<div class="visualizationContainer">
 				<div id="gridContainer"></div>
 				<div class="algoInfo">
 					<div>
 						<div class="heading">
-						<p class="title">Depth first search</p>
+						<h3 class="title">Depth first traversal.</h3>
 					</div>
 						<p>
 							This algorithm starts its search at the root and
@@ -126,7 +131,7 @@
 						</div>
 						<div>
 							<p class="subtitle">Computational complexity</p>
-							This algorithm takes <b>O(V + E)</b> where v is the number of
+							This algorithm takes <b><em>O(V + E)</em></b> where v is the number of
 							vertices and e is the number of edges.
 						</div>
 						<div>
@@ -141,6 +146,9 @@
 								</li>
 								<li>detecting cycles in a graph.</li>
 							</ul>
+						</div>
+						<div class="reference">
+							<a href="https://iq.opengenus.org/bfs-graph-traversal/">reference</a>
 						</div>
 					</div>
 				</div>
