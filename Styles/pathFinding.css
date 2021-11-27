@@ -5,6 +5,7 @@ header {
 	height: 10vh;
 	margin-top: 6rem;
 }
+
 .heading {
 	display: flex;
 	flex-direction: column;
@@ -56,6 +57,9 @@ header {
 	justify-content: center;
 	cursor: pointer;
 	border-radius: 50%;
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+		rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+		rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 /* start and end node styling */
 .pathNode {
@@ -71,7 +75,7 @@ header {
 }
 /* wall styling */
 .wall {
-	background-color: #e74c3c;
+	background-color: #ee172d;
 	color: blue;
 	text-align: center;
 	display: flex;
@@ -85,7 +89,7 @@ header {
 
 /* path styling */
 .pathColor {
-	background: teal;
+	background: #453bdf;
 	color: black;
 	text-align: center;
 	display: flex;
@@ -96,7 +100,7 @@ header {
 	font-weight: bold;
 }
 .chosenPath {
-	background: #2ecc71;
+	background: #5eff14;
 	color: #000;
 	text-align: center;
 	display: flex;
@@ -106,6 +110,9 @@ header {
 	border: 1px solid #000;
 	font-size: 10px;
 	font-weight: bold;
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+		rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+		rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
 /* end visual container styling */
