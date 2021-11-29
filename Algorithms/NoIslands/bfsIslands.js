@@ -5,6 +5,75 @@ const gridContainer = document.querySelector("#gridContainer");
 const speedSlider = document.querySelector(".speedSlider");
 var time = speedSlider.value;
 
+class NumberOfIslands {
+	getGrid() {
+		let gridMatrix = [];
+		let matrix = [];
+
+		for (let i = 0; i < rowSize; i++) {
+			for (let j = 0; j < colSize; j++) {
+				var node = document.querySelector(
+					`div[row="${i}"][col="${j}"]`
+				);
+				var wall = parseInt(node.getAttribute("wall"));
+				gridMatrix.push(wall);
+			}
+		}
+		while (gridMatrix.length) {
+			matrix.push(gridMatrix.splice(0, colSize));
+		}
+		return matrix;
+	}
+
+	isSafe = (mat, i, j, vis, r, c) => {
+		return (
+			i >= 0 && i < r && j >= 0 && j < c && mat[i][j] == 1 && !vis[i][j]
+		);
+	};
+
+	bfs = (mat, vis, si, sj, r, c) => {
+		let row = [-1, -1, -1, 0, 0, 1, 1, 1];
+		let col = [-1, 0, 1, -1, 1, -1, 0, 1];
+
+		let q = [];
+		q.push([si, sj]);
+		vis[si][sj] = true;
+
+		while (q.length != 0) {
+			let i = q[0][0];
+			let j = q[0][1];
+			q.shift();
+
+			for (let k = 0; k < 8; k++) {
+				if (this.isSafe(mat, i + row[k], j + col[k], vis, r, c)) {
+					vis[i + row[k]][j + col[k]] = true;
+					q.push([i + row[k], j + col[k]]);
+				}
+			}
+		}
+	};
+
+	countIslands = (mat, r, c) => {
+		let vis = new Array(r);
+		for (let i = 0; i < c; i++) {
+			vis[i] = new Array(c);
+			for (let j = 0; j < r; j++) {
+				vis[i][j] = false;
+			}
+		}
+		let res = 0;
+		for (let i = 0; i < r; i++) {
+			for (let j = 0; j < c; j++) {
+				if (mat[i][j] == 1 && !vis[i][j]) {
+					this.bfs(mat, vis, i, j, r, c);
+					res++;
+				}
+			}
+		}
+		return res;
+	};
+}
+
 class Visualize {
 	changeColor = (node, count, cost) => {
 		setTimeout(() => {
@@ -59,7 +128,7 @@ class Visualize {
 		}
 	};
 
-	//algorithm implementation - bfs for unweighted, dijkstras for weighted
+	//bfs algorithm implementation
 	visualizeBFS = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 		time = speedSlider.value;
 		time = 40 + (time - 1) * -2;
@@ -111,93 +180,21 @@ class Visualize {
 			count++;
 		}
 
+		const numIslands = new NumberOfIslands();
+		let matGrid = numIslands.getGrid();
+
 		setTimeout(() => {
-			clearPathBtn.style.visibility = "visible";
-		}, count * time + 100);
-	};
-}
-
-class NumberOfIslands {
-	getGrid() {
-		let gridMatrix = [];
-		let matrix = [];
-
-		for (let i = 0; i < rowSize; i++) {
-			for (let j = 0; j < colSize; j++) {
-				var node = document.querySelector(
-					`div[row="${i}"][col="${j}"]`
-				);
-				var wall = parseInt(node.getAttribute("wall"));
-				gridMatrix.push(wall);
-			}
-		}
-		while (gridMatrix.length) {
-			matrix.push(gridMatrix.splice(0, colSize));
-		}
-
-		return matrix;
-	}
-
-	isSafe = (mat, i, j, vis, r, c) => {
-		return (
-			i >= 0 && i < r && j >= 0 && j < c && mat[i][j] == 1 && !vis[i][j]
-		);
-	};
-
-	bfs = (mat, vis, si, sj, r, c) => {
-		let row = [-1, -1, -1, 0, 0, 1, 1, 1];
-		let col = [-1, 0, 1, -1, 1, -1, 0, 1];
-
-		let q = [];
-		q.push([si, sj]);
-		vis[si][sj] = true;
-
-		while (q.length != 0) {
-			let i = q[0][0];
-			let j = q[0][1];
-			q.shift();
-
-			for (let k = 0; k < 8; k++) {
-				if (this.isSafe(mat, i + row[k], j + col[k], vis, r, c)) {
-					vis[i + row[k]][j + col[k]] = true;
-					q.push([i + row[k], j + col[k]]);
-				}
-			}
-		}
-	};
-
-	countIslands = (mat, r, c) => {
-		let vis = new Array(r);
-		for (let i = 0; i < c; i++) {
-			vis[i] = new Array(c);
-			for (let j = 0; j < r; j++) {
-				vis[i][j] = false;
-			}
-		}
-		let res = 0;
-		for (let i = 0; i < r; i++) {
-			for (let j = 0; j < c; j++) {
-				if (mat[i][j] == 1 && !vis[i][j]) {
-					this.bfs(mat, vis, i, j, r, c);
-					res++;
-				}
-			}
-		}
-		return res;
+			startBtn.style.visibility = "visible";
+			alert(
+				"There are " +
+					numIslands.countIslands(matGrid, rowSize, colSize) +
+					" islands."
+			);
+		}, count * time + 1000);
 	};
 }
 
 export const bfsIslands = (r, c) => {
-	const visualize = new Visualize();
-	const numIslands = new NumberOfIslands();
-	var time = speedSlider.value;
-	var count = 1;
-
-	visualize.visualizeBFS(0, 0, 19, 39);
-
-	let matGrid = numIslands.getGrid();
-
-	setTimeout(() => {
-		console.log(numIslands.countIslands(matGrid, r, c));
-	}, count * time + 100);
+	const visual = new Visualize();
+	visual.visualizeBFS(0, 0, rowSize - 1, colSize - 1);
 };
