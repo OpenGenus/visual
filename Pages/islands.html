@@ -15,12 +15,12 @@
 		<meta name="author" content="lumunge" />
 		<link rel="stylesheet" href="../Styles/index.css" />
 		<link rel="stylesheet" href="../Styles/pathFinding.css" />
-		<!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
 			href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@500&display=swap"
 			rel="stylesheet"
-		/> -->
+		/>
 		<title>Number of islands.</title>
 	</head>
 	<body>
@@ -86,7 +86,87 @@
 		<main class="mainHome">
 			<div class="visualizationContainer">
 				<div id="gridContainer"></div>
-				<div class="algoInfo"></div>
+				<div class="algoInfo">
+					<div>
+						<div class="infoHeading">
+							<h3 class="title">Depth first traversal.</h3>
+						</div>
+						<p>
+							This algorithm starts its search at the root and
+							explores one of its children's subtree and then
+							moves on to the next child's subtree and etcetera
+							<br />
+							The idea used is to go as deep into the graph as
+							possible and backtrack once we reach a vertex with
+							unvisited neighbors. <br />
+							That is, start search at one vertex, after visiting
+							the vertex, perform dfs for each unvisited adjacent
+							vertex. In this way we visit all vertices reachable
+							from the starting vertex. <br />
+							We use a <b><em>stack</em></b> data structure.
+						</p>
+						<div>
+							<p class="subtitle">Algorithm</p>
+							<p>
+								1. Mark the current node as visited(initially
+								current node is the root node).
+							</p>
+							<p>
+								2. Check if current node is the goal, If so,
+								then return it.
+							</p>
+							<p>
+								1. Iterate over children nodes of current node,
+								and do the following:
+							</p>
+							<p class="nest1">
+								2. Check if a child node is not visited.
+							</p>
+							<p class="nest1">
+								1.If so, then, mark it as visited.
+							</p>
+							<p class="nest1">
+								3. Go to it's sub tree recursively until you
+								find the goal node(In other words, do the same
+								steps here passing the child node as the current
+								node in the next recursive call).
+							</p>
+							<p class="nest1">
+								4. If the child node has the goal node in this
+								sub tree, then, return it.
+							</p>
+							<p>
+								3. If goal node is not found, then goal node is
+								not in the tree!
+							</p>
+						</div>
+						<div>
+							<p class="subtitle">Computational complexity</p>
+							This algorithm takes <b><em>O(V + E)</em></b> where
+							v is the number of vertices and e is the number of
+							edges.
+						</div>
+						<div>
+							<p class="subtitle">Applications</p>
+							<ul>
+								<li>topological sorting.</li>
+								<li>bipartite graph testing.</li>
+								<li>finding strongly connected components.</li>
+								<li>
+									solving puzzles that can only have one
+									solution.
+								</li>
+								<li>detecting cycles in a graph.</li>
+							</ul>
+						</div>
+						<div class="reference">
+							<a
+								href="https://iq.opengenus.org/bfs-graph-traversal/"
+								>reference</a
+							>
+						</div>
+					</div>
+				</div>
 			</div>
 		</main>
 		<p>algorithms visualizer @ 2021</p>
