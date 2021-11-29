@@ -1,10 +1,12 @@
 import { rowSize, colSize, weightType } from "../GridAlgorithms/index.js";
 import { setWall } from "../GridAlgorithms/createWalls.js";
 
+// get from DOM
 const gridContainer = document.querySelector("#gridContainer");
 const speedSlider = document.querySelector(".speedSlider");
 var time = speedSlider.value;
 
+//calculate the number of islands
 class NumberOfIslands {
 	getGrid() {
 		let gridMatrix = [];
@@ -74,8 +76,9 @@ class NumberOfIslands {
 	};
 }
 
+//visualize the calculation
 class Visualize {
-	changeColor = (node, count, cost) => {
+	changeColor = (node, count) => {
 		setTimeout(() => {
 			node.setAttribute("class", "chosenPath");
 		}, count * time);
@@ -126,18 +129,16 @@ class Visualize {
 	};
 
 	//bfs algorithm implementation
-	visualizeBFS = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
+	visualizeBFS = () => {
 		time = speedSlider.value;
 		time = 40 + (time - 1) * -2;
 		gridContainer.removeEventListener("mousedown", setWall);
 		gridContainer.removeEventListener("mouseover", setWall);
-		var startNode = document.querySelector(`div[row='${x1}'][col='${y1}']`);
+		var startNode = document.querySelector(`div[row='${0}'][col='${0}']`);
 
-		//disable start and refresh btn
+		//hide start and refresh btn
 		var startBtn = document.querySelector(".start");
-		startBtn.style.visibility = "hidden";
-		var clearPathBtn = document.querySelector(".clearPath");
-		clearPathBtn.style.visibility = "hidden";
+		startBtn.setAttribute("disabled", true);
 
 		//start algorithm
 		var visited = [startNode];
@@ -161,19 +162,14 @@ class Visualize {
 			let curr = checker.pop();
 			let row = parseInt(curr.getAttribute("row"));
 			let col = parseInt(curr.getAttribute("col"));
-			if (weightType == "Unweighted" && row == x2 && col == y2) break;
 			let wall = parseInt(curr.getAttribute("wall"));
 			if (wall == 1) continue;
 
 			//check 4 sides of node
-			let nextRow = row + 1;
-			let prevRow = row - 1;
-			let leftCol = col - 1;
-			let rightCol = col + 1;
-			this.checkUpdateNode(nextRow, col, curr, checker, visited, count);
-			this.checkUpdateNode(prevRow, col, curr, checker, visited, count);
-			this.checkUpdateNode(row, leftCol, curr, checker, visited, count);
-			this.checkUpdateNode(row, rightCol, curr, checker, visited, count);
+			this.checkUpdateNode(row + 1, col, curr, checker, visited, count);
+			this.checkUpdateNode(row - 1, col, curr, checker, visited, count);
+			this.checkUpdateNode(row, col - 1, curr, checker, visited, count);
+			this.checkUpdateNode(row, col + 1, curr, checker, visited, count);
 			count++;
 		}
 
@@ -181,17 +177,17 @@ class Visualize {
 		let matGrid = numIslands.getGrid();
 
 		setTimeout(() => {
-			startBtn.style.visibility = "visible";
 			alert(
-				"There are " +
-					numIslands.countIslands(matGrid, rowSize, colSize) +
-					" islands."
+				numIslands.countIslands(matGrid, rowSize, colSize) == 0
+					? "No islands found, create some islands"
+					: "Number of islands: " +
+							numIslands.countIslands(matGrid, rowSize, colSize)
 			);
 		}, count * time + 1000);
 	};
 }
 
-export const bfsIslands = (r, c) => {
+export const bfsIslands = () => {
 	const visual = new Visualize();
-	visual.visualizeBFS(0, 0, rowSize - 1, colSize - 1);
+	visual.visualizeBFS();
 };

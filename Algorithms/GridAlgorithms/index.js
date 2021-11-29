@@ -121,7 +121,7 @@ const startVisualization = () => {
 	} else if (algorithmType.classList.contains("dfs")) {
 		dfs(startRow, startCol, endRow, endCol);
 	} else if (algorithmType.classList.contains("numIslands")) {
-		bfsIslands(rowSize, colSize);
+		bfsIslands();
 	}
 };
 startBtn.addEventListener("click", startVisualization);
