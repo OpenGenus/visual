@@ -98,15 +98,11 @@ export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 		let wall = parseInt(curr.getAttribute("wall"));
 		if (wall == 1) continue;
 
-		//check 4 sides of node
-		let nextRow = row + 1;
-		let prevRow = row - 1;
-		let leftCol = col - 1;
-		let rightCol = col + 1;
-		let a = checkUpdateNode(nextRow, col, curr, checker, visited, count);
-		let b = checkUpdateNode(prevRow, col, curr, checker, visited, count);
-		let c = checkUpdateNode(row, leftCol, curr, checker, visited, count);
-		let d = checkUpdateNode(row, rightCol, curr, checker, visited, count);
+		//check 4 sides of node, top, right, bottom, left
+		checkUpdateNode(row + 1, col, curr, checker, visited, count);
+		checkUpdateNode(row - 1, col, curr, checker, visited, count);
+		checkUpdateNode(row, col - 1, curr, checker, visited, count);
+		checkUpdateNode(row, col + 1, curr, checker, visited, count);
 		count++;
 	}
 
