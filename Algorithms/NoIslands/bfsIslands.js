@@ -79,9 +79,6 @@ class Visualize {
 		setTimeout(() => {
 			node.setAttribute("class", "chosenPath");
 		}, count * time);
-		// setTimeout(() => {
-		// 	node.setAttribute("class", "pathColor");
-		// }, count * time + 100);
 	};
 
 	checkUpdateNode = (row, col, curr, checker, visited, count) => {
