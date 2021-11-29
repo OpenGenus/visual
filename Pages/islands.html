@@ -4,15 +4,24 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="description" content="depth first search path finding algorithm">
-		<meta name="keywords" content="depth first search, depth first algorithm, depth first traversal, path finding, graph algorithms, algorithms, visualization, visual, graphs, graph traversal, traversal">
-		<meta name="author" content="lumunge">
-		<link rel="stylesheet" href="../Styles/index.css">
-		<link rel="stylesheet" href="../Styles/pathFinding.css">
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@500&display=swap" rel="stylesheet"> 
-		<title>Depth first search path finding algorithm.</title>
+		<meta
+			name="description"
+			content="depth first search, breadth first search, number of islands"
+		/>
+		<meta
+			name="keywords"
+			content="breadth first search, breadth first algorithm, depth first search, depth first traversal, breadth first traversal, path finding, graph algorithms, graphs, algorithms, visualization, visual, graphs, graph traversal, traversal"
+		/>
+		<meta name="author" content="lumunge" />
+		<link rel="stylesheet" href="../Styles/index.css" />
+		<link rel="stylesheet" href="../Styles/pathFinding.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@500&display=swap"
+			rel="stylesheet"
+		/>
+		<title>Number of islands.</title>
 	</head>
 	<body>
 		<nav>
@@ -23,8 +32,8 @@
 		</nav>
 		<header>
 			<div class="heading">
-				<h2 class="algorithm dfs">Depth first search</h2>
-				<hr>
+				<h2 class="algorithm numIslands">Number of islands</h2>
+				<hr />
 			</div>
 			<div class="controlsContainer">
 				<div class="visualControls">
@@ -39,7 +48,7 @@
 						/>
 					</div>
 					<div class="obstacles">
-						<p>Obstacles</p>
+						<p>Create islands</p>
 						<div class="obstaclesElements">
 							<input
 								type="range"
@@ -48,7 +57,7 @@
 								class="obstacleSlider"
 							/>
 							&nbsp;
-							<button class="setWalls btn">walls</button>
+							<button class="setWalls btn">islands</button>
 						</div>
 					</div>
 					<div class="controlBtns">
@@ -56,7 +65,7 @@
 						<button class="clearPath btn">clear path</button>
 						<button class="reset btn">reload</button>
 					</div>
-				</div>				
+				</div>
 				<!-- not displayed -->
 				<div class="controls">
 					<div class="algorithms">
@@ -74,18 +83,19 @@
 				</div>
 			</div>
 		</header>
-		<main>
+		<main class="mainHome">
 			<div class="visualizationContainer">
 				<div id="gridContainer"></div>
 				<div class="algoInfo">
 					<div>
 						<div class="infoHeading">
-						<h3 class="title">Depth first traversal.</h3>
-					</div>
+							<h3 class="title">Depth first traversal.</h3>
+						</div>
 						<p>
 							This algorithm starts its search at the root and
-							explores one of its children's subtree and then moves
-							on to the next child's subtree and etcetera <br />
+							explores one of its children's subtree and then
+							moves on to the next child's subtree and etcetera
+							<br />
 							The idea used is to go as deep into the graph as
 							possible and backtrack once we reach a vertex with
 							unvisited neighbors. <br />
@@ -132,8 +142,9 @@
 						</div>
 						<div>
 							<p class="subtitle">Computational complexity</p>
-							This algorithm takes <b><em>O(V + E)</em></b> where v is the number of
-							vertices and e is the number of edges.
+							This algorithm takes <b><em>O(V + E)</em></b> where
+							v is the number of vertices and e is the number of
+							edges.
 						</div>
 						<div>
 							<p class="subtitle">Applications</p>
@@ -149,13 +160,16 @@
 							</ul>
 						</div>
 						<div class="reference">
-							<a href="https://iq.opengenus.org/bfs-graph-traversal/">reference</a>
+							<a
+								href="https://iq.opengenus.org/bfs-graph-traversal/"
+								>reference</a
+							>
 						</div>
 					</div>
 				</div>
 			</div>
 		</main>
-		<p class="footer">algorithms visualizer @ 2021</footer>
+		<p>algorithms visualizer @ 2021</p>
 		<script
 			type="module"
 			src="../Algorithms/GridAlgorithms/index.js"
