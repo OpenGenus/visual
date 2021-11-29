@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="depth first search, breadth first search, number of islands"
+		/>
+		<meta
+			name="keywords"
+			content="breadth first search, breadth first algorithm, depth first search, depth first traversal, breadth first traversal, path finding, graph algorithms, graphs, algorithms, visualization, visual, graphs, graph traversal, traversal"
+		/>
+		<meta name="author" content="lumunge" />
+		<link rel="stylesheet" href="../Styles/index.css" />
+		<link rel="stylesheet" href="../Styles/pathFinding.css" />
+		<!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@500&display=swap"
+			rel="stylesheet"
+		/> -->
+		<title>Number of islands.</title>
+	</head>
+	<body>
+		<nav>
+			<a href="../index.html">Visual Algo</a>
+			<a href="./bfs.html">bfs</a>
+			<a href="./dfs.html">dfs</a>
+			<a href="./islands.html">num islands</a>
+		</nav>
+		<header>
+			<div class="heading">
+				<h2 class="algorithm numIslands">Number of islands</h2>
+				<hr />
+			</div>
+			<div class="controlsContainer">
+				<div class="visualControls">
+					<div class="visualSpeed">
+						<p>Speed</p>
+						<input
+							type="range"
+							min="1"
+							max="20"
+							value="10"
+							class="speedSlider"
+						/>
+					</div>
+					<div class="obstacles">
+						<p>Create islands</p>
+						<div class="obstaclesElements">
+							<input
+								type="range"
+								min="1"
+								value="50"
+								class="obstacleSlider"
+							/>
+							&nbsp;
+							<button class="setWalls btn">islands</button>
+						</div>
+					</div>
+					<div class="controlBtns">
+						<button class="start btn">start</button>
+						<button class="clearPath btn">clear path</button>
+						<button class="reset btn">reload</button>
+					</div>
+				</div>
+				<!-- not displayed -->
+				<div class="controls">
+					<div class="algorithms">
+						<select name="" class="algo">
+							<option value="bfs">BFS</option>
+							<option value="dijkstras">Dijkstra's</option>
+						</select>
+					</div>
+					<div class="weights">
+						<select name="" class="weight">
+							<option value="Unweighted">Unweighted</option>
+							<option value="Weighted">Weighted</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</header>
+		<main class="mainHome">
+			<div class="visualizationContainer">
+				<div id="gridContainer"></div>
+				<div class="algoInfo"></div>
+			</div>
+		</main>
+		<p>algorithms visualizer @ 2021</p>
+		<script
+			type="module"
+			src="../Algorithms/GridAlgorithms/index.js"
+		></script>
+	</body>
+</html>
