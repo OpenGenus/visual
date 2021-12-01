@@ -124,16 +124,8 @@ export const refreshBoard = () => {
 			}
 		}
 	}
-	if (
-		algorithmType.classList.contains("bfs") ||
-		algorithmType.classList.contains("dfs")
-	) {
-		createStartNode(startRow, startCol);
-		createEndNode(endRow, endCol);
-	} else if (algorithmType.classList.contains("numIslands")) {
-		createStartIsland(startRow, startCol);
-		createEndIsland(endRow, endCol);
-	}
+	createStartNode(startRow, startCol);
+	createEndNode(endRow, endCol);
 };
 
 export const refreshEmptyBoard = () => {
@@ -147,14 +139,6 @@ export const refreshEmptyBoard = () => {
 			}
 		}
 	}
-	if (
-		algorithmType.classList.contains("bfs") ||
-		algorithmType.classList.contains("dfs")
-	) {
-		createStartNode(startRow, startCol);
-		createEndNode(endRow, endCol);
-	} else if (algorithmType.classList.contains("numIslands")) {
-		createStartIsland(startRow, startCol);
-		createEndIsland(endRow, endCol);
-	}
+	createStartNode(startRow, startCol);
+	createEndNode(endRow, endCol);
 };

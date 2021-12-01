@@ -1,122 +1,12 @@
 import { rowSize, colSize, weightType } from "../GridAlgorithms/index.js";
 import { setWall } from "../GridAlgorithms/createWalls.js";
 
+// get from DOM
 const gridContainer = document.querySelector("#gridContainer");
 const speedSlider = document.querySelector(".speedSlider");
 var time = speedSlider.value;
 
-class Visualize {
-	changeColor = (node, count, cost) => {
-		setTimeout(() => {
-			node.setAttribute("class", "chosenPath");
-		}, count * time);
-		// setTimeout(() => {
-		// 	node.setAttribute("class", "pathColor");
-		// }, count * time + 100);
-	};
-
-	checkUpdateNode = (row, col, curr, checker, visited, count) => {
-		if (row >= 0 && col >= 0 && row < rowSize && col < colSize) {
-			var node = document.querySelector(
-				`div[row="${row}"][col="${col}"]`
-			);
-			let wall = parseInt(node.getAttribute("wall"));
-			if (wall == 1) return;
-			let prow = parseInt(curr.getAttribute("row"));
-			let pcol = parseInt(curr.getAttribute("col"));
-			if (weightType == "weighted") {
-				var cost = Math.min(
-					parseInt(curr.getAttribute("cost")) +
-						parseInt(node.getAttribute("weight")),
-					node.getAttribute("cost")
-				);
-			} else {
-				var cost = Math.min(
-					parseInt(curr.getAttribute("cost")) +
-						Math.abs(Math.abs(prow - row) + Math.abs(pcol - col)),
-					node.getAttribute("cost")
-				);
-				if (cost < node.getAttribute("cost")) {
-					node.setAttribute(
-						"parent",
-						curr.getAttribute("row") +
-							"|" +
-							curr.getAttribute("col")
-					);
-					node.setAttribute("cost", cost);
-				}
-
-				//change color
-				this.changeColor(curr, count, curr.getAttribute("cost"));
-				if (!visited.includes(node)) {
-					checker.push(node);
-				}
-				visited.push(node);
-				return node;
-			}
-		} else {
-			return false;
-		}
-	};
-
-	//algorithm implementation - bfs for unweighted, dijkstras for weighted
-	visualizeBFS = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
-		time = speedSlider.value;
-		time = 40 + (time - 1) * -2;
-		gridContainer.removeEventListener("mousedown", setWall);
-		gridContainer.removeEventListener("mouseover", setWall);
-		var startNode = document.querySelector(`div[row='${x1}'][col='${y1}']`);
-
-		//disable start and refresh btn
-		var startBtn = document.querySelector(".start");
-		startBtn.style.visibility = "hidden";
-		var clearPathBtn = document.querySelector(".clearPath");
-		clearPathBtn.style.visibility = "hidden";
-
-		//start algorithm
-		var visited = [startNode];
-		var checker = [startNode];
-		var count = 1;
-
-		while (checker.length != 0) {
-			checker.sort((a, b) => {
-				if (
-					parseInt(a.getAttribute("cost")) <
-					parseInt(b.getAttribute("cost"))
-				)
-					return 1;
-				if (
-					parseInt(a.getAttribute("cost")) >
-					parseInt(b.getAttribute("cost"))
-				)
-					return -1;
-				return 0;
-			});
-			let curr = checker.pop();
-			let row = parseInt(curr.getAttribute("row"));
-			let col = parseInt(curr.getAttribute("col"));
-			if (weightType == "Unweighted" && row == x2 && col == y2) break;
-			let wall = parseInt(curr.getAttribute("wall"));
-			if (wall == 1) continue;
-
-			//check 4 sides of node
-			let nextRow = row + 1;
-			let prevRow = row - 1;
-			let leftCol = col - 1;
-			let rightCol = col + 1;
-			this.checkUpdateNode(nextRow, col, curr, checker, visited, count);
-			this.checkUpdateNode(prevRow, col, curr, checker, visited, count);
-			this.checkUpdateNode(row, leftCol, curr, checker, visited, count);
-			this.checkUpdateNode(row, rightCol, curr, checker, visited, count);
-			count++;
-		}
-
-		setTimeout(() => {
-			clearPathBtn.style.visibility = "visible";
-		}, count * time + 100);
-	};
-}
-
+//calculate the number of islands
 class NumberOfIslands {
 	getGrid() {
 		let gridMatrix = [];
@@ -134,7 +24,6 @@ class NumberOfIslands {
 		while (gridMatrix.length) {
 			matrix.push(gridMatrix.splice(0, colSize));
 		}
-
 		return matrix;
 	}
 
@@ -187,17 +76,118 @@ class NumberOfIslands {
 	};
 }
 
-export const bfsIslands = (r, c) => {
-	const visualize = new Visualize();
-	const numIslands = new NumberOfIslands();
-	var time = speedSlider.value;
-	var count = 1;
+//visualize the calculation
+class Visualize {
+	changeColor = (node, count) => {
+		setTimeout(() => {
+			node.setAttribute("class", "chosenPath");
+		}, count * time);
+	};
 
-	visualize.visualizeBFS(0, 0, 19, 39);
+	checkUpdateNode = (row, col, curr, checker, visited, count) => {
+		if (row >= 0 && col >= 0 && row < rowSize && col < colSize) {
+			var node = document.querySelector(
+				`div[row="${row}"][col="${col}"]`
+			);
+			let wall = parseInt(node.getAttribute("wall"));
+			if (wall == 1) return;
+			let prow = parseInt(curr.getAttribute("row"));
+			let pcol = parseInt(curr.getAttribute("col"));
+			if (weightType == "weighted") {
+				var cost = Math.min(
+					parseInt(curr.getAttribute("cost")) +
+						parseInt(node.getAttribute("weight")),
+					node.getAttribute("cost")
+				);
+			} else {
+				var cost = Math.min(
+					parseInt(curr.getAttribute("cost")) +
+						Math.abs(Math.abs(prow - row) + Math.abs(pcol - col)),
+					node.getAttribute("cost")
+				);
+				if (cost < node.getAttribute("cost")) {
+					node.setAttribute(
+						"parent",
+						curr.getAttribute("row") +
+							"|" +
+							curr.getAttribute("col")
+					);
+					node.setAttribute("cost", cost);
+				}
 
-	let matGrid = numIslands.getGrid();
+				//change color
+				this.changeColor(curr, count, curr.getAttribute("cost"));
+				if (!visited.includes(node)) {
+					checker.push(node);
+				}
+				visited.push(node);
+				return node;
+			}
+		} else {
+			return false;
+		}
+	};
 
-	setTimeout(() => {
-		console.log(numIslands.countIslands(matGrid, r, c));
-	}, count * time + 100);
+	//bfs algorithm implementation
+	visualizeBFS = () => {
+		time = speedSlider.value;
+		time = 40 + (time - 1) * -2;
+		gridContainer.removeEventListener("mousedown", setWall);
+		gridContainer.removeEventListener("mouseover", setWall);
+		var startNode = document.querySelector(`div[row='${0}'][col='${0}']`);
+
+		//hide start and refresh btn
+		var startBtn = document.querySelector(".start");
+		startBtn.setAttribute("disabled", true);
+
+		//start algorithm
+		var visited = [startNode];
+		var checker = [startNode];
+		var count = 1;
+
+		while (checker.length != 0) {
+			checker.sort((a, b) => {
+				if (
+					parseInt(a.getAttribute("cost")) <
+					parseInt(b.getAttribute("cost"))
+				)
+					return 1;
+				if (
+					parseInt(a.getAttribute("cost")) >
+					parseInt(b.getAttribute("cost"))
+				)
+					return -1;
+				return 0;
+			});
+			let curr = checker.pop();
+			let row = parseInt(curr.getAttribute("row"));
+			let col = parseInt(curr.getAttribute("col"));
+			let wall = parseInt(curr.getAttribute("wall"));
+			if (wall == 1) continue;
+
+			//check 4 sides of node
+			this.checkUpdateNode(row + 1, col, curr, checker, visited, count);
+			this.checkUpdateNode(row - 1, col, curr, checker, visited, count);
+			this.checkUpdateNode(row, col - 1, curr, checker, visited, count);
+			this.checkUpdateNode(row, col + 1, curr, checker, visited, count);
+			count++;
+		}
+
+		const numIslands = new NumberOfIslands();
+		let matGrid = numIslands.getGrid();
+
+		setTimeout(() => {
+			alert(
+				numIslands.countIslands(matGrid, rowSize, colSize) == 0
+					? "No islands found, create some islands"
+					: "Number of islands: " +
+							numIslands.countIslands(matGrid, rowSize, colSize)
+			);
+		}, count * time + 1000);
+	};
+}
+
+export const bfsIslands = () => {
+	const visual = new Visualize();
+	visual.visualizeBFS();
 };
