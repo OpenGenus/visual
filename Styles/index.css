@@ -71,6 +71,7 @@ nav a:hover {
 	z-index: 2;
 	border-radius: 4px;
 	color: #fff;
+	text-align: left;
 }
 .tutorialContent:after {
 	content: "";
