@@ -1,178 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta
-			name="description"
-			content="depth first search, breadth first search, number of islands"
-		/>
-		<meta
-			name="keywords"
-			content="breadth first search, breadth first algorithm, depth first search, depth first traversal, breadth first traversal, path finding, graph algorithms, graphs, algorithms, visualization, visual, graphs, graph traversal, traversal"
-		/>
-		<meta name="author" content="lumunge" />
-		<link rel="stylesheet" href="../Styles/index.css" />
-		<link rel="stylesheet" href="../Styles/pathFinding.css" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@500&display=swap"
-			rel="stylesheet"
-		/>
-		<title>Number of islands.</title>
-	</head>
-	<body>
-		<nav>
-			<a href="../index.html">Visual Algo</a>
-			<a href="./bfs.html">bfs</a>
-			<a href="./dfs.html">dfs</a>
-			<a href="./islands.html">num islands</a>
-		</nav>
-		<header>
-			<div class="heading">
-				<h2 class="algorithm numIslands">Number of islands</h2>
-				<hr />
-			</div>
-			<div class="controlsContainer">
-				<div class="visualControls">
-					<div class="visualSpeed">
-						<p>Speed</p>
-						<input
-							type="range"
-							min="1"
-							max="20"
-							value="10"
-							class="speedSlider"
-						/>
-					</div>
-					<div class="obstacles">
-						<p>Create islands</p>
-						<div class="obstaclesElements">
-							<input
-								type="range"
-								min="1"
-								value="50"
-								class="obstacleSlider"
-							/>
-							&nbsp;
-							<button class="setWalls btn">islands</button>
-						</div>
-					</div>
-					<div class="controlBtns">
-						<button class="start btn">start</button>
-						<button class="clearPath btn">clear path</button>
-						<button class="reset btn">reload</button>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="depth first search, breadth first search, number of islands" />
+	<meta name="keywords"
+		content="breadth first search, breadth first algorithm, depth first search, depth first traversal, breadth first traversal, path finding, graph algorithms, graphs, algorithms, visualization, visual, graphs, graph traversal, traversal" />
+	<meta name="author" content="lumunge" />
+	<link rel="stylesheet" href="../Styles/index.css" />
+	<link rel="stylesheet" href="../Styles/pathFinding.css" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@500&display=swap" rel="stylesheet" />
+	<title>Number of islands.</title>
+</head>
+
+<body>
+	<nav>
+		<a href="../index.html">Visual Algo</a>
+		<a href="./bfs.html">bfs</a>
+		<a href="./dfs.html">dfs</a>
+		<a href="./islands.html">num islands</a>
+	</nav>
+	<header>
+		<div class="heading">
+			<h2 class="algorithm numIslands">Number of islands</h2>
+			<hr />
+		</div>
+		<div class="controlsContainer">
+			<div class="visualControls">
+				<div class="visualSpeed">
+					<p>Speed</p>
+					<input type="range" min="1" max="20" value="10" class="speedSlider" />
+				</div>
+				<div class="obstacles">
+					<p>Create islands</p>
+					<div class="obstaclesElements">
+						<input type="range" min="1" value="50" class="obstacleSlider" />
+						&nbsp;
+						<button class="setWalls btn">islands</button>
 					</div>
 				</div>
-				<!-- not displayed -->
-				<div class="controls">
-					<div class="algorithms">
-						<select name="" class="algo">
-							<option value="bfs">BFS</option>
-							<option value="dijkstras">Dijkstra's</option>
-						</select>
-					</div>
-					<div class="weights">
-						<select name="" class="weight">
-							<option value="Unweighted">Unweighted</option>
-							<option value="Weighted">Weighted</option>
-						</select>
-					</div>
+				<div class="controlBtns">
+					<button class="start btn">start</button>
+					<button class="clearPath btn" style="display: none">clear path</button>
+					<button class="reset btn">reload</button>
 				</div>
-			</div>
-		</header>
-		<main class="mainHome">
-			<div class="visualizationContainer">
-				<div id="gridContainer"></div>
-				<div class="algoInfo">
-					<div>
-						<div class="infoHeading">
-							<h3 class="title">Depth first traversal.</h3>
-						</div>
-						<p>
-							This algorithm starts its search at the root and
-							explores one of its children's subtree and then
-							moves on to the next child's subtree and etcetera
-							<br />
-							The idea used is to go as deep into the graph as
-							possible and backtrack once we reach a vertex with
-							unvisited neighbors. <br />
-							That is, start search at one vertex, after visiting
-							the vertex, perform dfs for each unvisited adjacent
-							vertex. In this way we visit all vertices reachable
-							from the starting vertex. <br />
-							We use a <b><em>stack</em></b> data structure.
+				<div class="tutorialContainer">
+					<span><img class="info" src="../img/icons8-info-60.png" alt=""></span>
+					<div class="tutorialContent">
+						<h4>Controls</h4>
+						<p><span>Speed</span> - increase or decrease the speed of the visualization</p>
+						<p><span>Islands-</span> - create islands on the grid.
+							<br /> You can adjust the number of islands generated per click.
+							<br /> - You can also click on the grid cells to create an island.
 						</p>
-						<div>
-							<p class="subtitle">Algorithm</p>
-							<p>
-								1. Mark the current node as visited(initially
-								current node is the root node).
-							</p>
-							<p>
-								2. Check if current node is the goal, If so,
-								then return it.
-							</p>
-							<p>
-								1. Iterate over children nodes of current node,
-								and do the following:
-							</p>
-							<p class="nest1">
-								2. Check if a child node is not visited.
-							</p>
-							<p class="nest1">
-								1.If so, then, mark it as visited.
-							</p>
-							<p class="nest1">
-								3. Go to it's sub tree recursively until you
-								find the goal node(In other words, do the same
-								steps here passing the child node as the current
-								node in the next recursive call).
-							</p>
-							<p class="nest1">
-								4. If the child node has the goal node in this
-								sub tree, then, return it.
-							</p>
-							<p>
-								3. If goal node is not found, then goal node is
-								not in the tree!
-							</p>
-						</div>
-						<div>
-							<p class="subtitle">Computational complexity</p>
-							This algorithm takes <b><em>O(V + E)</em></b> where
-							v is the number of vertices and e is the number of
-							edges.
-						</div>
-						<div>
-							<p class="subtitle">Applications</p>
-							<ul>
-								<li>topological sorting.</li>
-								<li>bipartite graph testing.</li>
-								<li>finding strongly connected components.</li>
-								<li>
-									solving puzzles that can only have one
-									solution.
-								</li>
-								<li>detecting cycles in a graph.</li>
-							</ul>
-						</div>
-						<div class="reference">
-							<a
-								href="https://iq.opengenus.org/bfs-graph-traversal/"
-								>reference</a
-							>
-						</div>
+						<p><span>Start</span> - After adjusting the speed and creating islands, you can now start the
+							visualization to see the workings of the algorithm.</p>
+						<p><span>Speed</span> - If the grid becomes to cluttered you can reload it and repeat the above
+							steps.</p>
 					</div>
 				</div>
 			</div>
-		</main>
-		<p>algorithms visualizer @ 2021</p>
-		<script
-			type="module"
-			src="../Algorithms/GridAlgorithms/index.js"
-		></script>
-	</body>
+			<!-- not displayed -->
+			<div class="controls">
+				<div class="algorithms">
+					<select name="" class="algo">
+						<option value="bfs">BFS</option>
+						<option value="dijkstras">Dijkstra's</option>
+					</select>
+				</div>
+				<div class="weights">
+					<select name="" class="weight">
+						<option value="Unweighted">Unweighted</option>
+						<option value="Weighted">Weighted</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</header>
+	<main class="mainHome">
+		<div class="visualizationContainer">
+			<div id="gridContainer"></div>
+			<div class="algoInfo">
+				<div>
+					<div class="infoHeading">
+						<h3 class="title">Depth first traversal.</h3>
+					</div>
+					<p>
+						This algorithm starts its search at the root and
+						explores one of its children's subtree and then
+						moves on to the next child's subtree and etcetera
+						<br />
+						The idea used is to go as deep into the graph as
+						possible and backtrack once we reach a vertex with
+						unvisited neighbors. <br />
+						That is, start search at one vertex, after visiting
+						the vertex, perform dfs for each unvisited adjacent
+						vertex. In this way we visit all vertices reachable
+						from the starting vertex. <br />
+						We use a <b><em>stack</em></b> data structure.
+					</p>
+					<div>
+						<p class="subtitle">Algorithm</p>
+						<p>
+							1. Mark the current node as visited(initially
+							current node is the root node).
+						</p>
+						<p>
+							2. Check if current node is the goal, If so,
+							then return it.
+						</p>
+						<p>
+							1. Iterate over children nodes of current node,
+							and do the following:
+						</p>
+						<p class="nest1">
+							2. Check if a child node is not visited.
+						</p>
+						<p class="nest1">
+							1.If so, then, mark it as visited.
+						</p>
+						<p class="nest1">
+							3. Go to it's sub tree recursively until you
+							find the goal node(In other words, do the same
+							steps here passing the child node as the current
+							node in the next recursive call).
+						</p>
+						<p class="nest1">
+							4. If the child node has the goal node in this
+							sub tree, then, return it.
+						</p>
+						<p>
+							3. If goal node is not found, then goal node is
+							not in the tree!
+						</p>
+					</div>
+					<div>
+						<p class="subtitle">Computational complexity</p>
+						This algorithm takes <b><em>O(V + E)</em></b> where
+						v is the number of vertices and e is the number of
+						edges.
+					</div>
+					<div>
+						<p class="subtitle">Applications</p>
+						<ul>
+							<li>topological sorting.</li>
+							<li>bipartite graph testing.</li>
+							<li>finding strongly connected components.</li>
+							<li>
+								solving puzzles that can only have one
+								solution.
+							</li>
+							<li>detecting cycles in a graph.</li>
+						</ul>
+					</div>
+					<div class="reference">
+						<a href="https://iq.opengenus.org/bfs-graph-traversal/">reference</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<p>algorithms visualizer @ 2021</p>
+	<script type="module" src="../Algorithms/GridAlgorithms/index.js"></script>
+</body>
+
 </html>
