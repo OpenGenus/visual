@@ -268,7 +268,7 @@ header {
 	.algoInfo {
 		margin-top: 3rem;
 		height: 66vh;
-		overflow-y: scroll;
+		/* overflow-y: scroll; */
 		padding: 0 1rem;
 	}
 }
