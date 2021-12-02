@@ -5,6 +5,7 @@ import {
 	endRow,
 	startCol,
 	endCol,
+	algorithmType,
 } from "./index.js";
 
 const genRandom = (maxVal) => {
@@ -108,7 +109,6 @@ export const createEndNode = (x2 = rowSize - 1, y2 = colSize - 1) => {
 
 const jump = (x1 = 0, y1 = 0) => {
 	var node = document.querySelector(`div[row='${x1}'][col='${y1}']`);
-	console.log(node);
 };
 jump();
 

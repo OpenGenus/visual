@@ -17,9 +17,14 @@ const changeColor = (node, count) => {
 		node.setAttribute("class", "chosenPath");
 		node.innerHTML = count;
 	}, count * time);
+	// draw path blue
 	setTimeout(() => {
 		node.setAttribute("class", "pathColor");
 	}, count * time + 100);
+	//draw path green
+	setTimeout(() => {
+		node.setAttribute("class", "chosenPath");
+	}, count * time + 1000);
 };
 
 //traverse grid
@@ -80,21 +85,6 @@ export const dfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 	bool = false;
 	traverse(startNode, visited, count, endNode);
 
-	// draw route
-	setTimeout(() => {
-		startNode.setAttribute("class", "pathNode");
-		while (endNode.getAttribute("parent") != "null") {
-			endNode.setAttribute("class", "chosenPath");
-			let coor = endNode.getAttribute("parent").split("|");
-			let prow = parseInt(coor[0]);
-			let pcol = parseInt(coor[1]);
-			endNode = document.querySelector(
-				`div[row="${prow}"][col="${pcol}"]`
-			);
-		}
-		endNode = document.querySelector(`div[row="${x2}"][col="${y2}"]`);
-		endNode.setAttribute("class", "pathNode");
-	}, count * time + 100);
 	setTimeout(() => {
 		clearPathBtn.style.visibility = "visible";
 	}, count * time + 100);

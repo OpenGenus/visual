@@ -143,8 +143,9 @@ header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	align-items: center;
+	justify-content: center;
 	height: 50%;
-	margin-left: 2rem;
 }
 .controls {
 	display: none;
@@ -261,13 +262,13 @@ header {
 	}
 	.visualizationContainer {
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		margin: 0 2rem;
 	}
 	.algoInfo {
 		margin-top: 3rem;
 		height: 66vh;
-		overflow-y: scroll;
+		/* overflow-y: scroll; */
 		padding: 0 1rem;
 	}
 }
