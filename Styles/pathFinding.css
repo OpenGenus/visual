@@ -76,7 +76,7 @@ header {
 /* wall styling */
 .wall {
 	background-color: #ee172d;
-	color: blue;
+	color: #fff;
 	text-align: center;
 	display: flex;
 	justify-content: center;

@@ -92,34 +92,13 @@ const updateWeight = () => {
 };
 weightBtn.addEventListener("change", updateWeight);
 
-// const updateAlgo = () => {
-// 	algorithm = algoBtn.options[algoBtn.selectedIndex].value;
-// 	if (algorithm != "Dijkstras") {
-// 		weightBtn.value = "Unweighted";
-// 		weightType = weightBtn.options[weightBtn.selectedIndex].value;
-// 		// refreshEmptyBoard();
-// 	} else if (algorithm == "Dijkstras") {
-// 		if (weightBtn.value == "Unweighted") {
-// 			refreshEmptyBoard();
-// 		} else {
-// 			refreshBoard();
-// 		}
-// 	}
-// 	if (
-// 		algorithmType.classList.contains("bfs") ||
-// 		algorithmType.classList.contains("dfs")
-// 	) {
-// 		createStartNode(startRow, startCol);
-// 		createEndNode(endRow, endCol);
-// 	}
-// };
-// algoBtn.addEventListener("change", updateAlgo);
-
 const startVisualization = () => {
 	if (algorithmType.classList.contains("bfs")) {
 		bfs(startRow, startCol, endRow, endCol);
 	} else if (algorithmType.classList.contains("dfs")) {
 		dfs(startRow, startCol, endRow, endCol);
+	} else if (algorithmType.classList.contains("dijkstras")) {
+		bfs(startRow, startCol, endRow, endCol);
 	} else if (algorithmType.classList.contains("numIslands")) {
 		if (islandAlgo === "bfs") {
 			bfsIslands();
@@ -135,14 +114,15 @@ window.onload = () => {
 	gridContainer.addEventListener("mousedown", setWall);
 	gridContainer.addEventListener("mouseup", setWall);
 	gridContainer.addEventListener("mouseover", setWall);
-	if (weightType == "Unweighted") {
+	if (!algorithmType.classList.contains("dijkstras")) {
 		createEmptyBoard();
 	} else {
 		createBoard();
 	}
 	if (
 		algorithmType.classList.contains("bfs") ||
-		algorithmType.classList.contains("dfs")
+		algorithmType.classList.contains("dfs") ||
+		algorithmType.classList.contains("dijkstras")
 	) {
 		createStartNode(startRow, startCol);
 		createEndNode(endRow, endCol);
