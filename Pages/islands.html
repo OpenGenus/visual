@@ -86,9 +86,25 @@
 			</div>
 		</div>
 	</header>
-	<main class="mainHome">
+	<main>
 		<div class="visualizationContainer">
 			<div id="gridContainer"></div>
+			<div class="tutorials">
+				<div class="tutorial">
+					<div class="emptyPath"></div>&nbsp;
+					<div>This is represents an empty area without any islands.</div>
+				</div>
+				<div class="tutorial">
+					<div class="obstacle"></div>&nbsp;
+					<div>These are islands, which we are to count. The definition of an island is described in the
+						algorithm section below.</div>
+				</div>
+				<div class="tutorial">
+					<div class="selectedPath islands"></div>&nbsp;
+					<div>This highlights how the algorithm traverses the grid looking fr islands, after the algorithm is
+						complete, we have finished counting the number of islands.</div>
+				</div>
+			</div>
 			<div class="algoInfo">
 				<div>
 					<div class="infoHeading">
@@ -164,7 +180,7 @@
 			</div>
 		</div>
 	</main>
-	<p>algorithms visualizer @ 2021</p>
+	<p class="footer">algorithms visualizer @ 2021</p>
 	<script type="module" src="../Algorithms/GridAlgorithms/index.js"></script>
 </body>
 
