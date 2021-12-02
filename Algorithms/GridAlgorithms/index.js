@@ -30,10 +30,6 @@ export var startRow = 4;
 export var startCol = 5;
 export var endRow = 15;
 export var endCol = 32;
-export var startIslandRow = 4;
-export var startIslandCol = 5;
-export var endIslandRow = 15;
-export var endIslandCol = 32;
 export var mouseDown = false;
 export var weightType = weightBtn.options[weightBtn.selectedIndex].value;
 export var algorithm = algoBtn.options[algoBtn.selectedIndex].value;
@@ -71,50 +67,6 @@ const clearPath = () => {
 resetBtn.addEventListener("click", () => location.reload());
 clearPathBtn.addEventListener("click", clearPath);
 
-const updateWeight = () => {
-	weightType = weightBtn.options[weightBtn.selectedIndex].value;
-	if (weightType == "Unweighted") {
-		refreshEmptyBoard();
-	} else {
-		if (algorithm != "Dijkstras") {
-			algoBtn.value = "dijkstras";
-			algorithm = algoBtn.options[algoBtn.selectedIndex].value;
-		}
-		refreshBoard();
-	}
-	if (
-		algorithmType.classList.contains("bfs") ||
-		algorithmType.classList.contains("dfs")
-	) {
-		createStartNode(startRow, startCol);
-		createEndNode(endRow, endCol);
-	}
-};
-weightBtn.addEventListener("change", updateWeight);
-
-// const updateAlgo = () => {
-// 	algorithm = algoBtn.options[algoBtn.selectedIndex].value;
-// 	if (algorithm != "Dijkstras") {
-// 		weightBtn.value = "Unweighted";
-// 		weightType = weightBtn.options[weightBtn.selectedIndex].value;
-// 		// refreshEmptyBoard();
-// 	} else if (algorithm == "Dijkstras") {
-// 		if (weightBtn.value == "Unweighted") {
-// 			refreshEmptyBoard();
-// 		} else {
-// 			refreshBoard();
-// 		}
-// 	}
-// 	if (
-// 		algorithmType.classList.contains("bfs") ||
-// 		algorithmType.classList.contains("dfs")
-// 	) {
-// 		createStartNode(startRow, startCol);
-// 		createEndNode(endRow, endCol);
-// 	}
-// };
-// algoBtn.addEventListener("change", updateAlgo);
-
 const startVisualization = () => {
 	if (algorithmType.classList.contains("bfs")) {
 		bfs(startRow, startCol, endRow, endCol);
@@ -150,9 +102,21 @@ window.onload = () => {
 		if (islandAlgo === "bfs") {
 			createStartNode(0, 0);
 			createEndNode(19, 39);
+			document
+				.querySelector(`div[row='${0}'][col='${0}']`)
+				.classList.add("islandsPathNode");
+			document
+				.querySelector(`div[row='${19}'][col='${39}']`)
+				.classList.add("islandsPathNode");
 		} else if (islandAlgo === "dfs") {
 			createStartNode(0, 0);
 			createEndNode(0, 1);
+			document
+				.querySelector(`div[row='${0}'][col='${0}']`)
+				.classList.add("islandsPathNode");
+			document
+				.querySelector(`div[row='${0}'][col='${1}']`)
+				.classList.add("islandsPathNode");
 		}
 	}
 };
