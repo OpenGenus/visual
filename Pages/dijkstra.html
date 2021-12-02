@@ -75,15 +75,13 @@
             <!-- not displayed -->
             <div class="controls">
                 <div class="algorithms">
-                    <select name="" class="algo">
-                        <option value="bfs">BFS</option>
-                        <option value="dijkstras">Dijkstra's</option>
+                    <select class="algo">
+                        <option value=""></option>
                     </select>
                 </div>
                 <div class="weights">
-                    <select name="" class="weight">
-                        <option value="Unweighted">Unweighted</option>
-                        <option value="Weighted">Weighted</option>
+                    <select class="weight">
+                        <option value=""></option>
                     </select>
                 </div>
             </div>
@@ -92,69 +90,101 @@
     <main>
         <div class="visualizationContainer">
             <div id="gridContainer"></div>
+            <div class="tutorials">
+                <div class="tutorial">
+                    <div class="emptyPath"><span class="txt">4</span></div>&nbsp;
+                    <div>This is a node with an assigned weight, which means that from source to a point it will take
+                        4(km/m/cm/hops...)
+                        to get to that point.</div>
+                </div>
+                <div class="tutorial">
+                    <div class="stedimg"><span class="txt">A</span></div>&nbsp;
+                    <div>Start Node -> this is the starting point(source),
+                        search for a path starts here.</div>
+                </div>
+                <div class="tutorial">
+                    <div class="stedimg"><span class="txt">B</span></div>&nbsp;
+                    <div>End Node -> where the search stops when a path to destination has been found</div>
+                </div>
+                <div class="tutorial">
+                    <div class="obstacle"><span class="txt">4</span></div>&nbsp;
+                    <div>These act as obstacles, walls. On a real map these may be buildings or structures that may
+                        block
+                        a shorter path to a destination.</div>
+                </div>
+                <div class="tutorial">
+                    <div class="selectedPath"><span class="txt">7</span></div>&nbsp;
+                    <div>After the algorithm is complete, we have arrived at the destination, now the shortest path is
+                        highlighted in green with the cost of path written in black inside the path.</div>
+                </div>
+            </div>
             <div class="algoInfo">
                 <div>
                     <div class="infoHeading">
                         <h3 class="title">Dijkstra’s shortest path algorithm</h3>
                     </div>
-                    This algorithm starts from a chosen node(source) and examines
-                    all its neighbors, then it examines all the neighbors of
-                    the neighbors, and etcetera. <br />
-                    The algorithm can be understood as a
-                    <em>"fire spreading"</em> on the graph, at the 0th step
-                    only the source is on fire. At each step, the buring
-                    fire at each vertex spreads to all its neighbors. <br />
-                    The <em>ring of fire</em> is expanded at each iteration.
-                    We use a <b><em>queue</em></b> data structure.
+                    This algorithm finds a shortest path tree from a single source node by building a set of nodes that
+                    have a minimum distance from the source node. <br />
+                    This algorithm uses a greedy approach in that we find the next best solution in hope that it will
+                    lead to a generalized optimal solution.
+                    <u>Vertices</u> are denoted by <em>u</em> and <em>v</em>. In our case in the above grid we place the
+                    weights inside the vertex denoting the weight to get to it. <br>
+                    <u>Weighted edges</u> that connect two nodes (u, v) are denoted as w(u, v). <br>
+                    <u><em>dist</em></u> is an array of distances from source <em>s</em> to every node in the graph.
+                    <em>s</em> is initialized as 0 and for all other nodes we initialize them as &#8734;. <em>dist(v) =
+                        &#8734;</em> <br>
+                    We use a <u><b><em>queue (Q)</em></b></u> data structure to store all nodes in the graph and at the
+                    end of
+                    the
+                    algorithm the queue will be empty. <br>
+                    <u>S</u> - an empty set to indicate which nodes the algorithm has visited. At the end of the
+                    algorithm, S
+                    will contain all nodes of the graph.
                     <div>
                         <p class="subtitle">Algorithm</p>
                         <p>
-                            1. Add root node to the queue, and mark it as
-                            visited(already explored).
+                            1. While Q is not empty, we pop the node v that is not in <em>S</em> from <em>Q</em> with
+                            the smallest distance <em>dist(v)</em>.
+                            In the first iteration the source node is chosen because we initialized it with 0.
+                            In the following iterations nodes with the smallest weight values will be chosen.
                         </p>
                         <p>
-                            2. Loop through the queue as long as it's not empty
-                            do the following.
-                        </p>
-                        <p class="nest1">
-                            1. Get and remove the node at the top of the
-                            queue(current).
-                        </p>
-                        <p class="nest1">
-                            2. For every non-visited child of the current
-                            node, do the following:
-                        </p>
-                        <p class="nest2">1. Mark it as visited.</p>
-                        <p class="nest2">
-                            2. Check if it's the destination node, If so, then
-                            return and terminate.
-                        </p>
-                        <p class="nest2">
-                            3. Otherwise, push it to the queue.
+                            2. We add node <em>v</em> to <em>S</em>, to indicate that <em>v</em> has been visited.
                         </p>
                         <p>
-                            3. If queue is empty, then no path exists!
+                            3. We update <em>dist</em> values of adjacent nodes of the current node <em>v</em> by doing
+                            the following: for each new adjacent node <em>u</em>,
+                        </p>
+                        <p class="nest1">
+                            1. if <em>dist(v) + weight(u,v) < dist(u)</em>, that means there is a minimal distance found
+                                    for <em>u</em>.
+                                    <p class="nest2">1. update <em>dist(u)</em> to the new minimal distance value.</p>
+                                    <p class="nest2">2. Otherwise don't update <em>dist(u).</em></p>
+                        </p>
+                        <p>
+                            4. In the end the algorithm has visited all nodes in the graph and <em>dist</em> array will
+                            contain the shortest path(smallest distance) from source s to destination.
                         </p>
                     </div>
                     <div>
                         <p class="subtitle">Computational complexity</p>
-                        This algorithm takes <b><em>O(V + E)</em></b> where V is the number of
-                        vertices and E is the number of edges.
+                        This algorithm takes <b><em>O(V + E log V)</em></b> in the all cases where V is the number of
+                        vertices and E is the number of edges. <br>
+                        It has a <b><em>O(V)</em></b> space complexity. It stores V, the number of vertices.
                     </div>
                     <div class="applications">
                         <p class="subtitle">Applications</p>
                         <ul>
-                            <li>peer to peer networking</li>
-                            <li>search engine crawlers</li>
-                            <li>social networking websites</li>
-                            <li>maps and gps navigation software</li>
-                            <li>cycle detection in undirected graph</li>
-                            <li>bipartite graph testing</li>
-                            <li>spotting connected components</li>
+                            <li>Open Shortest Path First (OSPF) algorithm for packet routing.</li>
+                            <li>telephone networking.</li>
+                            <li>social network algorithms.</li>
+                            <li>maps and gps navigation software.</li>
+                            <li>Drone/robotic path routing.</li>
+                            <li>Designating a file server.</li>
                         </ul>
                     </div>
                     <div class="reference">
-                        <a href="https://iq.opengenus.org/bfs-graph-traversal/">reference</a>
+                        <a href="https://iq.opengenus.org/tag/dijkstra-algorithm/">reference</a>
                     </div>
                 </div>
             </div>
