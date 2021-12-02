@@ -154,7 +154,7 @@ header {
 	justify-content: center;
 	height: 50%;
 }
-.controls {
+.hide {
 	display: none;
 }
 .controlBtns {

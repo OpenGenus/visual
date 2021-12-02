@@ -56,7 +56,7 @@ const clearPath = () => {
 	gridContainer.addEventListener("mousedown", setWall);
 	gridContainer.addEventListener("mouseup", setWall);
 	gridContainer.addEventListener("mouseover", setWall);
-	if (weightType == "Unweighted") {
+	if (!algorithmType.classList.contains("dijkstras")) {
 		refreshEmptyBoard();
 	} else {
 		refreshBoard();
