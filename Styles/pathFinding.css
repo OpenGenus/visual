@@ -90,6 +90,9 @@ header {
 	align-items: center;
 	/* border: none; */
 }
+.island {
+	background-color: purple;
+}
 .setWalls {
 	cursor: pointer;
 }

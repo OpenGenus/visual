@@ -62,6 +62,12 @@ class Visualize {
 		setTimeout(() => {
 			node.setAttribute("class", "pathColor");
 		}, count * time + 100);
+		setTimeout(() => {
+			let wall = parseInt(node.getAttribute("wall"));
+			if (wall == 1) {
+				node.setAttribute("class", "beforeStart wall");
+			}
+		}, count * time + 100);
 	};
 
 	checker = (row, col) => {
@@ -72,12 +78,7 @@ class Visualize {
 	traverse = (node, visited, count, endNode) => {
 		let row = parseInt(node.getAttribute("row"));
 		let col = parseInt(node.getAttribute("col"));
-		if (bool || node == endNode) {
-			bool = true;
-			return;
-		}
-		let wall = parseInt(node.getAttribute("wall"));
-		if (wall == 1) return;
+
 		visited.push(node);
 		this.changeColor(node, count);
 
