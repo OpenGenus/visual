@@ -1,5 +1,5 @@
-import { rowSize, colSize } from "../GridAlgorithms/index.js";
-import { setWall } from "../GridAlgorithms/createWalls.js";
+import { rowSize, colSize } from "../Grid/index.js";
+import { setWall } from "../Grid/createWalls.js";
 import { getGrid } from "./index.js";
 
 // get from DOM
