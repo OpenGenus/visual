@@ -1,0 +1,345 @@
+import { rowSize, colSize } from "../Grid/index.js";
+import { getGrid } from "./index.js";
+import { setWall } from "../Grid/createWalls.js";
+
+const gridContainer = document.querySelector("#gridContainer");
+const speedSlider = document.querySelector(".speedSlider");
+var time = speedSlider.value;
+let bool = false;
+
+let extensions = [];
+let extensions2 = [];
+let extensions3 = [];
+let temp = [];
+let islands = [];
+let map = new Map();
+
+class MaxIsland {
+	//count largest island
+	getMaxIsland = (grid, x, y, mapId) => {
+		if (
+			x >= grid.length ||
+			y >= grid[0].length ||
+			x < 0 ||
+			y < 0 ||
+			grid[x][y] !== 1
+		)
+			return 0;
+
+		grid[x][y] = mapId;
+		let count = 1;
+		count += this.getMaxIsland(grid, x + 1, y, mapId);
+		count += this.getMaxIsland(grid, x - 1, y, mapId);
+		count += this.getMaxIsland(grid, x, y + 1, mapId);
+		count += this.getMaxIsland(grid, x, y - 1, mapId);
+
+		return count;
+	};
+
+	//flipping to get max
+	largestIsland = (grid) => {
+		let maxIsland = 0;
+		let mapId = 2;
+		let row = grid.length;
+		let col = grid[0].length;
+		let arr = [];
+		for (let i = 0; i < row; i++) {
+			for (let j = 0; j < col; j++) {
+				if (grid[i][j] === 1) {
+					map.set(mapId, this.getMaxIsland(grid, i, j, mapId, 0));
+					mapId += 1;
+					islands.push([mapId - 1, i, j]);
+				}
+			}
+		}
+
+		for (let m = 0; m < row; m++) {
+			for (let n = 0; n < col; n++) {
+				const ids = new Set();
+				// let node = document.querySelector(
+				// 	`div[row='${m}'][col='${n}']`
+				// );
+				if (grid[m][n] === 0) {
+					if (m < row - 1) ids.add(grid[m + 1][n]);
+					if (m > 0) ids.add(grid[m - 1][n]);
+					if (n < col - 1) ids.add(grid[m][n + 1]);
+					if (n > 0) ids.add(grid[m][n - 1]);
+					let sum = 0;
+					ids.forEach((id) => {
+						if (id !== 0) {
+							sum += map.get(id);
+						}
+					});
+					maxIsland = Math.max(sum + 1, maxIsland);
+				}
+				// console.log(ids, m, n);
+				temp.push([ids, m, n]);
+			}
+		}
+		// console.log(map);
+		//push viable flips
+		// extensions.push(...arr);
+		// console.log(arr);
+		//return max island
+		return maxIsland === 0 ? row * col : maxIsland;
+	};
+}
+
+class Visualize {
+	changeColor = (node, count) => {
+		setTimeout(() => {
+			node.setAttribute("class", "chosenPath");
+		}, count * time);
+		setTimeout(() => {
+			node.setAttribute("class", "pathColor");
+		}, count * time + 100);
+		setTimeout(() => {
+			let wall = parseInt(node.getAttribute("wall"));
+			if (wall == 1) {
+				node.setAttribute("class", "beforeStart wall");
+			}
+		}, count * time + 100);
+	};
+
+	checker = (row, col) => {
+		if (row >= 0 && col >= 0 && row < rowSize && col < colSize) return true;
+		return false;
+	};
+
+	traverse = (node, visited, count, endNode) => {
+		let row = parseInt(node.getAttribute("row"));
+		let col = parseInt(node.getAttribute("col"));
+
+		visited.push(node);
+		this.changeColor(node, count);
+
+		// Check all sides of a node
+		let cr = row,
+			cc = col;
+
+		if (this.checker(cr + 1, cc)) {
+			let child = document.querySelector(
+				`div[row="${cr + 1}"][col="${cc}"]`
+			);
+			if (!visited.includes(child))
+				this.traverse(child, visited, count + 1, endNode);
+		}
+		if (this.checker(cr, cc + 1)) {
+			let child = document.querySelector(
+				`div[row="${cr}"][col="${cc + 1}"]`
+			);
+			if (!visited.includes(child))
+				this.traverse(child, visited, count + 1, endNode);
+		}
+		if (this.checker(cr - 1, cc)) {
+			let child = document.querySelector(
+				`div[row="${cr - 1}"][col="${cc}"]`
+			);
+			if (!visited.includes(child))
+				this.traverse(child, visited, count + 1, endNode);
+		}
+		if (this.checker(cr, cc - 1)) {
+			let child = document.querySelector(
+				`div[row="${cr}"][col="${cc - 1}"]`
+			);
+			if (!visited.includes(child))
+				this.traverse(child, visited, count + 1, endNode);
+		}
+	};
+
+	visualizeMaxIsland = () => {
+		time = speedSlider.value;
+		time = 40 + (time - 1) * -2;
+		gridContainer.removeEventListener("mousedown", setWall);
+		gridContainer.removeEventListener("mouseover", setWall);
+		let startNode = document.querySelector(`div[row='${0}'][col='${0}']`);
+		let endNode = document.querySelector(`div[row='${0}'][col='${1}']`);
+
+		//disable start button during visualization
+		let startBtn = document.querySelector(".start");
+		startBtn.setAttribute("disabled", true);
+
+		let visited = [];
+		let count = 1;
+		bool = false;
+		this.traverse(startNode, visited, count, endNode);
+	};
+}
+
+export const dfsMaxIsland = () => {
+	const visual = new Visualize();
+
+	visual.visualizeMaxIsland();
+
+	const island = new MaxIsland();
+	let matGrid = getGrid();
+	let largest = island.largestIsland(matGrid);
+
+	console.log(map);
+	let maxIsland = Math.max(...map.values());
+	let maxId = [...map.entries()]
+		.filter(({ 1: v }) => v === maxIsland)
+		.map(([k]) => k)[0];
+
+	//get now
+	let mapVals = new Map();
+	let vals = Array.from(map.values());
+	for (let i = 0; i < vals.length; i++) {
+		mapVals.set([vals[i]], vals[i]);
+	}
+	let vals1 = vals.flatMap((v, i) => vals.slice(i + 1).map((w) => [v, w]));
+	for (let i = 0; i < vals1.length; i++) {
+		let sum = vals1[i].reduce((total, n) => parseInt(total) + parseInt(n));
+		mapVals.set(vals1[i], sum);
+	}
+	console.log(mapVals);
+
+	// console.log(islands);
+
+	//end get now
+
+	// console.log(temp);
+
+	// let LA;
+	// for (let i = 0; i < islands.length; i++) {
+	// 	if (islands[i][0] == maxId) {
+	// 		LA = islands[i];
+	// 	}
+	// }
+
+	// let key = mapVals.get(maxIsland - 1);
+
+	// console.log(maxIsland);
+
+	const getValue = (mapVals, srch) => {
+		for (let [key, value] of mapVals.entries()) {
+			if (value === srch) return key;
+		}
+	};
+
+	let p1 = getValue(mapVals, largest - 1);
+
+	if (p1.length > 1) {
+		console.log("join three");
+		//filter sets of 3
+		for (let i = 0; i < temp.length; i++) {
+			if (temp[i][1] >= 0 && temp[i][2] >= 0 && temp[i][0].size == 3) {
+				extensions.push(temp[i]);
+			}
+		}
+	} else {
+		console.log("join two");
+		// filter sets of 2
+		for (let i = 0; i < temp.length; i++) {
+			if (temp[i][1] >= 0 && temp[i][2] >= 0 && temp[i][0].size == 2) {
+				extensions.push(temp[i]);
+			}
+		}
+	}
+
+	console.log("extensions 1");
+	console.log(extensions);
+	console.log("extensions 2");
+	console.log(extensions2);
+
+	for (let i = 0; i < extensions.length; i++) {
+		if (extensions[i][0].has(maxId)) {
+			extensions2.push(extensions[i]);
+		}
+	}
+
+	// console.log(LA);
+
+	// let x = 0;
+
+	// for (let i = 0; i < temp.length; i++) {
+	// 	let max = temp[i][0];
+	// 	x = Math.max(max, x);
+	// }
+
+	// for (let i = 0; i < temp.length; i++) {
+	// if (
+	// 	temp[i][1] >= 0 &&
+	// 	temp[i][2] >= 0 &&
+	// 	temp[i][0].size >= 2
+	// temp[i][0].size == p2.length + 1
+	// 	) {
+	// 		extensions.push(temp[i]);
+	// 	}
+	// 	if (temp[i][0].size == p2.length + 1) {
+	// 		extensions.push(temp[i]);
+	// 	}
+	// }
+
+	// console.log(extensions);
+
+	// console.log(maxIsland);
+	// console.log(maxId);
+	// console.log(temp[0][0]);
+
+	// let islandSize = console.log(maxIsland);
+	// let x = 0;
+
+	// for (let i = 0; i < temp.length; i++) {
+	// 	let max = temp[i][0];
+	// 	x = Math.max(max, x);
+	// }
+
+	// for (let i = 0; i < temp.length; i++) {
+	// 	if (temp[i][0] === maxIsland) {
+	// 		extensions.push(temp[i]);
+	// 	}
+	// }
+
+	// for (let i = 0; i < temp.length; i++) {
+	// 	if (temp[i][0] === x && temp[i][0] == maxIsland) {
+	// 		extensions.push(temp[i]);
+	// 	}
+	// }
+	// console.log(extensions);
+
+	console.log("Largest is " + largest);
+
+	setTimeout(() => {
+		// let node = document.querySelector(
+		// 	`div[row='${extensions[0][1] + 1}'][col='${extensions[0][2]}']`
+		// );
+		// let wall = parseInt(node.getAttribute("wall"));
+		// // node.style.backgroundColor = "blue";
+		// if (node == null || wall == 1) {
+		// 	node = document.querySelector(
+		// 		`div[row='${extensions[0][1] - 1}'][col='${extensions[0][2]}']`
+		// 	);
+		// 	wall = parseInt(node.getAttribute("wall"));
+		// 	node.style.backgroundColor = "yellow";
+		// } else if (node == null || wall == 1) {
+		// 	node = document.querySelector(
+		// 		`div[row='${extensions[0][1]}'][col='${extensions[0][2] + 1}']`
+		// 	);
+		// 	wall = parseInt(node.getAttribute("wall"));
+		// 	node.style.backgroundColor = "green";
+		// } else if (node == null || wall == 1) {
+		// 	node = document.querySelector(
+		// 		`div[row='${extensions[0][1]}'][col='${extensions[0][2] - 1}']`
+		// 	);
+		// 	wall = parseInt(node.getAttribute("wall"));
+		// 	node.style.backgroundColor = "black";
+		// }
+
+		// let len = extensions.length - 1;
+		if (p1.length > 1) {
+			let node = document.querySelector(
+				`div[row='${extensions[0][1]}'][col='${extensions[0][2]}']`
+			);
+			node.style.backgroundColor = "yellow";
+		} else {
+			let node = document.querySelector(
+				`div[row='${extensions2[0][1]}'][col='${extensions2[0][2]}']`
+			);
+			node.style.backgroundColor = "yellow";
+		}
+
+		// 	alert("The largest island is of size " + largest);
+		// window.location.reload();
+	}, rowSize * colSize * time + 1000);
+};
