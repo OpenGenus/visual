@@ -12,7 +12,7 @@ import { dfs } from "../PathFindingAlgorithms/dfs.js";
 import { bfs } from "../PathFindingAlgorithms/bfs.js";
 import { bfsIslands } from "../NoIslands/bfsIslands.js";
 import { dfsIslands } from "../NoIslands/dfsIslands.js";
-import { dfsMaxIsland } from "../NoIslands/largeIsland.js";
+import { maxIsland } from "../NoIslands/largeIsland.js";
 
 // get dom elements
 const gridContainer = document.querySelector("#gridContainer");
@@ -106,10 +106,8 @@ const startVisualization = () => {
 			bfsIslands();
 		} else if (islandAlgo === "dfs") {
 			dfsIslands();
-		} else if (islandAlgo === "bfsMaxIslands") {
-			console.log("bfs not implemented");
-		} else if (islandAlgo === "dfsMaxIslands") {
-			dfsMaxIsland();
+		} else if (algorithmType.classList.contains("maxIslands")) {
+			maxIsland();
 		}
 	}
 };

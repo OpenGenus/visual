@@ -46,9 +46,8 @@
                 </div>
                 <div class="controlBtns">
                     <button class="clearPath btn" style="display: none">clear path</button>
-                    <select name="" class="islandsAlgo">
-                        <option value="bfsMaxIslands">BFS</option>
-                        <option value="dfsMaxIslands">DFS</option>
+                    <select name="" class="islandsAlgo" style="display: none;">
+                        <option value=""></option>
                     </select>
                     <button class="start btn">start</button>
                     <button class="reset btn">reload</button>
@@ -71,18 +70,12 @@
             </div>
             <!-- not displayed -->
             <div class="controls">
-                <div class="algorithms">
-                    <select name="" class="algo">
-                        <option value="bfs">BFS</option>
-                        <option value="dijkstras">Dijkstra's</option>
-                    </select>
-                </div>
-                <div class="weights">
-                    <select name="" class="weight">
-                        <option value="Unweighted">Unweighted</option>
-                        <option value="Weighted">Weighted</option>
-                    </select>
-                </div>
+                <select class="algo">
+                    <option value=""></option>
+                </select>
+                <select class="weight">
+                    <option value="Unweighted"></option>
+                </select>
             </div>
         </div>
     </header>
@@ -92,79 +85,59 @@
             <div class="algoInfo">
                 <div>
                     <div class="infoHeading">
-                        <h3 class="title">Number of islands</h3>
+                        <h3 class="title">Getting the maximum island</h3>
                     </div>
                     <p>
-                        We are given a grid map of '1's and '0's(water). We
-                        are to count the number of islands on the grid.<br.>
-                            An island is surrounded by water and formed by
-                            connecting adjacent land horizontally or vertocally.
-                            In other words an island is a group of connected '1's.
-                            We assume all four edges of the whole grid are
-                            surrounded by water.
+                        We are given a binary grid(matrix) map of '1's and '0's(water).
+                        We are allowed to change at most one '0' t0 be '1'(flip one '0' to '1').
+                        Return the size of the largest island in the grid after applying the above opperation.
+                        In this case an island is classified as a <em><b>4-directionally</b></em> connected group of 1s.
+                        <br>
+                        In this <em><b>dfs</b></em> approach for every 0 encountered, we temporarily change if to a 1
+                        and
+                        estimate the
+                        maximum island formed. <br> After finding the size we change the 1 back to a 0. <br>Finally we
+                        will have the maximum island which we return.
                     </p>
                     <div>
                         <p class="subtitle">Algorithm</p>
                         <p>
-                            1. Mark the current node as visited(initially
-                            current node is the root node).
+                            1. Traverse the entire grid swapping 1s for each island with an assigned group
+                            id(representing that island).
                         </p>
                         <p>
-                            2. Check if current node is the goal, If so,
-                            then return it.
+                            2. Create a hashmap with mapId as key and size of island as value(this done in the first
+                            traversal).
                         </p>
                         <p>
-                            1. Iterate over children nodes of current node,
-                            and do the following:
-                        </p>
-                        <p class="nest1">
-                            2. Check if a child node is not visited.
-                        </p>
-                        <p class="nest1">
-                            1.If so, then, mark it as visited.
-                        </p>
-                        <p class="nest1">
-                            3. Go to it's sub tree recursively until you
-                            find the goal node(In other words, do the same
-                            steps here passing the child node as the current
-                            node in the next recursive call).
-                        </p>
-                        <p class="nest1">
-                            4. If the child node has the goal node in this
-                            sub tree, then, return it.
+                            3. Traverse the grid for the ssecond time and find the 0s.
                         </p>
                         <p>
-                            3. If goal node is not found, then goal node is
-                            not in the tree!
+                            4. Calculate the suns of all neighbors(4-directional) and add 1 to represent the flipped 0.
+                        </p>
+                        <p>
+                            5. Determine the maximum island by comparing previous sizes.
+                        </p>
+                        <p>
+                            6. If max is 0 after both traversals, return grid size, this is one big island.
                         </p>
                     </div>
                     <div>
                         <p class="subtitle">Computational complexity</p>
                         This algorithm takes <b><em>O(M + N)</em></b> where
-                        M is the number of rows and E is the number of
+                        M is the number of rows and N is the number of
                         columns.
-                    </div>
-                    <div>
-                        <p class="subtitle">Applications</p>
-                        <ul>
-                            <li>topological sorting.</li>
-                            <li>bipartite graph testing.</li>
-                            <li>finding strongly connected components.</li>
-                            <li>
-                                solving puzzles that can only have one
-                                solution.
-                            </li>
-                            <li>detecting cycles in a graph.</li>
-                        </ul>
+                        The space complexity is <b><em>O(L)</em></b> where L is the size of the largest island.
                     </div>
                     <div class="reference">
-                        <a href="https://iq.opengenus.org/number-of-islands/">reference</a>
+                        <a href="https://iq.opengenus.org/number-of-islands/">number of islands</a>
+                        <a href="https://iq.opengenus.org/making-a-large-island/">max island</a>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-    <p>algorithms visualizer @ 2021</p>
+    <p class="footer">algorithms visualizer @ 2021</p>
     <script type="module" src="../Algorithms/Grid/index.js"></script>
 </body>
 

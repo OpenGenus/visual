@@ -156,7 +156,7 @@ class Visualize {
 	};
 }
 
-export const dfsMaxIsland = () => {
+export const maxIsland = () => {
 	const visual = new Visualize();
 
 	visual.visualizeMaxIsland();
@@ -201,8 +201,9 @@ export const dfsMaxIsland = () => {
 
 	let p1 = getValue(mapVals, largest - 1);
 
-	if (p1.length > 1) {
-		console.log("join three");
+	if (p1 == null) {
+		alert("Largest island is 1");
+	} else if (p1.length > 1) {
 		//filter sets of 3
 		for (let i = 0; i < temp.length; i++) {
 			if (temp[i][1] >= 0 && temp[i][2] >= 0 && temp[i][0].size == 3) {
@@ -210,7 +211,6 @@ export const dfsMaxIsland = () => {
 			}
 		}
 	} else {
-		console.log("join two");
 		// filter sets of 2
 		for (let i = 0; i < temp.length; i++) {
 			if (temp[i][1] >= 0 && temp[i][2] >= 0 && temp[i][0].size == 2) {
@@ -231,7 +231,6 @@ export const dfsMaxIsland = () => {
 	// console.log(extensions2);
 
 	let prime;
-	console.log("Sar");
 	for (let i = 0; i < extensions.length; i++) {
 		let sar = Array.from(extensions[i][0]);
 		sar.sort((a, b) => a - b);
