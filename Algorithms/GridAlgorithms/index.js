@@ -11,6 +11,7 @@ import { setObstacles } from "./generateObstacles.js";
 import { dfs } from "../PathFindingAlgorithms/dfs.js";
 import { bfs } from "../PathFindingAlgorithms/bfs.js";
 import { bfsIslands } from "../NoIslands/bfsIslands.js";
+import { dfsIslands } from "../NoIslands/dfsIslands.js";
 
 // get dom elements
 const gridContainer = document.querySelector("#gridContainer");
@@ -20,6 +21,7 @@ const weightBtn = document.querySelector(".weight");
 const algoBtn = document.querySelector(".algo");
 const startBtn = document.querySelector(".start");
 const wallBtn = document.querySelector(".setWalls");
+const islandAlgoBtn = document.querySelector(".islandsAlgo");
 export const algorithmType = document.querySelector(".algorithm");
 
 export var rowSize = 20;
@@ -35,6 +37,8 @@ export var endIslandCol = 32;
 export var mouseDown = false;
 export var weightType = weightBtn.options[weightBtn.selectedIndex].value;
 export var algorithm = algoBtn.options[algoBtn.selectedIndex].value;
+export var islandAlgo =
+	islandAlgoBtn.options[islandAlgoBtn.selectedIndex].value;
 
 //event listeners
 gridContainer.addEventListener("mousedown", () => {
@@ -47,6 +51,10 @@ gridContainer.addEventListener("mouseover", () => {
 	setWall;
 });
 wallBtn.addEventListener("click", setObstacles);
+
+islandAlgoBtn.addEventListener("change", () => {
+	window.location.reload();
+});
 
 const clearPath = () => {
 	gridContainer.addEventListener("mousedown", setWall);
@@ -81,39 +89,31 @@ const updateWeight = () => {
 		createStartNode(startRow, startCol);
 		createEndNode(endRow, endCol);
 	}
-	if (algorithmType.classList.contains("numIslands")) {
-		createStartIsland(startRow, startCol);
-		createEndIsland(endRow, endCol);
-	}
 };
 weightBtn.addEventListener("change", updateWeight);
 
-const updateAlgo = () => {
-	algorithm = algoBtn.options[algoBtn.selectedIndex].value;
-	if (algorithm != "Dijkstras") {
-		weightBtn.value = "Unweighted";
-		weightType = weightBtn.options[weightBtn.selectedIndex].value;
-		// refreshEmptyBoard();
-	} else if (algorithm == "Dijkstras") {
-		if (weightBtn.value == "Unweighted") {
-			refreshEmptyBoard();
-		} else {
-			refreshBoard();
-		}
-	}
-	if (
-		algorithmType.classList.contains("bfs") ||
-		algorithmType.classList.contains("dfs")
-	) {
-		createStartNode(startRow, startCol);
-		createEndNode(endRow, endCol);
-	}
-	if (algorithmType.classList.contains("numIslands")) {
-		createStartIsland(startRow, startCol);
-		createEndIsland(endRow, endCol);
-	}
-};
-algoBtn.addEventListener("change", updateAlgo);
+// const updateAlgo = () => {
+// 	algorithm = algoBtn.options[algoBtn.selectedIndex].value;
+// 	if (algorithm != "Dijkstras") {
+// 		weightBtn.value = "Unweighted";
+// 		weightType = weightBtn.options[weightBtn.selectedIndex].value;
+// 		// refreshEmptyBoard();
+// 	} else if (algorithm == "Dijkstras") {
+// 		if (weightBtn.value == "Unweighted") {
+// 			refreshEmptyBoard();
+// 		} else {
+// 			refreshBoard();
+// 		}
+// 	}
+// 	if (
+// 		algorithmType.classList.contains("bfs") ||
+// 		algorithmType.classList.contains("dfs")
+// 	) {
+// 		createStartNode(startRow, startCol);
+// 		createEndNode(endRow, endCol);
+// 	}
+// };
+// algoBtn.addEventListener("change", updateAlgo);
 
 const startVisualization = () => {
 	if (algorithmType.classList.contains("bfs")) {
@@ -121,7 +121,11 @@ const startVisualization = () => {
 	} else if (algorithmType.classList.contains("dfs")) {
 		dfs(startRow, startCol, endRow, endCol);
 	} else if (algorithmType.classList.contains("numIslands")) {
-		bfsIslands();
+		if (islandAlgo === "bfs") {
+			bfsIslands();
+		} else if (islandAlgo === "dfs") {
+			dfsIslands();
+		}
 	}
 };
 startBtn.addEventListener("click", startVisualization);
@@ -143,7 +147,12 @@ window.onload = () => {
 		createStartNode(startRow, startCol);
 		createEndNode(endRow, endCol);
 	} else if (algorithmType.classList.contains("numIslands")) {
-		createStartNode(0, 0);
-		createEndNode(19, 39);
+		if (islandAlgo === "bfs") {
+			createStartNode(0, 0);
+			createEndNode(19, 39);
+		} else if (islandAlgo === "dfs") {
+			createStartNode(0, 0);
+			createEndNode(0, 1);
+		}
 	}
 };

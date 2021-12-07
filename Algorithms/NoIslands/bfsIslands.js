@@ -1,5 +1,6 @@
 import { rowSize, colSize, weightType } from "../GridAlgorithms/index.js";
 import { setWall } from "../GridAlgorithms/createWalls.js";
+import { getGrid } from "./index.js";
 
 // get from DOM
 const gridContainer = document.querySelector("#gridContainer");
@@ -8,25 +9,6 @@ var time = speedSlider.value;
 
 //calculate the number of islands
 class NumberOfIslands {
-	getGrid() {
-		let gridMatrix = [];
-		let matrix = [];
-
-		for (let i = 0; i < rowSize; i++) {
-			for (let j = 0; j < colSize; j++) {
-				var node = document.querySelector(
-					`div[row="${i}"][col="${j}"]`
-				);
-				var wall = parseInt(node.getAttribute("wall"));
-				gridMatrix.push(wall);
-			}
-		}
-		while (gridMatrix.length) {
-			matrix.push(gridMatrix.splice(0, colSize));
-		}
-		return matrix;
-	}
-
 	isSafe = (mat, i, j, vis, r, c) => {
 		return (
 			i >= 0 && i < r && j >= 0 && j < c && mat[i][j] == 1 && !vis[i][j]
@@ -137,7 +119,7 @@ class Visualize {
 		var startNode = document.querySelector(`div[row='${0}'][col='${0}']`);
 
 		//hide start and refresh btn
-		var startBtn = document.querySelector(".start");
+		let startBtn = document.querySelector(".start");
 		startBtn.setAttribute("disabled", true);
 
 		//start algorithm
@@ -174,7 +156,7 @@ class Visualize {
 		}
 
 		const numIslands = new NumberOfIslands();
-		let matGrid = numIslands.getGrid();
+		let matGrid = getGrid();
 
 		setTimeout(() => {
 			alert(
@@ -183,6 +165,7 @@ class Visualize {
 					: "Number of islands: " +
 							numIslands.countIslands(matGrid, rowSize, colSize)
 			);
+			window.location.reload();
 		}, count * time + 1000);
 	};
 }
