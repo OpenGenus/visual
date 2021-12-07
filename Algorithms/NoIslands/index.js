@@ -1,4 +1,4 @@
-import { rowSize, colSize } from "../GridAlgorithms/index.js";
+import { rowSize, colSize } from "../Grid/index.js";
 
 export const getGrid = () => {
 	let gridMatrix = [];

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="depth first search, breadth first search, number of islands" />
+    <meta name="keywords"
+        content="breadth first search, breadth first algorithm, depth first search, depth first traversal, breadth first traversal, path finding, graph algorithms, graphs, algorithms, visualization, visual, graphs, graph traversal, traversal" />
+    <meta name="author" content="lumunge" />
+    <link rel="stylesheet" href="../Styles/index.css" />
+    <link rel="stylesheet" href="../Styles/pathFinding.css" />
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@500&display=swap" rel="stylesheet" /> -->
+    <title>Making a large island.</title>
+</head>
+
+<body>
+    <nav>
+        <a href="../index.html">Visual Algo</a>
+        <a href="./bfs.html">bfs</a>
+        <a href="./dfs.html">dfs</a>
+        <a href="./islands.html">num islands</a>
+        <a href="./maxIsland.html">max island</a>
+    </nav>
+    <header>
+        <div class="heading">
+            <h2 class="algorithm maxIslands">Making a large island</h2>
+            <hr />
+        </div>
+        <div class="controlsContainer">
+            <div class="visualControls">
+                <div class="visualSpeed">
+                    <p>Speed</p>
+                    <input type="range" min="1" max="20" value="10" class="speedSlider" />
+                </div>
+                <div class="obstacles">
+                    <p>Create islands</p>
+                    <div class="obstaclesElements">
+                        <input type="range" min="1" value="50" class="obstacleSlider" />
+                        &nbsp;
+                        <button class="setWalls btn">islands</button>
+                    </div>
+                </div>
+                <div class="controlBtns">
+                    <button class="clearPath btn" style="display: none">clear path</button>
+                    <select name="" class="islandsAlgo" style="display: none;">
+                        <option value=""></option>
+                    </select>
+                    <button class="start btn">start</button>
+                    <button class="reset btn">reload</button>
+                </div>
+                <div class="tutorialContainer">
+                    <span><img class="info" src="../img/icons8-info-60.png" alt=""></span>
+                    <div class="tutorialContent">
+                        <h4>Controls</h4>
+                        <p><span>Speed</span> - increase or decrease the speed of the visualization</p>
+                        <p><span>Islands-</span> - create islands on the grid.
+                            <br /> You can adjust the number of islands generated per click.
+                            <br /> - You can also click on the grid cells to create an island.
+                        </p>
+                        <p><span>Start</span> - After adjusting the speed and creating islands, you can now start the
+                            visualization to see the workings of the algorithm.</p>
+                        <p><span>Speed</span> - If the grid becomes to cluttered you can reload it and repeat the above
+                            steps.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- not displayed -->
+            <div class="controls">
+                <select class="algo">
+                    <option value=""></option>
+                </select>
+                <select class="weight">
+                    <option value="Unweighted"></option>
+                </select>
+            </div>
+        </div>
+    </header>
+    <main class="mainHome">
+        <div class="visualizationContainer">
+            <div id="gridContainer"></div>
+            <div class="algoInfo">
+                <div>
+                    <div class="infoHeading">
+                        <h3 class="title">Getting the maximum island</h3>
+                    </div>
+                    <p>
+                        We are given a binary grid(matrix) map of '1's and '0's(water).
+                        We are allowed to change at most one '0' t0 be '1'(flip one '0' to '1').
+                        Return the size of the largest island in the grid after applying the above opperation.
+                        In this case an island is classified as a <em><b>4-directionally</b></em> connected group of 1s.
+                        <br>
+                        In this <em><b>dfs</b></em> approach for every 0 encountered, we temporarily change if to a 1
+                        and
+                        estimate the
+                        maximum island formed. <br> After finding the size we change the 1 back to a 0. <br>Finally we
+                        will have the maximum island which we return.
+                    </p>
+                    <div>
+                        <p class="subtitle">Algorithm</p>
+                        <p>
+                            1. Traverse the entire grid swapping 1s for each island with an assigned group
+                            id(representing that island).
+                        </p>
+                        <p>
+                            2. Create a hashmap with mapId as key and size of island as value(this done in the first
+                            traversal).
+                        </p>
+                        <p>
+                            3. Traverse the grid for the ssecond time and find the 0s.
+                        </p>
+                        <p>
+                            4. Calculate the suns of all neighbors(4-directional) and add 1 to represent the flipped 0.
+                        </p>
+                        <p>
+                            5. Determine the maximum island by comparing previous sizes.
+                        </p>
+                        <p>
+                            6. If max is 0 after both traversals, return grid size, this is one big island.
+                        </p>
+                    </div>
+                    <div>
+                        <p class="subtitle">Computational complexity</p>
+                        This algorithm takes <b><em>O(M + N)</em></b> where
+                        M is the number of rows and N is the number of
+                        columns.
+                        The space complexity is <b><em>O(L)</em></b> where L is the size of the largest island.
+                    </div>
+                    <div class="reference">
+                        <a href="https://iq.opengenus.org/number-of-islands/">number of islands</a>
+                        <a href="https://iq.opengenus.org/making-a-large-island/">max island</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <p class="footer">algorithms visualizer @ 2021</p>
+    <script type="module" src="../Algorithms/Grid/index.js"></script>
+</body>
+
+</html>

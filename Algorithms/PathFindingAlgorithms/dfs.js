@@ -1,5 +1,5 @@
-import { setWall } from "../GridAlgorithms/createWalls.js";
-import { rowSize, colSize } from "../GridAlgorithms/index.js";
+import { setWall } from "../Grid/createWalls.js";
+import { rowSize, colSize } from "../Grid/index.js";
 
 let gridContainer = document.querySelector("#gridContainer");
 let speedSlider = document.querySelector(".speedSlider");

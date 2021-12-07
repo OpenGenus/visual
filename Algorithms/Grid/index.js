@@ -12,6 +12,7 @@ import { dfs } from "../PathFindingAlgorithms/dfs.js";
 import { bfs } from "../PathFindingAlgorithms/bfs.js";
 import { bfsIslands } from "../NoIslands/bfsIslands.js";
 import { dfsIslands } from "../NoIslands/dfsIslands.js";
+import { maxIsland } from "../NoIslands/largeIsland.js";
 
 // get dom elements
 const gridContainer = document.querySelector("#gridContainer");
@@ -92,39 +93,21 @@ const updateWeight = () => {
 };
 weightBtn.addEventListener("change", updateWeight);
 
-// const updateAlgo = () => {
-// 	algorithm = algoBtn.options[algoBtn.selectedIndex].value;
-// 	if (algorithm != "Dijkstras") {
-// 		weightBtn.value = "Unweighted";
-// 		weightType = weightBtn.options[weightBtn.selectedIndex].value;
-// 		// refreshEmptyBoard();
-// 	} else if (algorithm == "Dijkstras") {
-// 		if (weightBtn.value == "Unweighted") {
-// 			refreshEmptyBoard();
-// 		} else {
-// 			refreshBoard();
-// 		}
-// 	}
-// 	if (
-// 		algorithmType.classList.contains("bfs") ||
-// 		algorithmType.classList.contains("dfs")
-// 	) {
-// 		createStartNode(startRow, startCol);
-// 		createEndNode(endRow, endCol);
-// 	}
-// };
-// algoBtn.addEventListener("change", updateAlgo);
-
 const startVisualization = () => {
 	if (algorithmType.classList.contains("bfs")) {
 		bfs(startRow, startCol, endRow, endCol);
 	} else if (algorithmType.classList.contains("dfs")) {
 		dfs(startRow, startCol, endRow, endCol);
-	} else if (algorithmType.classList.contains("numIslands")) {
+	} else if (
+		algorithmType.classList.contains("numIslands") ||
+		algorithmType.classList.contains("maxIslands")
+	) {
 		if (islandAlgo === "bfs") {
 			bfsIslands();
 		} else if (islandAlgo === "dfs") {
 			dfsIslands();
+		} else if (algorithmType.classList.contains("maxIslands")) {
+			maxIsland();
 		}
 	}
 };
@@ -146,11 +129,14 @@ window.onload = () => {
 	) {
 		createStartNode(startRow, startCol);
 		createEndNode(endRow, endCol);
-	} else if (algorithmType.classList.contains("numIslands")) {
-		if (islandAlgo === "bfs") {
+	} else if (
+		algorithmType.classList.contains("numIslands") ||
+		algorithmType.classList.contains("maxIslands")
+	) {
+		if (islandAlgo === "bfs" || islandAlgo === "bfsMaxIslands") {
 			createStartNode(0, 0);
 			createEndNode(19, 39);
-		} else if (islandAlgo === "dfs") {
+		} else if (islandAlgo === "dfs" || islandAlgo === "dfsMaxIslands") {
 			createStartNode(0, 0);
 			createEndNode(0, 1);
 		}
