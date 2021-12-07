@@ -9,7 +9,6 @@ let bool = false;
 
 let extensions = [];
 let extensions2 = [];
-let extensions3 = [];
 let temp = [];
 let islands = [];
 let map = new Map();
@@ -56,9 +55,6 @@ class MaxIsland {
 		for (let m = 0; m < row; m++) {
 			for (let n = 0; n < col; n++) {
 				const ids = new Set();
-				// let node = document.querySelector(
-				// 	`div[row='${m}'][col='${n}']`
-				// );
 				if (grid[m][n] === 0) {
 					if (m < row - 1) ids.add(grid[m + 1][n]);
 					if (m > 0) ids.add(grid[m - 1][n]);
@@ -72,15 +68,9 @@ class MaxIsland {
 					});
 					maxIsland = Math.max(sum + 1, maxIsland);
 				}
-				// console.log(ids, m, n);
 				temp.push([ids, m, n]);
 			}
 		}
-		// console.log(map);
-		//push viable flips
-		// extensions.push(...arr);
-		// console.log(arr);
-		//return max island
 		return maxIsland === 0 ? row * col : maxIsland;
 	};
 }
@@ -184,32 +174,24 @@ export const dfsMaxIsland = () => {
 	//get now
 	let mapVals = new Map();
 	let vals = Array.from(map.values());
+	let keys = Array.from(map.keys());
 	for (let i = 0; i < vals.length; i++) {
-		mapVals.set([vals[i]], vals[i]);
+		mapVals.set([keys[i]], vals[i]);
 	}
 	let vals1 = vals.flatMap((v, i) => vals.slice(i + 1).map((w) => [v, w]));
+	let keys1 = keys.flatMap((v, i) => keys.slice(i + 1).map((w) => [v, w]));
 	for (let i = 0; i < vals1.length; i++) {
 		let sum = vals1[i].reduce((total, n) => parseInt(total) + parseInt(n));
-		mapVals.set(vals1[i], sum);
+		mapVals.set(keys1[i], sum);
 	}
+
+	for (let [key, value] of mapVals) {
+		if (value !== largest - 1) {
+			mapVals.delete(key);
+		}
+	}
+
 	console.log(mapVals);
-
-	// console.log(islands);
-
-	//end get now
-
-	// console.log(temp);
-
-	// let LA;
-	// for (let i = 0; i < islands.length; i++) {
-	// 	if (islands[i][0] == maxId) {
-	// 		LA = islands[i];
-	// 	}
-	// }
-
-	// let key = mapVals.get(maxIsland - 1);
-
-	// console.log(maxIsland);
 
 	const getValue = (mapVals, srch) => {
 		for (let [key, value] of mapVals.entries()) {
@@ -237,109 +219,55 @@ export const dfsMaxIsland = () => {
 		}
 	}
 
-	console.log("extensions 1");
-	console.log(extensions);
-	console.log("extensions 2");
-	console.log(extensions2);
-
 	for (let i = 0; i < extensions.length; i++) {
 		if (extensions[i][0].has(maxId)) {
 			extensions2.push(extensions[i]);
 		}
 	}
 
-	// console.log(LA);
-
-	// let x = 0;
-
-	// for (let i = 0; i < temp.length; i++) {
-	// 	let max = temp[i][0];
-	// 	x = Math.max(max, x);
-	// }
-
-	// for (let i = 0; i < temp.length; i++) {
-	// if (
-	// 	temp[i][1] >= 0 &&
-	// 	temp[i][2] >= 0 &&
-	// 	temp[i][0].size >= 2
-	// temp[i][0].size == p2.length + 1
-	// 	) {
-	// 		extensions.push(temp[i]);
-	// 	}
-	// 	if (temp[i][0].size == p2.length + 1) {
-	// 		extensions.push(temp[i]);
-	// 	}
-	// }
-
+	// console.log("extensions 1");
 	// console.log(extensions);
+	// console.log("extensions 2");
+	// console.log(extensions2);
 
-	// console.log(maxIsland);
-	// console.log(maxId);
-	// console.log(temp[0][0]);
+	let prime;
+	console.log("Sar");
+	for (let i = 0; i < extensions.length; i++) {
+		let sar = Array.from(extensions[i][0]);
+		sar.sort((a, b) => a - b);
+		sar.shift();
+		for (let [key, val] of mapVals.entries()) {
+			if (JSON.stringify(key) === JSON.stringify(sar)) {
+				prime = sar;
+			}
+		}
+	}
 
-	// let islandSize = console.log(maxIsland);
-	// let x = 0;
+	let final = [];
 
-	// for (let i = 0; i < temp.length; i++) {
-	// 	let max = temp[i][0];
-	// 	x = Math.max(max, x);
-	// }
+	for (let i = 0; i < extensions.length; i++) {
+		if (extensions[i][0].has(prime[0]) && extensions[i][0].has(prime[1])) {
+			final.push(extensions[i]);
+		}
+	}
 
-	// for (let i = 0; i < temp.length; i++) {
-	// 	if (temp[i][0] === maxIsland) {
-	// 		extensions.push(temp[i]);
-	// 	}
-	// }
-
-	// for (let i = 0; i < temp.length; i++) {
-	// 	if (temp[i][0] === x && temp[i][0] == maxIsland) {
-	// 		extensions.push(temp[i]);
-	// 	}
-	// }
-	// console.log(extensions);
+	console.log(final);
 
 	console.log("Largest is " + largest);
 
 	setTimeout(() => {
-		// let node = document.querySelector(
-		// 	`div[row='${extensions[0][1] + 1}'][col='${extensions[0][2]}']`
-		// );
-		// let wall = parseInt(node.getAttribute("wall"));
-		// // node.style.backgroundColor = "blue";
-		// if (node == null || wall == 1) {
-		// 	node = document.querySelector(
-		// 		`div[row='${extensions[0][1] - 1}'][col='${extensions[0][2]}']`
-		// 	);
-		// 	wall = parseInt(node.getAttribute("wall"));
-		// 	node.style.backgroundColor = "yellow";
-		// } else if (node == null || wall == 1) {
-		// 	node = document.querySelector(
-		// 		`div[row='${extensions[0][1]}'][col='${extensions[0][2] + 1}']`
-		// 	);
-		// 	wall = parseInt(node.getAttribute("wall"));
-		// 	node.style.backgroundColor = "green";
-		// } else if (node == null || wall == 1) {
-		// 	node = document.querySelector(
-		// 		`div[row='${extensions[0][1]}'][col='${extensions[0][2] - 1}']`
-		// 	);
-		// 	wall = parseInt(node.getAttribute("wall"));
-		// 	node.style.backgroundColor = "black";
-		// }
-
-		// let len = extensions.length - 1;
 		if (p1.length > 1) {
 			let node = document.querySelector(
-				`div[row='${extensions[0][1]}'][col='${extensions[0][2]}']`
+				`div[row='${final[0][1]}'][col='${final[0][2]}']`
 			);
 			node.style.backgroundColor = "yellow";
 		} else {
 			let node = document.querySelector(
 				`div[row='${extensions2[0][1]}'][col='${extensions2[0][2]}']`
 			);
-			node.style.backgroundColor = "yellow";
+			node.style.backgroundColor = "green";
 		}
-
-		// 	alert("The largest island is of size " + largest);
+		alert("The largest island is of size " + largest);
 		// window.location.reload();
 	}, rowSize * colSize * time + 1000);
 };
