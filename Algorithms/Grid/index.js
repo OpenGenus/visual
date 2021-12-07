@@ -80,9 +80,9 @@ const startVisualization = () => {
 			bfsIslands();
 		} else if (islandAlgo === "dfs") {
 			dfsIslands();
-		} else if (algorithmType.classList.contains("maxIslands")) {
-			maxIsland();
 		}
+	} else if (algorithmType.classList.contains("maxIsland")) {
+		maxIsland();
 	}
 };
 startBtn.addEventListener("click", startVisualization);
@@ -108,7 +108,7 @@ window.onload = () => {
 		algorithmType.classList.contains("numIslands") ||
 		algorithmType.classList.contains("maxIslands")
 	) {
-		if (islandAlgo === "bfs" || islandAlgo === "bfsMaxIslands") {
+		if (islandAlgo === "bfs") {
 			createStartNode(0, 0);
 			createEndNode(19, 39);
 			document
@@ -117,7 +117,10 @@ window.onload = () => {
 			document
 				.querySelector(`div[row='${19}'][col='${39}']`)
 				.classList.add("islandsPathNode");
-		} else if (islandAlgo === "dfs") {
+		} else if (
+			islandAlgo === "dfs" ||
+			algorithmType.classList.contains("maxIslands")
+		) {
 			createStartNode(0, 0);
 			createEndNode(0, 1);
 			document
