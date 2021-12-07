@@ -41,7 +41,6 @@ class MaxIsland {
 		let mapId = 2;
 		let row = grid.length;
 		let col = grid[0].length;
-		let arr = [];
 		for (let i = 0; i < row; i++) {
 			for (let j = 0; j < col; j++) {
 				if (grid[i][j] === 1) {
@@ -165,7 +164,7 @@ export const maxIsland = () => {
 	let matGrid = getGrid();
 	let largest = island.largestIsland(matGrid);
 
-	console.log(map);
+	// console.log(map);
 	let maxIsland = Math.max(...map.values());
 	let maxId = [...map.entries()]
 		.filter(({ 1: v }) => v === maxIsland)
@@ -191,7 +190,7 @@ export const maxIsland = () => {
 		}
 	}
 
-	console.log(mapVals);
+	// console.log(mapVals);
 
 	const getValue = (mapVals, srch) => {
 		for (let [key, value] of mapVals.entries()) {
@@ -202,7 +201,9 @@ export const maxIsland = () => {
 	let p1 = getValue(mapVals, largest - 1);
 
 	if (p1 == null) {
-		alert("Largest island is 1");
+		setTimeout(() => {
+			alert("Largest island is " + rowSize * colSize);
+		}, rowSize * colSize * time + 1000);
 	} else if (p1.length > 1) {
 		//filter sets of 3
 		for (let i = 0; i < temp.length; i++) {
@@ -230,14 +231,14 @@ export const maxIsland = () => {
 	// console.log("extensions 2");
 	// console.log(extensions2);
 
-	let prime;
+	let toFlip;
 	for (let i = 0; i < extensions.length; i++) {
-		let sar = Array.from(extensions[i][0]);
-		sar.sort((a, b) => a - b);
-		sar.shift();
+		let arr = Array.from(extensions[i][0]);
+		arr.sort((a, b) => a - b);
+		arr.shift();
 		for (let [key, val] of mapVals.entries()) {
-			if (JSON.stringify(key) === JSON.stringify(sar)) {
-				prime = sar;
+			if (JSON.stringify(key) == JSON.stringify(arr)) {
+				toFlip = arr;
 			}
 		}
 	}
@@ -245,14 +246,17 @@ export const maxIsland = () => {
 	let final = [];
 
 	for (let i = 0; i < extensions.length; i++) {
-		if (extensions[i][0].has(prime[0]) && extensions[i][0].has(prime[1])) {
-			final.push(extensions[i]);
+		if (toFlip !== null) {
+			if (
+				extensions[i][0].has(toFlip[0]) &&
+				extensions[i][0].has(toFlip[1])
+			) {
+				final.push(extensions[i]);
+			}
 		}
 	}
 
-	console.log(final);
-
-	console.log("Largest is " + largest);
+	// console.log(final);
 
 	setTimeout(() => {
 		if (p1.length > 1) {
@@ -264,7 +268,7 @@ export const maxIsland = () => {
 			let node = document.querySelector(
 				`div[row='${extensions2[0][1]}'][col='${extensions2[0][2]}']`
 			);
-			node.style.backgroundColor = "green";
+			node.style.backgroundColor = "yellow";
 		}
 		alert("The largest island is of size " + largest);
 		// window.location.reload();
