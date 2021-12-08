@@ -5,31 +5,31 @@
 	<meta charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta name="description" content="depth first search path finding algorithm">
+	<meta name="description" content="depth first search, breadth first search, number of islands" />
 	<meta name="keywords"
-		content="depth first search, depth first algorithm, depth first traversal, path finding, graph algorithms, algorithms, visualization, visual, graphs, graph traversal, traversal">
-	<meta name="author" content="lumunge">
-	<link rel="stylesheet" href="../Styles/index.css">
-	<link rel="stylesheet" href="../Styles/pathFinding.css">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@500&display=swap" rel="stylesheet">
-	<title>Depth first search path finding algorithm.</title>
+		content="breadth first search, breadth first algorithm, depth first search, depth first traversal, breadth first traversal, path finding, graph algorithms, graphs, algorithms, visualization, visual, graphs, graph traversal, traversal" />
+	<meta name="author" content="lumunge" />
+	<link rel="stylesheet" href="../Styles/index.css" />
+	<link rel="stylesheet" href="../Styles/pathFinding.css" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@500&display=swap" rel="stylesheet" />
+	<title>Number of islands.</title>
 </head>
 
 <body>
 	<nav>
-		<a href="../index.html">Visual Algo</a>
-		<a href="./bfs.html">bfs</a>
-		<a href="./dfs.html">dfs</a>
-		<a href="./dijkstra.html">dijkstra’s</a>
-		<a href="./islands.html">num islands</a>
-		<a href="./maxIsland.html">max island</a>
+		<a href="../index.html">OpenGenus Visuals</a>
+		<a href="./bfs-visual.html">bfs</a>
+		<a href="./dfs-visual.html">dfs</a>
+		<a href="./dijkstra-visual.html">dijkstra’s</a>
+		<a href="./islands-visual.html">num islands</a>
+		<a href="./maxIsland-visual.html">max island</a>
 	</nav>
 	<header>
 		<div class="heading">
-			<h2 class="algorithm dfs">Depth first search</h2>
-			<hr>
+			<h2 class="algorithm numIslands">Number of islands</h2>
+			<hr />
 		</div>
 		<div class="controlsContainer">
 			<div class="visualControls">
@@ -38,35 +38,33 @@
 					<input type="range" min="1" max="20" value="10" class="speedSlider" />
 				</div>
 				<div class="obstacles">
-					<p>Obstacles</p>
+					<p>Create islands</p>
 					<div class="obstaclesElements">
 						<input type="range" min="1" value="50" class="obstacleSlider" />
 						&nbsp;
-						<button class="setWalls btn">walls</button>
+						<button class="setWalls btn">islands</button>
 					</div>
 				</div>
 				<div class="controlBtns">
-					<button class="start btn">start</button>
-					<button class="clearPath btn">clear path</button>
-					<button class="reset btn">reload</button>
-					<select style="display: none;" class="islandsAlgo">
-						<option></option>
+					<button class="clearPath btn" style="display: none">clear path</button>
+					<select name="" class="islandsAlgo">
+						<option value="bfs">BFS</option>
+						<option value="dfs">DFS</option>
 					</select>
+					<button class="start btn">start</button>
+					<button class="reset btn">reload</button>
 				</div>
 				<div class="tutorialContainer">
 					<span><img class="info" src="../img/icons8-info-60.png" alt=""></span>
 					<div class="tutorialContent">
 						<h4>Controls</h4>
 						<p><span>Speed</span> - increase or decrease the speed of the visualization</p>
-						<p><span>Obstacles-</span> - create walls/obstacles, on a map these can be buildings or
-							structures which hinder a path. You can adjust the number of obstacles generated per click.
-							<br /> - You can also click on the grid cells to create
-							obstacles.
+						<p><span>Islands-</span> - create islands on the grid.
+							<br /> You can adjust the number of islands generated per click.
+							<br /> - You can also click on the grid cells to create an island.
 						</p>
-						<p><span>Start</span> - After adjusting the speed and creating obstacles, you can now start the
+						<p><span>Start</span> - After adjusting the speed and creating islands, you can now start the
 							visualization to see the workings of the algorithm.</p>
-						<p><span>Clear Path</span> - After visualizing, you may opt to clear the path and add more
-							obstacles.</p>
 						<p><span>Speed</span> - If the grid becomes to cluttered you can reload it and repeat the above
 							steps.</p>
 					</div>
@@ -89,46 +87,32 @@
 			<div class="tutorials">
 				<div class="tutorial">
 					<div class="emptyPath"></div>&nbsp;
-					<div>This is an empty path without any walls, you can click is to add obstacles/walls.</div>
-				</div>
-				<div class="tutorial">
-					<div class="stedimg"><span class="txt">A</span></div>&nbsp;
-					<div>Start Node -> this is the starting point(source),
-						search for a path starts here.</div>
-				</div>
-				<div class="tutorial">
-					<div class="stedimg"><span class="txt">B</span></div>&nbsp;
-					<div>End Node -> where the search stops when a path to destination has been found</div>
+					<div>This is represents an empty area without any islands.</div>
 				</div>
 				<div class="tutorial">
 					<div class="obstacle"></div>&nbsp;
-					<div>These act as obstacles, walls. On a real map these may be buildings or structures that may
-						block
-						a shorter path to a destination.</div>
+					<div>These are islands, which we are to count. The definition of an island is described in the
+						algorithm section below.</div>
 				</div>
 				<div class="tutorial">
-					<div class="selectedPath"><span class="txt">7</span></div>&nbsp;
-					<div>After the algorithm is complete, we have arrived at the destination, now the shortest path is
-						highlighted in green with the cost of path written written in black inside the path.</div>
+					<div class="selectedPath islands"></div>&nbsp;
+					<div>This highlights how the algorithm traverses the grid looking fr islands, after the algorithm is
+						complete, we have finished counting the number of islands.</div>
 				</div>
 			</div>
 			<div class="algoInfo">
 				<div>
 					<div class="infoHeading">
-						<h3 class="title">Depth first traversal.</h3>
+						<h3 class="title">Number of islands</h3>
 					</div>
 					<p>
-						This algorithm starts its search at the root and
-						explores one of its children's subtree and then moves
-						on to the next child's subtree and etcetera <br />
-						The idea used is to go as deep into the graph as
-						possible and backtrack once we reach a vertex with
-						unvisited neighbors. <br />
-						That is, start search at one vertex, after visiting
-						the vertex, perform dfs for each unvisited adjacent
-						vertex. In this way we visit all vertices reachable
-						from the starting vertex. <br />
-						We use a <b><em>stack</em></b> data structure.
+						We are given a grid map of '1's and '0's(water). We
+						are to count the number of islands on the grid.<br.>
+							An island is surrounded by water and formed by
+							connecting adjacent land horizontally or vertocally.
+							In other words an island is a group of connected '1's.
+							We assume all four edges of the whole grid are
+							surrounded by water.
 					</p>
 					<div>
 						<p class="subtitle">Algorithm</p>
@@ -167,8 +151,9 @@
 					</div>
 					<div>
 						<p class="subtitle">Computational complexity</p>
-						This algorithm takes <b><em>O(V + E)</em></b> where v is the number of
-						vertices and e is the number of edges.
+						This algorithm takes <b><em>O(M + N)</em></b> where
+						M is the number of rows and E is the number of
+						columns.
 					</div>
 					<div>
 						<p class="subtitle">Applications</p>
@@ -184,7 +169,7 @@
 						</ul>
 					</div>
 					<div class="reference">
-						<a href="https://iq.opengenus.org/bfs-graph-traversal/">reference</a>
+						<a href="https://iq.opengenus.org/number-of-islands/">reference</a>
 					</div>
 				</div>
 			</div>
