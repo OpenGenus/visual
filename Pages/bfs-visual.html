@@ -39,14 +39,25 @@
 </head>
 
 <body>
-	<nav>
-		<a href="../index.html">OpenGenus Visuals</a>
-		<a href="./bfs-visual.html">bfs</a>
-		<a href="./dfs-visual.html">dfs</a>
-		<!-- <a href="./dijkstra-visual.html">dijkstra’s</a> -->
-		<a href="./islands-visual.html">num islands</a>
-		<a href="./maxIsland-visual.html">max island</a>
-	</nav>
+	<div class="menu">
+		<div class="nav">
+			<div class="logo">
+				<a href="../index.html">OpenGenus Visuals</a>
+			</div>
+			<div class="nav-links">
+				<a href="./bfs-visual.html">bfs</a>
+				<a href="./dfs-visual.html">dfs</a>
+				<!-- <a href="./Pages/dijkstra-visual.html">dijkstra’s</a> -->
+				<a href="./islands-visual.html">num islands</a>
+				<a href="./maxIsland-visual.html">max island</a>
+			</div>
+		</div>
+		<div class="hamburger">
+			<span class="bar"></span>
+			<span class="bar"></span>
+			<span class="bar"></span>
+		</div>
+	</div>
 	<header>
 		<div class="heading">
 			<h2 class="algorithm bfs">Breadth first search visualization</h2>
@@ -138,16 +149,18 @@
 					<div class="infoHeading">
 						<h3 class="title">Breadth first traversal</h3>
 					</div>
-					This algorithm starts from a chosen node(source) and examines
-					all its neighbors, then it examines all the neighbors of
-					the neighbors, and etcetera. <br />
-					The algorithm can be understood as a
-					<em>"fire spreading"</em> on the graph, at the 0th step
-					only the source is on fire. At each step, the buring
-					fire at each vertex spreads to all its neighbors. <br />
-					The <em>ring of fire</em> is expanded at each iteration.
-					We use a <b><em>queue</em></b> data structure.
-					<div>
+					<div class="description">
+						This algorithm starts from a chosen node(source) and examines
+						all its neighbors, then it examines all the neighbors of
+						the neighbors, and etcetera. <br />
+						The algorithm can be understood as a
+						<em>"fire spreading"</em> on the graph, at the 0th step
+						only the source is on fire. At each step, the buring
+						fire at each vertex spreads to all its neighbors. <br />
+						The <em>ring of fire</em> is expanded at each iteration.
+						We use a <b><em>queue</em></b> data structure.
+					</div>
+					<div class="algo-steps">
 						<p class="subtitle">Algorithm</p>
 						<p>
 							1. Add root node to the queue, and mark it as
@@ -177,7 +190,7 @@
 							3. If queue is empty, then no path exists!
 						</p>
 					</div>
-					<div>
+					<div class="complexity">
 						<p class="subtitle">Computational complexity</p>
 						This algorithm takes <b><em>O(V + E)</em></b> where V is the number of
 						vertices and E is the number of edges.
@@ -195,7 +208,8 @@
 						</ul>
 					</div>
 					<div class="reference">
-						<a href="https://iq.opengenus.org/bfs-graph-traversal/">reference</a>
+						<p>References</p>
+						<a href="https://iq.opengenus.org/bfs-graph-traversal/">bfs</a>
 					</div>
 				</div>
 			</div>
@@ -212,6 +226,7 @@
 			<span><a href="https://twitter.com/OpenGenus"> Twitter</a></span>
 		</div>
 	</footer>
+	<script src="../assets/js/common/index.js"></script>
 	<script type="module" src="../assets/js/visual/Grid/index.js"></script>
 </body>
 

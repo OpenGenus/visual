@@ -39,14 +39,25 @@
 </head>
 
 <body>
-    <nav>
-        <a href="../index.html">OpenGenus Visuals</a>
-        <a href="./bfs-visual.html">bfs</a>
-        <a href="./dfs-visual.html">dfs</a>
-        <a href="./dijkstra-visual.html">dijkstra’s</a>
-        <a href="./islands-visual.html">num islands</a>
-        <a href="./maxIsland-visual.html">max island</a>
-    </nav>
+    <div class="menu">
+        <div class="nav">
+            <div class="logo">
+                <a href="../index.html">OpenGenus Visuals</a>
+            </div>
+            <div class="nav-links">
+                <a href="./bfs-visual.html">bfs</a>
+                <a href="./dfs-visual.html">dfs</a>
+                <!-- <a href="./Pages/dijkstra-visual.html">dijkstra’s</a> -->
+                <a href="./islands-visual.html">num islands</a>
+                <a href="./maxIsland-visual.html">max island</a>
+            </div>
+        </div>
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </div>
     <header>
         <div class="heading">
             <h2 class="algorithm dijkstras">Dijkstra’s shortest path algorithm visualization</h2>
@@ -141,24 +152,31 @@
                     <div class="infoHeading">
                         <h3 class="title">Dijkstra’s shortest path algorithm</h3>
                     </div>
-                    This algorithm finds a shortest path tree from a single source node by building a set of nodes that
-                    have a minimum distance from the source node. <br />
-                    This algorithm uses a greedy approach in that we find the next best solution in hope that it will
-                    lead to a generalized optimal solution.
-                    <u>Vertices</u> are denoted by <em>u</em> and <em>v</em>. In our case in the above grid we place the
-                    weights inside the vertex denoting the weight to get to it. <br>
-                    <u>Weighted edges</u> that connect two nodes (u, v) are denoted as w(u, v). <br>
-                    <u><em>dist</em></u> is an array of distances from source <em>s</em> to every node in the graph.
-                    <em>s</em> is initialized as 0 and for all other nodes we initialize them as &#8734;. <em>dist(v) =
-                        &#8734;</em> <br>
-                    We use a <u><b><em>queue (Q)</em></b></u> data structure to store all nodes in the graph and at the
-                    end of
-                    the
-                    algorithm the queue will be empty. <br>
-                    <u>S</u> - an empty set to indicate which nodes the algorithm has visited. At the end of the
-                    algorithm, S
-                    will contain all nodes of the graph.
-                    <div>
+                    <div class="description">
+                        This algorithm finds a shortest path tree from a single source node by building a set of nodes
+                        that
+                        have a minimum distance from the source node. <br />
+                        This algorithm uses a greedy approach in that we find the next best solution in hope that it
+                        will
+                        lead to a generalized optimal solution.
+                        <u>Vertices</u> are denoted by <em>u</em> and <em>v</em>. In our case in the above grid we place
+                        the
+                        weights inside the vertex denoting the weight to get to it. <br>
+                        <u>Weighted edges</u> that connect two nodes (u, v) are denoted as w(u, v). <br>
+                        <u><em>dist</em></u> is an array of distances from source <em>s</em> to every node in the graph.
+                        <em>s</em> is initialized as 0 and for all other nodes we initialize them as &#8734;.
+                        <em>dist(v) =
+                            &#8734;</em> <br>
+                        We use a <u><b><em>queue (Q)</em></b></u> data structure to store all nodes in the graph and at
+                        the
+                        end of
+                        the
+                        algorithm the queue will be empty. <br>
+                        <u>S</u> - an empty set to indicate which nodes the algorithm has visited. At the end of the
+                        algorithm, S
+                        will contain all nodes of the graph.
+                    </div>
+                    <div class="algo-steps">
                         <p class="subtitle">Algorithm</p>
                         <p>
                             1. While Q is not empty, we pop the node v that is not in <em>S</em> from <em>Q</em> with
@@ -184,7 +202,7 @@
                             contain the shortest path(smallest distance) from source s to destination.
                         </p>
                     </div>
-                    <div>
+                    <div class="complexity">
                         <p class="subtitle">Computational complexity</p>
                         This algorithm takes <b><em>O(V + E log V)</em></b> in the all cases where V is the number of
                         vertices and E is the number of edges. <br>
@@ -219,6 +237,7 @@
             <span><a href="https://twitter.com/OpenGenus"> Twitter</a></span>
         </div>
     </footer>
+    <script src="../assets/js/common/index.js"></script>
     <script type="module" src="../assets/js/visual/Grid/index.js"></script>
 </body>
 

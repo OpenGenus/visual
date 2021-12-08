@@ -38,14 +38,25 @@
 </head>
 
 <body>
-	<nav>
-		<a href="../index.html">OpenGenus Visuals</a>
-		<a href="./bfs-visual.html">bfs</a>
-		<a href="./dfs-visual.html">dfs</a>
-		<!-- <a href="./dijkstra-visual.html">dijkstra’s</a> -->
-		<a href="./islands-visual.html">num islands</a>
-		<a href="./maxIsland-visual.html">max island</a>
-	</nav>
+	<div class="menu">
+		<div class="nav">
+			<div class="logo">
+				<a href="../index.html">OpenGenus Visuals</a>
+			</div>
+			<div class="nav-links">
+				<a href="./bfs-visual.html">bfs</a>
+				<a href="./dfs-visual.html">dfs</a>
+				<!-- <a href="./Pages/dijkstra-visual.html">dijkstra’s</a> -->
+				<a href="./islands-visual.html">num islands</a>
+				<a href="./maxIsland-visual.html">max island</a>
+			</div>
+		</div>
+		<div class="hamburger">
+			<span class="bar"></span>
+			<span class="bar"></span>
+			<span class="bar"></span>
+		</div>
+	</div>
 	<header>
 		<div class="heading">
 			<h2 class="algorithm numIslands">Number of islands visualization</h2>
@@ -125,16 +136,18 @@
 					<div class="infoHeading">
 						<h3 class="title">Number of islands</h3>
 					</div>
-					<p>
-						We are given a grid map of '1's and '0's(water). We
-						are to count the number of islands on the grid.<br.>
-							An island is surrounded by water and formed by
-							connecting adjacent land horizontally or vertocally.
-							In other words an island is a group of connected '1's.
-							We assume all four edges of the whole grid are
-							surrounded by water.
-					</p>
-					<div>
+					<div class="description">
+						<p>
+							We are given a grid map of '1's and '0's(water). We
+							are to count the number of islands on the grid.<br.>
+								An island is surrounded by water and formed by
+								connecting adjacent land horizontally or vertocally.
+								In other words an island is a group of connected '1's.
+								We assume all four edges of the whole grid are
+								surrounded by water.
+						</p>
+					</div>
+					<div class="algo-steps">
 						<p class="subtitle">Algorithm</p>
 						<p>
 							1. Mark the current node as visited(initially
@@ -169,13 +182,13 @@
 							not in the tree!
 						</p>
 					</div>
-					<div>
+					<div class="complexity">
 						<p class="subtitle">Computational complexity</p>
 						This algorithm takes <b><em>O(M + N)</em></b> where
 						M is the number of rows and E is the number of
 						columns.
 					</div>
-					<div>
+					<div class="applications">
 						<p class="subtitle">Applications</p>
 						<ul>
 							<li>topological sorting.</li>
@@ -189,7 +202,8 @@
 						</ul>
 					</div>
 					<div class="reference">
-						<a href="https://iq.opengenus.org/number-of-islands/">reference</a>
+						<p>References</p>
+						<a href="https://iq.opengenus.org/number-of-islands/">number of islands</a>
 					</div>
 				</div>
 			</div>
@@ -206,6 +220,7 @@
 			<span><a href="https://twitter.com/OpenGenus"> Twitter</a></span>
 		</div>
 	</footer>
+	<script src="../assets/js/common/index.js"></script>
 	<script type="module" src="../assets/js/visual/Grid/index.js"></script>
 </body>
 

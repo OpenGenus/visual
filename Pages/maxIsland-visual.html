@@ -39,14 +39,25 @@
 </head>
 
 <body>
-    <nav>
-        <a href="../index.html">OpenGenus Visuals</a>
-        <a href="./bfs-visual.html">bfs</a>
-        <a href="./dfs-visual.html">dfs</a>
-        <!-- <a href="./dijkstra-visual.html">dijkstra’s</a> -->
-        <a href="./islands-visual.html">num islands</a>
-        <a href="./maxIsland-visual.html">max island</a>
-    </nav>
+    <div class="menu">
+        <div class="nav">
+            <div class="logo">
+                <a href="../index.html">OpenGenus Visuals</a>
+            </div>
+            <div class="nav-links">
+                <a href="./bfs-visual.html">bfs</a>
+                <a href="./dfs-visual.html">dfs</a>
+                <!-- <a href="./Pages/dijkstra-visual.html">dijkstra’s</a> -->
+                <a href="./islands-visual.html">num islands</a>
+                <a href="./maxIsland-visual.html">max island</a>
+            </div>
+        </div>
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </div>
     <header>
         <div class="heading">
             <h2 class="algorithm maxIsland">Making a large island visualization</h2>
@@ -109,19 +120,24 @@
                     <div class="infoHeading">
                         <h3 class="title">Getting the maximum island</h3>
                     </div>
-                    <p>
-                        We are given a binary grid(matrix) map of '1's and '0's(water).
-                        We are allowed to change at most one '0' t0 be '1'(flip one '0' to '1').
-                        Return the size of the largest island in the grid after applying the above opperation.
-                        In this case an island is classified as a <em><b>4-directionally</b></em> connected group of 1s.
-                        <br>
-                        In this <em><b>dfs</b></em> approach for every 0 encountered, we temporarily change if to a 1
-                        and
-                        estimate the
-                        maximum island formed. <br> After finding the size we change the 1 back to a 0. <br>Finally we
-                        will have the maximum island which we return.
-                    </p>
-                    <div>
+                    <div class="description">
+                        <p>
+                            We are given a binary grid(matrix) map of '1's and '0's(water).
+                            We are allowed to change at most one '0' t0 be '1'(flip one '0' to '1').
+                            Return the size of the largest island in the grid after applying the above opperation.
+                            In this case an island is classified as a <em><b>4-directionally</b></em> connected group of
+                            1s.
+                            <br>
+                            In this <em><b>dfs</b></em> approach for every 0 encountered, we temporarily change if to a
+                            1
+                            and
+                            estimate the
+                            maximum island formed. <br> After finding the size we change the 1 back to a 0. <br>Finally
+                            we
+                            will have the maximum island which we return.
+                        </p>
+                    </div>
+                    <div class="algo-steps">
                         <p class="subtitle">Algorithm</p>
                         <p>
                             1. Traverse the entire grid swapping 1s for each island with an assigned group
@@ -144,7 +160,7 @@
                             6. If max is 0 after both traversals, return grid size, this is one big island.
                         </p>
                     </div>
-                    <div>
+                    <div class="complexity">
                         <p class="subtitle">Computational complexity</p>
                         This algorithm takes <b><em>O(M + N)</em></b> where
                         M is the number of rows and N is the number of
@@ -152,6 +168,7 @@
                         The space complexity is <b><em>O(L)</em></b> where L is the size of the largest island.
                     </div>
                     <div class="reference">
+                        <p>References</p>
                         <a href="https://iq.opengenus.org/number-of-islands/">number of islands</a> <br>
                         <a href="https://iq.opengenus.org/making-a-large-island/">max island</a>
                     </div>
@@ -170,6 +187,7 @@
             <span><a href="https://twitter.com/OpenGenus"> Twitter</a></span>
         </div>
     </footer>
+    <script src="../assets/js/common/index.js"></script>
     <script type="module" src="../assets/js/visual/Grid/index.js"></script>
 </body>
 

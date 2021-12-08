@@ -8,28 +8,81 @@ body {
 		Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;
 }
 /* navbar styling */
-nav {
-	position: fixed;
-	top: 0;
-	width: 100%;
+.menu {
 	background-color: #5a46cd;
+	display: flex;
 	height: 10vh;
 	display: flex;
 	align-items: center;
+	position: fixed;
+	top: 0;
+	width: 100%;
 	z-index: 99;
 }
-nav a {
+.nav {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+.nav-links {
+	padding-right: 2rem;
+}
+.logo a {
 	font-size: 1.2rem;
 	text-decoration: none;
-	margin-left: 2rem;
 	color: #fff;
 	font-weight: 600;
+	padding-left: 2rem;
+}
+.nav-links a {
+	font-size: 1.2rem;
+	text-decoration: none;
+	padding-left: 2rem;
+	color: #fff;
 }
 nav a:hover {
 	transition: all 0.5s ease-in-out;
 	cursor: pointer;
 }
+.hamburger {
+	display: none;
+}
+.bar {
+	display: block;
+	width: 25px;
+	height: 3px;
+	margin: 5px auto;
+	-webkit-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+	background-color: #fff;
+	border-radius: 20px;
+}
 /* end navbar styling */
+
+/* header styling */
+header {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	height: 10vh;
+	margin-top: 6rem;
+}
+
+.heading {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+.heading hr {
+	background-color: #5a46cd;
+	width: 20%;
+	height: 4px;
+	border-radius: 20px;
+	border: none;
+}
+/* end header styling */
+
 /* footer styling */
 footer {
 	background-color: #000;
@@ -189,8 +242,56 @@ footer a {
 	}
 	.tutorialContent {
 		top: 30px;
-		left: -200px;
+		left: -150px;
 		width: 300px;
 		height: 400px;
+	}
+	.tutorialContent:after {
+		top: -20px;
+		left: 150px;
+	}
+}
+@media only screen and (max-width: 768px) {
+	.hamburger {
+		display: block;
+		cursor: pointer;
+		padding-right: 2rem;
+	}
+	.hamburger.active .bar:nth-child(1) {
+		transform: translateY(8px) rotate(46deg);
+	}
+	.hamburger.active .bar:nth-child(2) {
+		opacity: 0;
+	}
+	.hamburger.active .bar:nth-child(3) {
+		transform: translateY(-9px) rotate(-46deg);
+	}
+	.nav-links {
+		position: fixed;
+		left: -150%;
+		top: 4rem;
+	}
+	.nav-links.active {
+		left: 0;
+		transition: 0.7s ease-in-out;
+		background-color: #5a46cd;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+		padding-bottom: 2rem;
+	}
+	.nav-links a {
+		padding-bottom: 1rem;
+	}
+	/* responsive footer */
+	footer {
+		display: flex;
+		flex-direction: column-reverse;
+		align-items: center;
+		justify-content: center;
+	}
+	footer .copy {
+		margin-top: 1rem;
 	}
 }

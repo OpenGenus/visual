@@ -1,35 +1,3 @@
-header {
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-	height: 10vh;
-	margin-top: 6rem;
-}
-
-.heading {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-.heading hr {
-	background-color: #2ecc71;
-	width: 10%;
-	height: 4px;
-	border-radius: 20px;
-	border: none;
-}
-/* visual container styling */
-/* .visualizationContainer {
-	display: flex;
-	flex-direction: row;
-	margin: 0 2rem;
-}
-.algoInfo {
-	margin-top: 3rem;
-	height: 66vh;
-	overflow-y: scroll;
-	padding: 0 1rem;
-} */
 .obstacles {
 	margin-left: 2rem;
 }
@@ -126,15 +94,21 @@ header {
 }
 
 /* end visual container styling */
+.description,
+.algo-steps .complexity,
+.complexity,
+.reference {
+	padding: 1rem 0;
+}
 .infoHeading {
 	padding-bottom: 1rem;
 }
 .title {
-	color: #3498db;
+	color: #5a46cd;
 	text-align: center;
 }
 .subtitle {
-	color: #2ecc71;
+	color: #5a46cd;
 	text-align: center;
 	text-decoration: underline;
 }
@@ -142,7 +116,7 @@ header {
 	padding-left: 1rem;
 }
 .reference a {
-	color: #2ecc71;
+	color: #5a46cd;
 }
 .nest2 {
 	padding-left: 2rem;
@@ -234,7 +208,7 @@ header {
 	#gridContainer {
 		overflow-x: scroll;
 		margin: 0 1rem;
-		margin-top: 6rem !important;
+		margin-top: 9rem !important;
 	}
 	.visualControls {
 		display: flex;
