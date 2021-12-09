@@ -64,6 +64,12 @@ class Visualize {
 		setTimeout(() => {
 			node.setAttribute("class", "chosenPath");
 		}, count * time);
+		setTimeout(() => {
+			let wall = parseInt(node.getAttribute("wall"));
+			if (wall == 1) {
+				node.setAttribute("class", "beforeStart wall");
+			}
+		}, count * time + 100);
 	};
 
 	checkUpdateNode = (row, col, curr, checker, visited, count) => {
@@ -71,8 +77,6 @@ class Visualize {
 			var node = document.querySelector(
 				`div[row="${row}"][col="${col}"]`
 			);
-			let wall = parseInt(node.getAttribute("wall"));
-			if (wall == 1) return;
 			let prow = parseInt(curr.getAttribute("row"));
 			let pcol = parseInt(curr.getAttribute("col"));
 			if (weightType == "weighted") {
@@ -98,7 +102,7 @@ class Visualize {
 				}
 
 				//change color
-				this.changeColor(curr, count, curr.getAttribute("cost"));
+				this.changeColor(curr, count);
 				if (!visited.includes(node)) {
 					checker.push(node);
 				}
@@ -144,8 +148,6 @@ class Visualize {
 			let curr = checker.pop();
 			let row = parseInt(curr.getAttribute("row"));
 			let col = parseInt(curr.getAttribute("col"));
-			let wall = parseInt(curr.getAttribute("wall"));
-			if (wall == 1) continue;
 
 			//check 4 sides of node
 			this.checkUpdateNode(row + 1, col, curr, checker, visited, count);

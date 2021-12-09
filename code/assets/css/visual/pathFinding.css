@@ -1,35 +1,3 @@
-header {
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-	height: 10vh;
-	margin-top: 6rem;
-}
-
-.heading {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-.heading hr {
-	background-color: #2ecc71;
-	width: 10%;
-	height: 4px;
-	border-radius: 20px;
-	border: none;
-}
-/* visual container styling */
-/* .visualizationContainer {
-	display: flex;
-	flex-direction: row;
-	margin: 0 2rem;
-}
-.algoInfo {
-	margin-top: 3rem;
-	height: 66vh;
-	overflow-y: scroll;
-	padding: 0 1rem;
-} */
 .obstacles {
 	margin-left: 2rem;
 }
@@ -73,15 +41,25 @@ header {
 	border-radius: 50%;
 	font-size: 12px;
 }
+.islandsPathNode {
+	background-color: transparent;
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+		rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+		rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+	border: 1px solid #000;
+}
 /* wall styling */
 .wall {
 	background-color: #ee172d;
-	color: blue;
+	color: #fff;
 	text-align: center;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	/* border: none; */
+}
+.island {
+	background-color: purple;
 }
 .setWalls {
 	cursor: pointer;
@@ -116,15 +94,21 @@ header {
 }
 
 /* end visual container styling */
+.description,
+.algo-steps .complexity,
+.complexity,
+.reference {
+	padding: 1rem 0;
+}
 .infoHeading {
 	padding-bottom: 1rem;
 }
 .title {
-	color: #3498db;
+	color: #5a46cd;
 	text-align: center;
 }
 .subtitle {
-	color: #2ecc71;
+	color: #5a46cd;
 	text-align: center;
 	text-decoration: underline;
 }
@@ -132,7 +116,7 @@ header {
 	padding-left: 1rem;
 }
 .reference a {
-	color: #2ecc71;
+	color: #5a46cd;
 }
 .nest2 {
 	padding-left: 2rem;
@@ -147,7 +131,7 @@ header {
 	justify-content: center;
 	height: 50%;
 }
-.controls {
+.hide {
 	display: none;
 }
 .controlBtns {
@@ -169,10 +153,6 @@ header {
 }
 .btn:hover {
 	cursor: pointer;
-}
-.footer {
-	text-align: center;
-	margin: 3rem 0;
 }
 
 @media (max-width: 575.98px) {
@@ -228,7 +208,7 @@ header {
 	#gridContainer {
 		overflow-x: scroll;
 		margin: 0 1rem;
-		margin-top: 6rem !important;
+		margin-top: 9rem !important;
 	}
 	.visualControls {
 		display: flex;
@@ -267,8 +247,6 @@ header {
 	}
 	.algoInfo {
 		margin-top: 3rem;
-		height: 66vh;
-		/* overflow-y: scroll; */
 		padding: 0 1rem;
 	}
 }

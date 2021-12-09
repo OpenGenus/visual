@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="depth first search, breadth first search, number of islands" />
+	<meta name="keywords"
+		content="breadth first search, breadth first algorithm, depth first search, depth first traversal, breadth first traversal, path finding, graph algorithms, graphs, algorithms, visualization, visual, graphs, graph traversal, traversal" />
+	<meta name="author" content="lumunge" />
+	<meta name="HandheldFriendly" content="True" />
+	<meta property="og:site_name" content="OpenGenus IQ: Computing Expertise &amp; Legacy" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Number of islands visualization" />
+	<meta property="og:description"
+		content="data structures and algorithms visualization, number of islands visualization, count islands on a graph, path finding algorithms, graph algorithms visualization, visual, graphs, graph traversal, traversal" />
+	<meta property="og:url" content="https://iq.opengenus.org/algorithm-siaualization/" />
+	<meta property="article:published_time" content="2021-12-08T10:39:05.000Z" />
+	<meta property="article:modified_time" content="2021-12-08T19:39:45.000Z" />
+	<meta property="article:tag" content="Algorithms" />
+	<meta property="article:tag" content="Data Structures" />
+	<meta property="article:tag" content="Visualization" />
+	<meta property="article:publisher" content="https://www.facebook.com/opengenus" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:title" content="Visualization" />
+	<meta name="twitter:description" content="Number of islands algorithm visualization, counting islands on a graph" />
+	<meta name="twitter:url" content="https://iq.opengenus.org/algorithm-siaualization/" />
+	<meta name="twitter:label1" content="Written by" />
+	<meta name="twitter:data1" content="Erick Lumunge" />
+	<meta name="twitter:label2" content="Filed under" />
+	<meta name="twitter:data2" content="Visualization, Algorithms, Data Structures" />
+	<meta name="twitter:site" content="@OpenGenus" />
+	<link rel="shortcut icon" type="image/png" href="./assets/images/fav1.ico" />
+	<link rel="stylesheet" href="./assets/css/visual/index.css">
+	<link rel="stylesheet" href="./assets/css/visual/pathFinding.css">
+	<title>Number of islands.</title>
+</head>
+
+<body>
+	<div class="menu">
+		<div class="nav">
+			<div class="logo">
+				<a href="./index.html">OpenGenus Visuals</a>
+			</div>
+			<div class="nav-links">
+				<a href="/bfs-visual">bfs</a>
+				<a href="/dfs-visual">dfs</a>
+				<!-- <a href="/dijkstra-visual">dijkstra’s</a> -->
+				<a href="/islands-visual">num islands</a>
+				<a href="/max-Island-visual">max island</a>
+			</div>
+		</div>
+		<div class="hamburger">
+			<span class="bar"></span>
+			<span class="bar"></span>
+			<span class="bar"></span>
+		</div>
+	</div>
+	<header>
+		<div class="heading">
+			<h2 class="algorithm numIslands">Number of islands visualization</h2>
+			<hr />
+		</div>
+		<div class="controlsContainer">
+			<div class="visualControls">
+				<div class="visualSpeed">
+					<p>Speed</p>
+					<input type="range" min="1" max="20" value="10" class="speedSlider" />
+				</div>
+				<div class="obstacles">
+					<p>Create islands</p>
+					<div class="obstaclesElements">
+						<input type="range" min="1" value="50" class="obstacleSlider" />
+						&nbsp;
+						<button class="setWalls btn">islands</button>
+					</div>
+				</div>
+				<div class="controlBtns">
+					<button class="clearPath btn" style="display: none">clear path</button>
+					<select name="" class="islandsAlgo">
+						<option value="bfs">BFS</option>
+						<option value="dfs">DFS</option>
+					</select>
+					<button class="start btn">start</button>
+					<button class="reset btn">reload</button>
+				</div>
+				<div class="tutorialContainer">
+					<span><img class="info" src="./assets/images/icons8-info-60.png" alt=""></span>
+					<div class="tutorialContent">
+						<h4>Controls</h4>
+						<p><span>Speed</span> - increase or decrease the speed of the visualization</p>
+						<p><span>Islands-</span> - create islands on the grid.
+							<br /> You can adjust the number of islands generated per click.
+							<br /> - You can also click on the grid cells to create an island.
+						</p>
+						<p><span>Start</span> - After adjusting the speed and creating islands, you can now start the
+							visualization to see the workings of the algorithm.</p>
+						<p><span>Speed</span> - If the grid becomes to cluttered you can reload it and repeat the above
+							steps.</p>
+					</div>
+				</div>
+			</div>
+			<!-- not displayed -->
+			<div class="hide">
+				<select class="algo">
+					<option value=""></option>
+				</select>
+				<select class="weight">
+					<option value=""></option>
+				</select>
+			</div>
+		</div>
+	</header>
+	<main>
+		<div class="visualizationContainer">
+			<div id="gridContainer"></div>
+			<div class="tutorials">
+				<div class="tutorial">
+					<div class="emptyPath"></div>&nbsp;
+					<div>This is represents an empty area without any islands.</div>
+				</div>
+				<div class="tutorial">
+					<div class="obstacle"></div>&nbsp;
+					<div>These are islands, which we are to count. The definition of an island is described in the
+						algorithm section below.</div>
+				</div>
+				<div class="tutorial">
+					<div class="selectedPath islands"></div>&nbsp;
+					<div>This highlights how the algorithm traverses the grid looking fr islands, after the algorithm is
+						complete, we have finished counting the number of islands.</div>
+				</div>
+			</div>
+			<div class="algoInfo">
+				<div>
+					<div class="infoHeading">
+						<h3 class="title">Number of islands</h3>
+					</div>
+					<div class="description">
+						<p>
+							We are given a grid map of '1's and '0's(water). We
+							are to count the number of islands on the grid.<br.>
+								An island is surrounded by water and formed by
+								connecting adjacent land horizontally or vertocally.
+								In other words an island is a group of connected '1's.
+								We assume all four edges of the whole grid are
+								surrounded by water.
+						</p>
+					</div>
+					<div class="algo-steps">
+						<p class="subtitle">Algorithm</p>
+						<p>
+							1. Mark the current node as visited(initially
+							current node is the root node).
+						</p>
+						<p>
+							2. Check if current node is the goal, If so,
+							then return it.
+						</p>
+						<p>
+							1. Iterate over children nodes of current node,
+							and do the following:
+						</p>
+						<p class="nest1">
+							2. Check if a child node is not visited.
+						</p>
+						<p class="nest1">
+							1.If so, then, mark it as visited.
+						</p>
+						<p class="nest1">
+							3. Go to it's sub tree recursively until you
+							find the goal node(In other words, do the same
+							steps here passing the child node as the current
+							node in the next recursive call).
+						</p>
+						<p class="nest1">
+							4. If the child node has the goal node in this
+							sub tree, then, return it.
+						</p>
+						<p>
+							3. If goal node is not found, then goal node is
+							not in the tree!
+						</p>
+					</div>
+					<div class="complexity">
+						<p class="subtitle">Computational complexity</p>
+						This algorithm takes <b><em>O(M + N)</em></b> where
+						M is the number of rows and E is the number of
+						columns.
+					</div>
+					<div class="applications">
+						<p class="subtitle">Applications</p>
+						<ul>
+							<li>topological sorting.</li>
+							<li>bipartite graph testing.</li>
+							<li>finding strongly connected components.</li>
+							<li>
+								solving puzzles that can only have one
+								solution.
+							</li>
+							<li>detecting cycles in a graph.</li>
+						</ul>
+					</div>
+					<div class="reference">
+						<p>References</p>
+						<a href="https://iq.opengenus.org/number-of-islands/">number of islands</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<footer>
+		<div class="copy">
+			<p>OpenGenus IQ © 2021 All rights reserved ™ [email: <a
+					href="mailto:team@opengenus.org">team@opengenus.org]</a></p>
+		</div>
+		<div class="links">
+			<span><a href="https://iq.opengenus.org/"> Top Posts </a></span>
+			<span><a href="https://www.linkedin.com/company/opengenus"> LinkedIn</a></span>
+			<span><a href="https://twitter.com/OpenGenus"> Twitter</a></span>
+		</div>
+	</footer>
+	<script src="./assets/js/common/index.js"></script>
+	<script type="module" src="./assets/js/visual/Grid/index.js"></script>
+</body>
+
+</html>

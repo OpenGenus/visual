@@ -1,4 +1,4 @@
-import { rowSize, colSize, weightType } from "../Grid/index.js";
+import { rowSize, colSize, weightType, algorithmType } from "../Grid/index.js";
 import { setWall } from "../Grid/createWalls.js";
 
 const gridContainer = document.querySelector("#gridContainer");
@@ -94,7 +94,12 @@ export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 		let curr = checker.pop();
 		let row = parseInt(curr.getAttribute("row"));
 		let col = parseInt(curr.getAttribute("col"));
-		if (weightType == "Unweighted" && row == x2 && col == y2) break;
+		if (
+			!algorithmType.classList.contains("dijkstras") &&
+			row == x2 &&
+			col == y2
+		)
+			break;
 		let wall = parseInt(curr.getAttribute("wall"));
 		if (wall == 1) continue;
 

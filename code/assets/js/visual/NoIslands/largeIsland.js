@@ -164,7 +164,6 @@ export const maxIsland = () => {
 	let matGrid = getGrid();
 	let largest = island.largestIsland(matGrid);
 
-	// console.log(map);
 	let maxIsland = Math.max(...map.values());
 	let maxId = [...map.entries()]
 		.filter(({ 1: v }) => v === maxIsland)
@@ -189,8 +188,6 @@ export const maxIsland = () => {
 			mapVals.delete(key);
 		}
 	}
-
-	// console.log(mapVals);
 
 	const getValue = (mapVals, srch) => {
 		for (let [key, value] of mapVals.entries()) {
@@ -226,11 +223,6 @@ export const maxIsland = () => {
 		}
 	}
 
-	// console.log("extensions 1");
-	// console.log(extensions);
-	// console.log("extensions 2");
-	// console.log(extensions2);
-
 	let toFlip;
 	for (let i = 0; i < extensions.length; i++) {
 		let arr = Array.from(extensions[i][0]);
@@ -255,8 +247,6 @@ export const maxIsland = () => {
 			}
 		}
 	}
-
-	// console.log(final);
 
 	setTimeout(() => {
 		if (p1.length > 1) {

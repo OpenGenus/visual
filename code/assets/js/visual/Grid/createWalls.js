@@ -9,7 +9,7 @@ export const setWall = (e) => {
 				(row == startRow && col == startCol) ||
 				(endRow == row && endCol == col)
 			) {
-				window.alert("Make wall inside the grid");
+				window.alert("Create a valid wall");
 			} else {
 				e.target.classList.toggle("wall");
 				if (e.target.classList.contains("wall")) {

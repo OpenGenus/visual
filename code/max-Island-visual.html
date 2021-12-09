@@ -9,25 +9,58 @@
     <meta name="keywords"
         content="breadth first search, breadth first algorithm, depth first search, depth first traversal, breadth first traversal, path finding, graph algorithms, graphs, algorithms, visualization, visual, graphs, graph traversal, traversal" />
     <meta name="author" content="lumunge" />
-    <link rel="stylesheet" href="../Styles/index.css" />
-    <link rel="stylesheet" href="../Styles/pathFinding.css" />
-    <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@500&display=swap" rel="stylesheet" /> -->
+    <meta name="HandheldFriendly" content="True" />
+    <meta property="og:site_name" content="OpenGenus IQ: Computing Expertise &amp; Legacy" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Making a large island visualization." />
+    <meta property="og:description"
+        content="data structures and algorithms visualization, path finding algorithms, graph algorithms visualization, visual, graphs, graph traversal, traversal" />
+    <meta property="og:url" content="https://iq.opengenus.org/algorithm-siaualization/" />
+    <meta property="article:published_time" content="2021-12-08T10:39:05.000Z" />
+    <meta property="article:modified_time" content="2021-12-08T19:39:45.000Z" />
+    <meta property="article:tag" content="Algorithms" />
+    <meta property="article:tag" content="Data Structures" />
+    <meta property="article:tag" content="Visualization" />
+    <meta property="article:publisher" content="https://www.facebook.com/opengenus" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Visualization" />
+    <meta name="twitter:description"
+        content="A visualization of making a large island given smaller islands by connecting neighboring islands to achive a maximum size." />
+    <meta name="twitter:url" content="https://iq.opengenus.org/algorithm-siaualization/" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Erick Lumunge" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Visualization, Algorithms, Data Structures" />
+    <meta name="twitter:site" content="@OpenGenus" />
+    <link rel="shortcut icon" type="image/png" href="./assets/images/fav1.ico" />
+    <link rel="stylesheet" href="./assets/css/visual/index.css">
+    <link rel="stylesheet" href="./assets/css/visual/pathFinding.css">
     <title>Making a large island.</title>
 </head>
 
 <body>
-    <nav>
-        <a href="../index.html">Visual Algo</a>
-        <a href="./bfs.html">bfs</a>
-        <a href="./dfs.html">dfs</a>
-        <a href="./islands.html">num islands</a>
-        <a href="./maxIsland.html">max island</a>
-    </nav>
+    <div class="menu">
+        <div class="nav">
+            <div class="logo">
+                <a href="/index">OpenGenus Visuals</a>
+            </div>
+            <div class="nav-links">
+                <a href="/bfs-visual">bfs</a>
+                <a href="/dfs-visual">dfs</a>
+                <!-- <a href="/dijkstra-visual">dijkstra’s</a> -->
+                <a href="/islands-visual">num islands</a>
+                <a href="/max-Island-visual">max island</a>
+            </div>
+        </div>
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </div>
     <header>
         <div class="heading">
-            <h2 class="algorithm maxIslands">Making a large island</h2>
+            <h2 class="algorithm maxIsland">Making a large island visualization</h2>
             <hr />
         </div>
         <div class="controlsContainer">
@@ -53,7 +86,7 @@
                     <button class="reset btn">reload</button>
                 </div>
                 <div class="tutorialContainer">
-                    <span><img class="info" src="../img/icons8-info-60.png" alt=""></span>
+                    <span><img class="info" src="./assets/images/icons8-info-60.png" alt=""></span>
                     <div class="tutorialContent">
                         <h4>Controls</h4>
                         <p><span>Speed</span> - increase or decrease the speed of the visualization</p>
@@ -69,7 +102,7 @@
                 </div>
             </div>
             <!-- not displayed -->
-            <div class="controls">
+            <div class="controls" style="display: none;">
                 <select class="algo">
                     <option value=""></option>
                 </select>
@@ -87,19 +120,24 @@
                     <div class="infoHeading">
                         <h3 class="title">Getting the maximum island</h3>
                     </div>
-                    <p>
-                        We are given a binary grid(matrix) map of '1's and '0's(water).
-                        We are allowed to change at most one '0' t0 be '1'(flip one '0' to '1').
-                        Return the size of the largest island in the grid after applying the above opperation.
-                        In this case an island is classified as a <em><b>4-directionally</b></em> connected group of 1s.
-                        <br>
-                        In this <em><b>dfs</b></em> approach for every 0 encountered, we temporarily change if to a 1
-                        and
-                        estimate the
-                        maximum island formed. <br> After finding the size we change the 1 back to a 0. <br>Finally we
-                        will have the maximum island which we return.
-                    </p>
-                    <div>
+                    <div class="description">
+                        <p>
+                            We are given a binary grid(matrix) map of '1's and '0's(water).
+                            We are allowed to change at most one '0' t0 be '1'(flip one '0' to '1').
+                            Return the size of the largest island in the grid after applying the above opperation.
+                            In this case an island is classified as a <em><b>4-directionally</b></em> connected group of
+                            1s.
+                            <br>
+                            In this <em><b>dfs</b></em> approach for every 0 encountered, we temporarily change if to a
+                            1
+                            and
+                            estimate the
+                            maximum island formed. <br> After finding the size we change the 1 back to a 0. <br>Finally
+                            we
+                            will have the maximum island which we return.
+                        </p>
+                    </div>
+                    <div class="algo-steps">
                         <p class="subtitle">Algorithm</p>
                         <p>
                             1. Traverse the entire grid swapping 1s for each island with an assigned group
@@ -122,7 +160,7 @@
                             6. If max is 0 after both traversals, return grid size, this is one big island.
                         </p>
                     </div>
-                    <div>
+                    <div class="complexity">
                         <p class="subtitle">Computational complexity</p>
                         This algorithm takes <b><em>O(M + N)</em></b> where
                         M is the number of rows and N is the number of
@@ -130,15 +168,27 @@
                         The space complexity is <b><em>O(L)</em></b> where L is the size of the largest island.
                     </div>
                     <div class="reference">
-                        <a href="https://iq.opengenus.org/number-of-islands/">number of islands</a>
+                        <p>References</p>
+                        <a href="https://iq.opengenus.org/number-of-islands/">number of islands</a> <br>
                         <a href="https://iq.opengenus.org/making-a-large-island/">max island</a>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-    <p class="footer">algorithms visualizer @ 2021</p>
-    <script type="module" src="../Algorithms/Grid/index.js"></script>
+    <footer>
+        <div class="copy">
+            <p>OpenGenus IQ © 2021 All rights reserved ™ [email: <a
+                    href="mailto:team@opengenus.org">team@opengenus.org]</a></p>
+        </div>
+        <div class="links">
+            <span><a href="https://iq.opengenus.org/"> Top Posts </a></span>
+            <span><a href="https://www.linkedin.com/company/opengenus"> LinkedIn</a></span>
+            <span><a href="https://twitter.com/OpenGenus"> Twitter</a></span>
+        </div>
+    </footer>
+    <script src="../assets/js/common/index.js"></script>
+    <script type="module" src="./assets/js/visual/Grid/index.js"></script>
 </body>
 
 </html>

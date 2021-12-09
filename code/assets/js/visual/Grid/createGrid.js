@@ -98,19 +98,18 @@ export const createStartNode = (x1 = 0, y1 = 0) => {
 	var startNode = document.querySelector(`div[row='${x1}'][col='${y1}']`);
 	startNode.setAttribute("cost", 0);
 	startNode.setAttribute("class", "pathNode");
-	startNode.innerHTML = "A";
+	if (!algorithmType.classList.contains("numIslands")) {
+		startNode.innerHTML = "A";
+	}
 };
 
 export const createEndNode = (x2 = rowSize - 1, y2 = colSize - 1) => {
 	var endNode = document.querySelector(`div[row='${x2}'][col='${y2}']`);
 	endNode.setAttribute("class", "pathNode");
-	endNode.innerHTML = "B";
+	if (!algorithmType.classList.contains("numIslands")) {
+		endNode.innerHTML = "B";
+	}
 };
-
-const jump = (x1 = 0, y1 = 0) => {
-	var node = document.querySelector(`div[row='${x1}'][col='${y1}']`);
-};
-jump();
 
 export const refreshBoard = () => {
 	for (var i = 0; i < rowSize; i++) {

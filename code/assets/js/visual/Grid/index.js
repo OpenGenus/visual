@@ -31,10 +31,6 @@ export var startRow = 4;
 export var startCol = 5;
 export var endRow = 15;
 export var endCol = 32;
-export var startIslandRow = 4;
-export var startIslandCol = 5;
-export var endIslandRow = 15;
-export var endIslandCol = 32;
 export var mouseDown = false;
 export var weightType = weightBtn.options[weightBtn.selectedIndex].value;
 export var algorithm = algoBtn.options[algoBtn.selectedIndex].value;
@@ -61,7 +57,7 @@ const clearPath = () => {
 	gridContainer.addEventListener("mousedown", setWall);
 	gridContainer.addEventListener("mouseup", setWall);
 	gridContainer.addEventListener("mouseover", setWall);
-	if (weightType == "Unweighted") {
+	if (!algorithmType.classList.contains("dijkstras")) {
 		refreshEmptyBoard();
 	} else {
 		refreshBoard();
@@ -72,43 +68,21 @@ const clearPath = () => {
 resetBtn.addEventListener("click", () => location.reload());
 clearPathBtn.addEventListener("click", clearPath);
 
-const updateWeight = () => {
-	weightType = weightBtn.options[weightBtn.selectedIndex].value;
-	if (weightType == "Unweighted") {
-		refreshEmptyBoard();
-	} else {
-		if (algorithm != "Dijkstras") {
-			algoBtn.value = "dijkstras";
-			algorithm = algoBtn.options[algoBtn.selectedIndex].value;
-		}
-		refreshBoard();
-	}
-	if (
-		algorithmType.classList.contains("bfs") ||
-		algorithmType.classList.contains("dfs")
-	) {
-		createStartNode(startRow, startCol);
-		createEndNode(endRow, endCol);
-	}
-};
-weightBtn.addEventListener("change", updateWeight);
-
 const startVisualization = () => {
 	if (algorithmType.classList.contains("bfs")) {
 		bfs(startRow, startCol, endRow, endCol);
 	} else if (algorithmType.classList.contains("dfs")) {
 		dfs(startRow, startCol, endRow, endCol);
-	} else if (
-		algorithmType.classList.contains("numIslands") ||
-		algorithmType.classList.contains("maxIslands")
-	) {
+	} else if (algorithmType.classList.contains("dijkstras")) {
+		bfs(startRow, startCol, endRow, endCol);
+	} else if (algorithmType.classList.contains("numIslands")) {
 		if (islandAlgo === "bfs") {
 			bfsIslands();
 		} else if (islandAlgo === "dfs") {
 			dfsIslands();
-		} else if (algorithmType.classList.contains("maxIslands")) {
-			maxIsland();
 		}
+	} else if (algorithmType.classList.contains("maxIsland")) {
+		maxIsland();
 	}
 };
 startBtn.addEventListener("click", startVisualization);
@@ -118,14 +92,15 @@ window.onload = () => {
 	gridContainer.addEventListener("mousedown", setWall);
 	gridContainer.addEventListener("mouseup", setWall);
 	gridContainer.addEventListener("mouseover", setWall);
-	if (weightType == "Unweighted") {
+	if (!algorithmType.classList.contains("dijkstras")) {
 		createEmptyBoard();
 	} else {
 		createBoard();
 	}
 	if (
 		algorithmType.classList.contains("bfs") ||
-		algorithmType.classList.contains("dfs")
+		algorithmType.classList.contains("dfs") ||
+		algorithmType.classList.contains("dijkstras")
 	) {
 		createStartNode(startRow, startCol);
 		createEndNode(endRow, endCol);
@@ -133,12 +108,27 @@ window.onload = () => {
 		algorithmType.classList.contains("numIslands") ||
 		algorithmType.classList.contains("maxIslands")
 	) {
-		if (islandAlgo === "bfs" || islandAlgo === "bfsMaxIslands") {
+		if (islandAlgo === "bfs") {
 			createStartNode(0, 0);
 			createEndNode(19, 39);
-		} else if (islandAlgo === "dfs" || islandAlgo === "dfsMaxIslands") {
+			document
+				.querySelector(`div[row='${0}'][col='${0}']`)
+				.classList.add("islandsPathNode");
+			document
+				.querySelector(`div[row='${19}'][col='${39}']`)
+				.classList.add("islandsPathNode");
+		} else if (
+			islandAlgo === "dfs" ||
+			algorithmType.classList.contains("maxIslands")
+		) {
 			createStartNode(0, 0);
 			createEndNode(0, 1);
+			document
+				.querySelector(`div[row='${0}'][col='${0}']`)
+				.classList.add("islandsPathNode");
+			document
+				.querySelector(`div[row='${0}'][col='${1}']`)
+				.classList.add("islandsPathNode");
 		}
 	}
 };
