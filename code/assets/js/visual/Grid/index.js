@@ -57,9 +57,17 @@ const clearPath = () => {
 	gridContainer.addEventListener("mousedown", setWall);
 	gridContainer.addEventListener("mouseup", setWall);
 	gridContainer.addEventListener("mouseover", setWall);
-	if (!algorithmType.classList.contains("dijkstras")) {
+	if (
+		algorithmType.classList.contains("bfs") ||
+		algorithmType.classList.contains("dfs") ||
+		algorithmType.classList.contains("numIslands") ||
+		algorithmType.classList.contains("maxIsland")
+	) {
 		refreshEmptyBoard();
-	} else {
+	} else if (
+		algorithmType.classList.contains("dijkstras") ||
+		algorithmType.classList.contains("bellman-ford")
+	) {
 		refreshBoard();
 	}
 	startBtn.style.visibility = "visible";
@@ -92,9 +100,17 @@ window.onload = () => {
 	gridContainer.addEventListener("mousedown", setWall);
 	gridContainer.addEventListener("mouseup", setWall);
 	gridContainer.addEventListener("mouseover", setWall);
-	if (!algorithmType.classList.contains("dijkstras")) {
+	if (
+		algorithmType.classList.contains("bfs") ||
+		algorithmType.classList.contains("dfs") ||
+		algorithmType.classList.contains("numIslands") ||
+		algorithmType.classList.contains("maxIsland")
+	) {
 		createEmptyBoard();
-	} else {
+	} else if (
+		algorithmType.classList.contains("dijkstras") ||
+		algorithmType.classList.contains("bellman-ford")
+	) {
 		createBoard();
 	}
 	if (

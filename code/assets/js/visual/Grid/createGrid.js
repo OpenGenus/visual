@@ -12,6 +12,11 @@ const genRandom = (maxVal) => {
 	return (Math.random() * (maxVal - 1)) % maxVal;
 };
 
+//bellman ford
+const genRandomNeg = (min, max) => {
+	return Math.random() * (max - min) + min;
+};
+
 const createNode = (row, col, weight) => {
 	var node = document.createElement("div");
 	node.setAttribute("class", "beforeStart");
@@ -76,9 +81,15 @@ export const createBoard = () => {
 	grid.innerHTML = "";
 	for (var i = 0; i < rowSize; i++) {
 		for (var j = 0; j < colSize; j++) {
-			let weight = Math.round(genRandom(5));
-			let newNode = createNode(i, j, weight);
-			grid.appendChild(newNode);
+			if (algorithmType.classList.contains("dijkstras")) {
+				let weight = Math.round(genRandom(5));
+				let newNode = createNode(i, j, weight);
+				grid.appendChild(newNode);
+			} else if (algorithmType.classList.contains("bellman-ford")) {
+				let weight = Math.round(genRandomNeg(5, -5));
+				let newNode = createNode(i, j, weight);
+				grid.appendChild(newNode);
+			}
 		}
 	}
 };
@@ -115,11 +126,20 @@ export const refreshBoard = () => {
 	for (var i = 0; i < rowSize; i++) {
 		for (var j = 0; j < colSize; j++) {
 			var node = document.querySelector(`div[row="${i}"][col="${j}"]`);
-			let weight = Math.round(genRandom(5));
-			if (node.getAttribute("wall") == 1) {
-				updateNode(node, i, j, weight, 1);
-			} else {
-				updateNode(node, i, j, weight, 0);
+			if (algorithmType.classList.contains("dijkstras")) {
+				let weight = Math.round(genRandom(5));
+				if (node.getAttribute("wall") == 1) {
+					updateNode(node, i, j, weight, 1);
+				} else {
+					updateNode(node, i, j, weight, 0);
+				}
+			} else if (algorithmType.classList.contains("bellman-ford")) {
+				let weight = Math.round(genRandomNeg(-5, 5));
+				if (node.getAttribute("wall") == 1) {
+					updateNode(node, i, j, weight, 1);
+				} else {
+					updateNode(node, i, j, weight, 0);
+				}
 			}
 		}
 	}
