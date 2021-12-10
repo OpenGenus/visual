@@ -116,7 +116,8 @@ window.onload = () => {
 	if (
 		algorithmType.classList.contains("bfs") ||
 		algorithmType.classList.contains("dfs") ||
-		algorithmType.classList.contains("dijkstras")
+		algorithmType.classList.contains("dijkstras") ||
+		algorithmType.classList.contains("bellman-ford")
 	) {
 		createStartNode(startRow, startCol);
 		createEndNode(endRow, endCol);
