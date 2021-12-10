@@ -13,6 +13,7 @@ import { bfs } from "../PathFindingAlgorithms/bfs.js";
 import { bfsIslands } from "../NoIslands/bfsIslands.js";
 import { dfsIslands } from "../NoIslands/dfsIslands.js";
 import { maxIsland } from "../NoIslands/largeIsland.js";
+import { bellmanFord } from "../PathFindingAlgorithms/bellman-ford.js";
 
 // get dom elements
 const gridContainer = document.querySelector("#gridContainer");
@@ -83,6 +84,8 @@ const startVisualization = () => {
 		dfs(startRow, startCol, endRow, endCol);
 	} else if (algorithmType.classList.contains("dijkstras")) {
 		bfs(startRow, startCol, endRow, endCol);
+	} else if (algorithmType.classList.contains("bellman-ford")) {
+		bellmanFord(startRow, startCol, endRow, endCol);
 	} else if (algorithmType.classList.contains("numIslands")) {
 		if (islandAlgo === "bfs") {
 			bfsIslands();
