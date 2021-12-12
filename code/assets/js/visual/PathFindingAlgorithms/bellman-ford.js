@@ -3,7 +3,7 @@ import { setWall } from "../Grid/createWalls.js";
 
 const gridContainer = document.querySelector("#gridContainer");
 const speedSlider = document.querySelector(".speedSlider");
-let time = speedSlider.value;
+var time = speedSlider.value;
 
 const changeColor = (node, count, cost) => {
 	setTimeout(() => {
@@ -22,49 +22,40 @@ const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 		var node = document.querySelector(`div[row="${row}"][col="${col}"]`);
 		let wall = parseInt(node.getAttribute("wall"));
 		if (wall == 1) return;
-		let prow = parseInt(curr.getAttribute("row"));
-		let pcol = parseInt(curr.getAttribute("col"));
-		if (weightType == "weighted") {
-			var cost = Math.min(
-				parseInt(curr.getAttribute("cost")) +
-					parseInt(node.getAttribute("weight")),
-				node.getAttribute("cost")
-			);
-		} else {
-			var cost = Math.min(
-				parseInt(curr.getAttribute("cost")) +
-					Math.abs(Math.abs(prow - row) + Math.abs(pcol - col)),
-				node.getAttribute("cost")
-			);
-			if (cost < node.getAttribute("cost")) {
-				node.setAttribute(
-					"parent",
-					curr.getAttribute("row") + "|" + curr.getAttribute("col")
-				);
-				node.setAttribute("cost", cost);
-			}
 
-			//change color
-			changeColor(curr, count, curr.getAttribute("cost"));
-			if (!visited.includes(node)) {
-				checker.push(node);
-			}
-			visited.push(node);
-			return node;
+		var cost = Math.min(
+			parseInt(curr.getAttribute("cost")) +
+				parseInt(node.getAttribute("weight")),
+			node.getAttribute("cost")
+		);
+
+		if (cost < node.getAttribute("cost")) {
+			node.setAttribute(
+				"parent",
+				curr.getAttribute("row") + "|" + curr.getAttribute("col")
+			);
+			node.setAttribute("cost", cost);
 		}
+
+		//change color
+		changeColor(curr, count, curr.getAttribute("cost"));
+		if (!visited.includes(node)) {
+			checker.push(node);
+		}
+		visited.push(node);
+		return node;
 	} else {
 		return false;
 	}
 };
 
-//algorithm implementation - bellman ford algorithm
 export const bellmanFord = (
 	x1 = 0,
 	y1 = 0,
 	x2 = rowSize - 1,
 	y2 = colSize - 1
 ) => {
-	time = speedSlider.value;
+	time = speedSlider.value - 1000;
 	time = 40 + (time - 1) * -2;
 	gridContainer.removeEventListener("mousedown", setWall);
 	gridContainer.removeEventListener("mouseover", setWall);
@@ -77,60 +68,69 @@ export const bellmanFord = (
 	var clearPathBtn = document.querySelector(".clearPath");
 	clearPathBtn.style.visibility = "hidden";
 
+	// start algo
+	let V = rowSize * colSize;
+	let distance = Array(rowSize * colSize).fill(100000000);
+	distance[startNode] = 0;
+
+	// for(let i = 0; i < V - 1; i++){
+	// 	for(let j = 0; j < )
+	// }
+
 	//start algorithm
-	var visited = [startNode];
-	var checker = [startNode];
-	var count = 1;
+	// var visited = [startNode];
+	// var checker = [startNode];
+	// var count = 1;
 
-	while (checker.length != 0) {
-		checker.sort((a, b) => {
-			if (
-				parseInt(a.getAttribute("cost")) <
-				parseInt(b.getAttribute("cost"))
-			)
-				return 1;
-			if (
-				parseInt(a.getAttribute("cost")) >
-				parseInt(b.getAttribute("cost"))
-			)
-				return -1;
-			return 0;
-		});
-		let curr = checker.pop();
-		let row = parseInt(curr.getAttribute("row"));
-		let col = parseInt(curr.getAttribute("col"));
-		if (
-			!algorithmType.classList.contains("dijkstras") &&
-			row == x2 &&
-			col == y2
-		)
-			break;
-		let wall = parseInt(curr.getAttribute("wall"));
-		if (wall == 1) continue;
+	// while (checker.length != 0) {
+	// 	checker.sort((a, b) => {
+	// 		if (
+	// 			parseInt(a.getAttribute("cost")) <
+	// 			parseInt(b.getAttribute("cost"))
+	// 		)
+	// 			return 1;
+	// 		if (
+	// 			parseInt(a.getAttribute("cost")) >
+	// 			parseInt(b.getAttribute("cost"))
+	// 		)
+	// 			return -1;
+	// 		return 0;
+	// 	});
+	// 	let curr = checker.pop();
+	// 	let row = parseInt(curr.getAttribute("row"));
+	// 	let col = parseInt(curr.getAttribute("col"));
+	// 	if (
+	// 		!algorithmType.classList.contains("bellman-ford") &&
+	// 		row == x2 &&
+	// 		col == y2
+	// 	)
+	// 		break;
+	// 	let wall = parseInt(curr.getAttribute("wall"));
+	// 	if (wall == 1) continue;
 
-		//check 4 sides of node, top, right, bottom, left
-		checkUpdateNode(row + 1, col, curr, checker, visited, count);
-		checkUpdateNode(row - 1, col, curr, checker, visited, count);
-		checkUpdateNode(row, col - 1, curr, checker, visited, count);
-		checkUpdateNode(row, col + 1, curr, checker, visited, count);
-		count++;
-	}
+	// 	//check 4 sides of node, top, right, bottom, left
+	// 	checkUpdateNode(row + 1, col, curr, checker, visited, count);
+	// 	checkUpdateNode(row - 1, col, curr, checker, visited, count);
+	// 	checkUpdateNode(row, col - 1, curr, checker, visited, count);
+	// 	checkUpdateNode(row, col + 1, curr, checker, visited, count);
+	// 	count++;
+	// }
 
 	//draw route
-	setTimeout(() => {
-		startNode.setAttribute("class", "pathNode");
-		while (endNode.getAttribute("parent") != "null") {
-			endNode.setAttribute("class", "chosenPath");
-			var coor = endNode.getAttribute("parent").split("|");
-			var prow = parseInt(coor[0]);
-			var pcol = parseInt(coor[1]);
-			endNode = document.querySelector(
-				`div[row="${prow}"][col="${pcol}"]`
-			);
-		}
-		endNode = document.querySelector(`div[row="${x2}"][col="${y2}`);
-		endNode.setAttribute("class", "pathNode");
-	}, count * time + 100);
+	// setTimeout(() => {
+	// 	startNode.setAttribute("class", "pathNode");
+	// 	while (endNode.getAttribute("parent") != "null") {
+	// 		endNode.setAttribute("class", "chosenPath");
+	// 		var coor = endNode.getAttribute("parent").split("|");
+	// 		var prow = parseInt(coor[0]);
+	// 		var pcol = parseInt(coor[1]);
+	// 		endNode = document.querySelector(
+	// 			`div[row="${prow}"][col="${pcol}"]`
+	// 		);
+	// 	}
+	// 	endNode = document.querySelector(`div[row="${x2}"][col="${y2}`);
+	// 	endNode.setAttribute("class", "pathNode");
+	// }, count * time + 100);
 
 	setTimeout(() => {
 		clearPathBtn.style.visibility = "visible";
