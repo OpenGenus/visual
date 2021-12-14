@@ -86,7 +86,7 @@ export const createBoard = () => {
 				let newNode = createNode(i, j, weight);
 				grid.appendChild(newNode);
 			} else if (algorithmType.classList.contains("bellman-ford")) {
-				let weight = Math.round(genRandomNeg(5, -5));
+				let weight = Math.round(genRandomNeg(-1, 5));
 				let newNode = createNode(i, j, weight);
 				grid.appendChild(newNode);
 			}
@@ -134,7 +134,7 @@ export const refreshBoard = () => {
 					updateNode(node, i, j, weight, 0);
 				}
 			} else if (algorithmType.classList.contains("bellman-ford")) {
-				let weight = Math.round(genRandomNeg(-5, 5));
+				let weight = Math.round(genRandomNeg(-1, 5));
 				if (node.getAttribute("wall") == 1) {
 					updateNode(node, i, j, weight, 1);
 				} else {
