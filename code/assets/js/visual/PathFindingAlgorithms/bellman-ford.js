@@ -118,7 +118,6 @@ export const bellmanFord = (
 			endNode = document.querySelector(
 				`div[row="${prow}"][col="${pcol}"]`
 			);
-			console.log("hey");
 			countNeg++;
 			if (countNeg > 10000) {
 				alert("Negative cycle detected");
