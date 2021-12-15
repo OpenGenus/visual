@@ -24,7 +24,7 @@ const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 		if (wall == 1) return;
 		let prow = parseInt(curr.getAttribute("row"));
 		let pcol = parseInt(curr.getAttribute("col"));
-		if (weightType == "weighted") {
+		if (algorithmType.classList.contains("dijkstras")) {
 			var cost = Math.min(
 				parseInt(curr.getAttribute("cost")) +
 					parseInt(node.getAttribute("weight")),
@@ -36,22 +36,22 @@ const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 					Math.abs(Math.abs(prow - row) + Math.abs(pcol - col)),
 				node.getAttribute("cost")
 			);
-			if (cost < node.getAttribute("cost")) {
-				node.setAttribute(
-					"parent",
-					curr.getAttribute("row") + "|" + curr.getAttribute("col")
-				);
-				node.setAttribute("cost", cost);
-			}
-
-			//change color
-			changeColor(curr, count, curr.getAttribute("cost"));
-			if (!visited.includes(node)) {
-				checker.push(node);
-			}
-			visited.push(node);
-			return node;
 		}
+		if (cost < node.getAttribute("cost")) {
+			node.setAttribute(
+				"parent",
+				curr.getAttribute("row") + "|" + curr.getAttribute("col")
+			);
+			node.setAttribute("cost", cost);
+		}
+
+		//change color
+		changeColor(curr, count, curr.getAttribute("cost"));
+		if (!visited.includes(node)) {
+			checker.push(node);
+		}
+		visited.push(node);
+		return node;
 	} else {
 		return false;
 	}
