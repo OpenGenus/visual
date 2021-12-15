@@ -19,11 +19,10 @@ const changeColor = (node, count, cost) => {
 
 const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 	if (row >= 0 && col >= 0 && row < rowSize && col < colSize) {
-		var node = document.querySelector(`div[row="${row}"][col="${col}"]`);
+		let node = document.querySelector(`div[row="${row}"][col="${col}"]`);
 		let wall = parseInt(node.getAttribute("wall"));
 		if (wall == 1) return;
-
-		var cost = Math.min(
+		let cost = Math.min(
 			parseInt(curr.getAttribute("cost")) +
 				parseInt(node.getAttribute("weight")),
 			node.getAttribute("cost")
@@ -91,7 +90,7 @@ export const bellmanFord = (
 		let row = parseInt(curr.getAttribute("row"));
 		let col = parseInt(curr.getAttribute("col"));
 		if (
-			!algorithmType.classList.contains("dijkstras") &&
+			!algorithmType.classList.contains("bellman-ford") &&
 			row == x2 &&
 			col == y2
 		)
@@ -110,6 +109,7 @@ export const bellmanFord = (
 	//draw route
 	setTimeout(() => {
 		startNode.setAttribute("class", "pathNode");
+		let countNeg = 0;
 		while (endNode.getAttribute("parent") != "null") {
 			endNode.setAttribute("class", "chosenPath");
 			var coor = endNode.getAttribute("parent").split("|");
@@ -118,6 +118,12 @@ export const bellmanFord = (
 			endNode = document.querySelector(
 				`div[row="${prow}"][col="${pcol}"]`
 			);
+			console.log("hey");
+			countNeg++;
+			if (countNeg > 10000) {
+				alert("Negative cycle detected");
+				break;
+			}
 		}
 		endNode = document.querySelector(`div[row="${x2}"][col="${y2}`);
 		endNode.setAttribute("class", "pathNode");
