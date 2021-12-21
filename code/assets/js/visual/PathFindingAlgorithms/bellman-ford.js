@@ -1,9 +1,17 @@
-import { rowSize, colSize, weightType, algorithmType } from "../Grid/index.js";
+import {
+	rowSize,
+	colSize,
+	algorithmType,
+	endRow,
+	endCol,
+	startRow,
+	startCol,
+} from "../Grid/index.js";
 import { setWall } from "../Grid/createWalls.js";
 
 const gridContainer = document.querySelector("#gridContainer");
 const speedSlider = document.querySelector(".speedSlider");
-var time = speedSlider.value;
+let time = speedSlider.value;
 
 const changeColor = (node, count, cost) => {
 	setTimeout(() => {
@@ -48,39 +56,22 @@ const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 	}
 };
 
-export const bellmanFord = (
-	x1 = 0,
-	y1 = 0,
-	x2 = rowSize - 1,
-	y2 = colSize - 1
-) => {
-	time = speedSlider.value;
-	time = 40 + (time - 1) * -2;
-	gridContainer.removeEventListener("mousedown", setWall);
-	gridContainer.removeEventListener("mouseover", setWall);
-	var startNode = document.querySelector(`div[row='${x1}'][col='${y1}']`);
-	var endNode = document.querySelector(`div[row='${x2}'][col='${y2}']`);
-
-	//disable start and refresh btn
-	var startBtn = document.querySelector(".start");
-	startBtn.style.visibility = "hidden";
-	var clearPathBtn = document.querySelector(".clearPath");
-	clearPathBtn.style.visibility = "hidden";
-
+const relax = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
+	let startNode = document.querySelector(`div[row='${x1}'][col='${y1}']`);
 	//start algorithm
-	var visited = [startNode];
-	var checker = [startNode];
-	var count = 1;
+	let visited = [startNode];
+	let checker = [startNode];
+	let count = 1;
 
 	while (checker.length != 0) {
 		checker.sort((a, b) => {
 			if (
-				parseInt(a.getAttribute("cost")) >
+				parseInt(a.getAttribute("cost")) <
 				parseInt(b.getAttribute("cost"))
 			)
 				return 1;
 			if (
-				parseInt(a.getAttribute("cost")) <
+				parseInt(a.getAttribute("cost")) >
 				parseInt(b.getAttribute("cost"))
 			)
 				return -1;
@@ -105,30 +96,69 @@ export const bellmanFord = (
 		checkUpdateNode(row, col + 1, curr, checker, visited, count);
 		count++;
 	}
+};
 
+const drawPath = () => {
+	let startNode = document.querySelector(
+		`div[row='${startRow}'][col='${startCol}']`
+	);
+	let endNode = document.querySelector(
+		`div[row='${endRow}'][col='${endCol}']`
+	);
 	//draw route
 	setTimeout(() => {
 		startNode.setAttribute("class", "pathNode");
-		let countNeg = 0;
 		while (endNode.getAttribute("parent") != "null") {
 			endNode.setAttribute("class", "chosenPath");
-			var coor = endNode.getAttribute("parent").split("|");
-			var prow = parseInt(coor[0]);
-			var pcol = parseInt(coor[1]);
+			let coor = endNode.getAttribute("parent").split("|");
+			let prow = parseInt(coor[0]);
+			let pcol = parseInt(coor[1]);
 			endNode = document.querySelector(
 				`div[row="${prow}"][col="${pcol}"]`
 			);
-			countNeg++;
-			if (countNeg > 10000) {
-				alert("Negative cycle detected");
-				break;
-			}
 		}
-		endNode = document.querySelector(`div[row="${x2}"][col="${y2}`);
+		endNode = document.querySelector(`div[row="${endRow}"][col="${endCol}`);
 		endNode.setAttribute("class", "pathNode");
-	}, count * time + 100);
+	}, 1000 * time + 100);
+};
+
+export const bellmanFord = (
+	x1 = 0,
+	y1 = 0,
+	x2 = rowSize - 1,
+	y2 = colSize - 1
+) => {
+	time = speedSlider.value;
+	time = 40 + (time - 1) * -2;
+	gridContainer.removeEventListener("mousedown", setWall);
+	gridContainer.removeEventListener("mouseover", setWall);
+
+	//disable start and refresh btn
+	let startBtn = document.querySelector(".start");
+	startBtn.style.visibility = "hidden";
+	let clearPathBtn = document.querySelector(".clearPath");
+	clearPathBtn.style.visibility = "hidden";
+
+	let relaxations = 1;
+	let run = () => {
+		setInterval(() => {
+			if (relaxations < 6) {
+				relax(
+					(x1 = 0),
+					(y1 = 0),
+					(x2 = rowSize - 1),
+					(y2 = colSize - 1)
+				);
+				relaxations++;
+			} else {
+				clearInterval(run);
+			}
+			drawPath();
+		}, 5000);
+	};
+	run();
 
 	setTimeout(() => {
 		clearPathBtn.style.visibility = "visible";
-	}, count * time + 100);
+	}, 800 * time + 100);
 };
