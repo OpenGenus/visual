@@ -3,7 +3,6 @@ import { rowSize, colSize } from "./index.js";
 const obstacles = (x = 0, y = 0) => {
 	var node = document.querySelector(`div[row='${x}'][col='${y}']`);
 	if (node.classList.contains("pathNode")) {
-		console.log("node found");
 		return;
 	} else {
 		node.classList.toggle("wall");

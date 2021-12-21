@@ -13,6 +13,7 @@ import { bfs } from "../PathFindingAlgorithms/bfs.js";
 import { bfsIslands } from "../NoIslands/bfsIslands.js";
 import { dfsIslands } from "../NoIslands/dfsIslands.js";
 import { maxIsland } from "../NoIslands/largeIsland.js";
+import { bellmanFord } from "../PathFindingAlgorithms/bellman-ford.js";
 
 // get dom elements
 const gridContainer = document.querySelector("#gridContainer");
@@ -57,9 +58,17 @@ const clearPath = () => {
 	gridContainer.addEventListener("mousedown", setWall);
 	gridContainer.addEventListener("mouseup", setWall);
 	gridContainer.addEventListener("mouseover", setWall);
-	if (!algorithmType.classList.contains("dijkstras")) {
+	if (
+		algorithmType.classList.contains("bfs") ||
+		algorithmType.classList.contains("dfs") ||
+		algorithmType.classList.contains("numIslands") ||
+		algorithmType.classList.contains("maxIsland")
+	) {
 		refreshEmptyBoard();
-	} else {
+	} else if (
+		algorithmType.classList.contains("dijkstras") ||
+		algorithmType.classList.contains("bellman-ford")
+	) {
 		refreshBoard();
 	}
 	startBtn.style.visibility = "visible";
@@ -75,6 +84,8 @@ const startVisualization = () => {
 		dfs(startRow, startCol, endRow, endCol);
 	} else if (algorithmType.classList.contains("dijkstras")) {
 		bfs(startRow, startCol, endRow, endCol);
+	} else if (algorithmType.classList.contains("bellman-ford")) {
+		bellmanFord(startRow, startCol, endRow, endCol);
 	} else if (algorithmType.classList.contains("numIslands")) {
 		if (islandAlgo === "bfs") {
 			bfsIslands();
@@ -92,15 +103,24 @@ window.onload = () => {
 	gridContainer.addEventListener("mousedown", setWall);
 	gridContainer.addEventListener("mouseup", setWall);
 	gridContainer.addEventListener("mouseover", setWall);
-	if (!algorithmType.classList.contains("dijkstras")) {
+	if (
+		algorithmType.classList.contains("bfs") ||
+		algorithmType.classList.contains("dfs") ||
+		algorithmType.classList.contains("numIslands") ||
+		algorithmType.classList.contains("maxIsland")
+	) {
 		createEmptyBoard();
-	} else {
+	} else if (
+		algorithmType.classList.contains("dijkstras") ||
+		algorithmType.classList.contains("bellman-ford")
+	) {
 		createBoard();
 	}
 	if (
 		algorithmType.classList.contains("bfs") ||
 		algorithmType.classList.contains("dfs") ||
-		algorithmType.classList.contains("dijkstras")
+		algorithmType.classList.contains("dijkstras") ||
+		algorithmType.classList.contains("bellman-ford")
 	) {
 		createStartNode(startRow, startCol);
 		createEndNode(endRow, endCol);

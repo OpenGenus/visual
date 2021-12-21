@@ -51,12 +51,11 @@
 /* wall styling */
 .wall {
 	background-color: #ee172d;
-	color: #fff;
+	color: transparent;
 	text-align: center;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	/* border: none; */
 }
 .island {
 	background-color: purple;

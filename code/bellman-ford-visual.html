@@ -7,14 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="breadth first search path finding algorithm">
     <meta name="keywords"
-        content="Dijkstra’s shortest path algorithm, shortest path algorithm, dijkastras path finding, graph algorithms, algorithms, visualization, visual, graphs, graph traversal, traversal">
+        content="Bellman ford's single source shortest path algorithm, shortest path algorithm, bellman ford's path finding, graph algorithms, algorithms, visualization, visual, graphs, graph traversal, traversal">
     <meta name="author" content="lumunge">
     <meta name="HandheldFriendly" content="True" />
     <meta property="og:site_name" content="OpenGenus IQ: Computing Expertise &amp; Legacy" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="Dijkstras Shortest Path Algorithm Visualization" />
+    <meta property="og:title" content="Bellman Ford's Single Source Shortest Path Algorithm Visualization" />
     <meta property="og:description"
-        content="data structures and algorithms visualization, dijkstra's path shortest path algorithm visualization, path finding algorithms, graph algorithms visualization, visual, graphs, graph traversal, traversal" />
+        content="data structures and algorithms visualization, bellmand ford's single source shortest path shortest path algorithm visualization, path finding algorithms, graph algorithms visualization, visual, graphs, graph traversal, traversal" />
     <meta property="og:url" content="https://iq.opengenus.org/algorithm-siaualization/" />
     <meta property="article:published_time" content="2021-12-08T10:39:05.000Z" />
     <meta property="article:modified_time" content="2021-12-08T19:39:45.000Z" />
@@ -25,7 +25,7 @@
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Visualization" />
     <meta name="twitter:description"
-        content="A visualization of dijkastra's shortest path algorithm, graph algorithms, path finding" />
+        content="A visualization of bellmand ford's single source shortest path algorithm, graph algorithms, path finding" />
     <meta name="twitter:url" content="https://iq.opengenus.org/algorithm-siaualization/" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Erick Lumunge" />
@@ -35,7 +35,7 @@
     <link rel="shortcut icon" type="image/png" href="../assets/images/fav1.ico" />
     <link rel="stylesheet" href="./assets/css/visual/index.css">
     <link rel="stylesheet" href="./assets/css/visual/pathFinding.css">
-    <title>Dijkstra’s shortest path algorithm.</title>
+    <title>Bellman Ford's Single Source Shortest Path Algorithm.</title>
 </head>
 
 <body>
@@ -48,6 +48,7 @@
                 <a href="/bfs-visual">bfs</a>
                 <a href="/dfs-visual">dfs</a>
                 <a href="/dijkstra-visual">dijkstra’s</a>
+                <a href="/bellman-ford-visual">bellman-ford's</a>
                 <a href="/islands-visual">num islands</a>
                 <a href="/max-Island-visual">max island</a>
             </div>
@@ -60,7 +61,7 @@
     </div>
     <header>
         <div class="heading">
-            <h2 class="algorithm dijkstras">Dijkstra’s shortest path algorithm visualization</h2>
+            <h2 class="algorithm bellman-ford">Bellman ford's single source shortest path algorithm visualization</h2>
             <hr>
         </div>
         <div class="controlsContainer">
@@ -150,81 +151,66 @@
             <div class="algoInfo">
                 <div>
                     <div class="infoHeading">
-                        <h3 class="title">Dijkstra’s shortest path algorithm</h3>
+                        <h3 class="title">Bellman Ford Algorithm.</h3>
                     </div>
                     <div class="description">
-                        This algorithm finds a shortest path tree from a single source node by building a set of nodes
-                        that
-                        have a minimum distance from the source node. <br />
-                        This algorithm uses a greedy approach in that we find the next best solution in hope that it
-                        will
-                        lead to a generalized optimal solution.
-                        <u>Vertices</u> are denoted by <em>u</em> and <em>v</em>. In our case in the above grid we place
-                        the
-                        weights inside the vertex denoting the weight to get to it. <br>
-                        <u>Weighted edges</u> that connect two nodes (u, v) are denoted as w(u, v). <br>
-                        <u><em>dist</em></u> is an array of distances from source <em>s</em> to every node in the graph.
-                        <em>s</em> is initialized as 0 and for all other nodes we initialize them as &#8734;.
-                        <em>dist(v) =
-                            &#8734;</em> <br>
-                        We use a <u><b><em>queue (Q)</em></b></u> data structure to store all nodes in the graph and at
-                        the
-                        end of
-                        the
-                        algorithm the queue will be empty. <br>
-                        <u>S</u> - an empty set to indicate which nodes the algorithm has visited. At the end of the
-                        algorithm, S
-                        will contain all nodes of the graph.
+                        This is a single source shortest path algorithm that finds the shortest path in a graph
+                        containing negative edge weights but no negative cycles.
+                        It is slower than dijkstra's algorithm but it is more versatile as it is capable of handling
+                        negative weights.
+                        It is based on the principle of <em><b>relaxation</b></em>, whereby the shortest distance
+                        for all vertices is gradually replaced by more accurate values until eventually reaching the
+                        optimum solution.
                     </div>
                     <div class="algo-steps">
                         <p class="subtitle">Algorithm</p>
                         <p>
-                            1. While Q is not empty, we pop the node v that is not in <em>S</em> from <em>Q</em> with
-                            the smallest distance <em>dist(v)</em>.
-                            In the first iteration the source node is chosen because we initialized it with 0.
-                            In the following iterations nodes with the smallest weight values will be chosen.
+                            1. Initialize distances from source to all vertices as infinity ans set source distance to
+                            0. Create an array distance[] of size |V| with all values as infinite except
+                            distance[source].
                         </p>
                         <p>
-                            2. We add node <em>v</em> to <em>S</em>, to indicate that <em>v</em> has been visited.
-                        </p>
-                        <p>
-                            3. We update <em>dist</em> values of adjacent nodes of the current node <em>v</em> by doing
-                            the following: for each new adjacent node <em>u</em>,
+                            2. Calculate shortest distances by doing the following |V| - 1 times where |V| is the number
+                            of vertices.(In this visualization we dont perform relaxation 800 times as it is time
+                            consuming considering some vertices wont change after n number of relaxations).
                         </p>
                         <p class="nest1">
-                            1. if <em>dist(v) + weight(u,v) < dist(u)</em>, that means there is a minimal distance found
-                                    for <em>u</em>.
-                                    <p class="nest2">1. update <em>dist(u)</em> to the new minimal distance value.</p>
-                                    <p class="nest2">2. Otherwise don't update <em>dist(u).</em></p>
+                            1. For each edge (u,v) if distance[v] > distance[u] + weight of edge (u,v), update
+                            distance[v]. (distance[v] = distance[u] + weight(u, v)).
                         </p>
                         <p>
-                            4. In the end the algorithm has visited all nodes in the graph and <em>dist</em> array will
-                            contain the shortest path(smallest distance) from source s to destination.
+                            3. If distance[v] > distance[u] + weight(u,v) then graph contains a negative weight cycle
+                            therefore terminate the algorithm and return.
                         </p>
+                        <em>Step 2 guarantees the shortest distances if the graph does not contain negative cycles,
+                            which means if the next iteration produces a shorter path for any vertex then there exists a
+                            negative weight cycle.</em>
                     </div>
                     <div class="complexity">
                         <p class="subtitle">Computational complexity</p>
-                        This algorithm takes <b><em>O(V + E log V)</em></b> in the all cases where V is the number of
-                        vertices and E is the number of edges. <br>
-                        It has a <b><em>O(V)</em></b> space complexity. It stores V, the number of vertices.
+                        The algorithm has <em><b>O(VE)</b></em> time complexity in the average and best cases and
+                        <em><b>O(E)</b></em> time complexity in the best case.
+                        The space complexity is <em><b>O(V)</b></em> as we store vertices in memory.
                     </div>
                     <div class="applications">
                         <p class="subtitle">Applications</p>
                         <ul>
-                            <li>Open Shortest Path First (OSPF) algorithm for packet routing.</li>
+                            <li>Detecting negative cycles.</li>
+                            <li>Network packet routing protocols</li>
                             <li>telephone networking.</li>
-                            <li>social network algorithms.</li>
+                            <li>Distributed systems.</li>
                             <li>maps and gps navigation software.</li>
                             <li>Drone/robotic path routing.</li>
-                            <li>Designating a file server.</li>
                         </ul>
                     </div>
                     <div class="reference">
-                        <a href="https://iq.opengenus.org/tag/dijkstra-algorithm/">reference</a>
+                        <p>References</p>
+                        <a href="https://iq.opengenus.org/bellman-ford-algorithm/">bellman ford algorithm</a>
                     </div>
                 </div>
             </div>
         </div>
+
     </main>
     <footer>
         <div class="copy">
