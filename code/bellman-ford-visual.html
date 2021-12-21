@@ -148,7 +148,69 @@
                         highlighted in green with the cost of path written in black inside the path.</div>
                 </div>
             </div>
+            <div class="algoInfo">
+                <div>
+                    <div class="infoHeading">
+                        <h3 class="title">Bellman Ford Algorithm.</h3>
+                    </div>
+                    <div class="description">
+                        This is a single source shortest path algorithm that finds the shortest path in a graph
+                        containing negative edge weights but no negative cycles.
+                        It is slower than dijkstra's algorithm but it is more versatile as it is capable of handling
+                        negative weights.
+                        It is based on the principle of <em><b>relaxation</b></em>, whereby the shortest distance
+                        for all vertices is gradually replaced by more accurate values until eventually reaching the
+                        optimum solution.
+                    </div>
+                    <div class="algo-steps">
+                        <p class="subtitle">Algorithm</p>
+                        <p>
+                            1. Initialize distances from source to all vertices as infinity ans set source distance to
+                            0. Create an array distance[] of size |V| with all values as infinite except
+                            distance[source].
+                        </p>
+                        <p>
+                            2. Calculate shortest distances by doing the following |V| - 1 times where |V| is the number
+                            of vertices.(In this visualization we dont perform relaxation 800 times as it is time
+                            consuming considering some vertices wont change after n number of relaxations).
+                        </p>
+                        <p class="nest1">
+                            1. For each edge (u,v) if distance[v] > distance[u] + weight of edge (u,v), update
+                            distance[v]. (distance[v] = distance[u] + weight(u, v)).
+                        </p>
+                        <p>
+                            3. If distance[v] > distance[u] + weight(u,v) then graph contains a negative weight cycle
+                            therefore terminate the algorithm and return.
+                        </p>
+                        <em>Step 2 guarantees the shortest distances if the graph does not contain negative cycles,
+                            which means if the next iteration produces a shorter path for any vertex then there exists a
+                            negative weight cycle.</em>
+                    </div>
+                    <div class="complexity">
+                        <p class="subtitle">Computational complexity</p>
+                        The algorithm has <em><b>O(VE)</b></em> time complexity in the average and best cases and
+                        <em><b>O(E)</b></em> time complexity in the best case.
+                        The space complexity is <em><b>O(V)</b></em> as we store vertices in memory.
+                    </div>
+                    <div class="applications">
+                        <p class="subtitle">Applications</p>
+                        <ul>
+                            <li>Detecting negative cycles.</li>
+                            <li>Network packet routing protocols</li>
+                            <li>telephone networking.</li>
+                            <li>Distributed systems.</li>
+                            <li>maps and gps navigation software.</li>
+                            <li>Drone/robotic path routing.</li>
+                        </ul>
+                    </div>
+                    <div class="reference">
+                        <p>References</p>
+                        <a href="https://iq.opengenus.org/bellman-ford-algorithm/">bellman ford algorithm</a>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </main>
     <footer>
         <div class="copy">
