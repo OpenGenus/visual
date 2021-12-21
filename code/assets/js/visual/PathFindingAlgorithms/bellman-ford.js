@@ -1,9 +1,17 @@
-import { rowSize, colSize, weightType, algorithmType } from "../Grid/index.js";
+import {
+	rowSize,
+	colSize,
+	algorithmType,
+	endRow,
+	endCol,
+	startRow,
+	startCol,
+} from "../Grid/index.js";
 import { setWall } from "../Grid/createWalls.js";
 
 const gridContainer = document.querySelector("#gridContainer");
 const speedSlider = document.querySelector(".speedSlider");
-var time = speedSlider.value;
+let time = speedSlider.value;
 
 const changeColor = (node, count, cost) => {
 	setTimeout(() => {
@@ -19,10 +27,10 @@ const changeColor = (node, count, cost) => {
 
 const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 	if (row >= 0 && col >= 0 && row < rowSize && col < colSize) {
-		var node = document.querySelector(`div[row="${row}"][col="${col}"]`);
+		let node = document.querySelector(`div[row="${row}"][col="${col}"]`);
 		let wall = parseInt(node.getAttribute("wall"));
 		if (wall == 1) return;
-		var cost = Math.min(
+		let cost = Math.min(
 			parseInt(curr.getAttribute("cost")) +
 				parseInt(node.getAttribute("weight")),
 			node.getAttribute("cost")
@@ -39,7 +47,6 @@ const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 		//change color
 		changeColor(curr, count, curr.getAttribute("cost"));
 		if (!visited.includes(node)) {
-			// changeColor(curr, count, curr.getAttribute("cost"));
 			checker.push(node);
 		}
 		visited.push(node);
@@ -91,23 +98,27 @@ const relax = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 	}
 };
 
-const drawPath = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
-	let startNode = document.querySelector(`div[row='${x1}'][col='${y1}']`);
-	var endNode = document.querySelector(`div[row='${15}'][col='${32}']`);
+const drawPath = () => {
+	let startNode = document.querySelector(
+		`div[row='${startRow}'][col='${startCol}']`
+	);
+	let endNode = document.querySelector(
+		`div[row='${endRow}'][col='${endCol}']`
+	);
 	//draw route
 	setTimeout(() => {
 		startNode.setAttribute("class", "pathNode");
 		while (endNode.getAttribute("parent") != "null") {
 			endNode.setAttribute("class", "chosenPath");
-			var coor = endNode.getAttribute("parent").split("|");
-			var prow = parseInt(coor[0]);
-			var pcol = parseInt(coor[1]);
+			let coor = endNode.getAttribute("parent").split("|");
+			let prow = parseInt(coor[0]);
+			let pcol = parseInt(coor[1]);
 			endNode = document.querySelector(
 				`div[row="${prow}"][col="${pcol}"]`
 			);
 		}
-		// endNode = document.querySelector(`div[row="${x2}"][col="${y2}`);
-		// endNode.setAttribute("class", "pathNode");
+		endNode = document.querySelector(`div[row="${endRow}"][col="${endCol}`);
+		endNode.setAttribute("class", "pathNode");
 	}, 1000 * time + 100);
 };
 
@@ -123,15 +134,15 @@ export const bellmanFord = (
 	gridContainer.removeEventListener("mouseover", setWall);
 
 	//disable start and refresh btn
-	var startBtn = document.querySelector(".start");
+	let startBtn = document.querySelector(".start");
 	startBtn.style.visibility = "hidden";
-	var clearPathBtn = document.querySelector(".clearPath");
+	let clearPathBtn = document.querySelector(".clearPath");
 	clearPathBtn.style.visibility = "hidden";
 
-	var relaxations = 1;
-	var run = () => {
+	let relaxations = 1;
+	let run = () => {
 		setInterval(() => {
-			if (relaxations < 3) {
+			if (relaxations < 6) {
 				relax(
 					(x1 = 0),
 					(y1 = 0),
@@ -140,14 +151,9 @@ export const bellmanFord = (
 				);
 				relaxations++;
 			} else {
-				drawPath(
-					(x1 = 0),
-					(y1 = 0),
-					(x2 = rowSize - 1),
-					(y2 = colSize - 1)
-				);
 				clearInterval(run);
 			}
+			drawPath();
 		}, 5000);
 	};
 
