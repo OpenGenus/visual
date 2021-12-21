@@ -19,10 +19,10 @@ const changeColor = (node, count, cost) => {
 
 const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 	if (row >= 0 && col >= 0 && row < rowSize && col < colSize) {
-		let node = document.querySelector(`div[row="${row}"][col="${col}"]`);
+		var node = document.querySelector(`div[row="${row}"][col="${col}"]`);
 		let wall = parseInt(node.getAttribute("wall"));
 		if (wall == 1) return;
-		let cost = Math.min(
+		var cost = Math.min(
 			parseInt(curr.getAttribute("cost")) +
 				parseInt(node.getAttribute("weight")),
 			node.getAttribute("cost")
@@ -39,6 +39,7 @@ const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 		//change color
 		changeColor(curr, count, curr.getAttribute("cost"));
 		if (!visited.includes(node)) {
+			// changeColor(curr, count, curr.getAttribute("cost"));
 			checker.push(node);
 		}
 		visited.push(node);
@@ -48,39 +49,22 @@ const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 	}
 };
 
-export const bellmanFord = (
-	x1 = 0,
-	y1 = 0,
-	x2 = rowSize - 1,
-	y2 = colSize - 1
-) => {
-	time = speedSlider.value;
-	time = 40 + (time - 1) * -2;
-	gridContainer.removeEventListener("mousedown", setWall);
-	gridContainer.removeEventListener("mouseover", setWall);
-	var startNode = document.querySelector(`div[row='${x1}'][col='${y1}']`);
-	var endNode = document.querySelector(`div[row='${x2}'][col='${y2}']`);
-
-	//disable start and refresh btn
-	var startBtn = document.querySelector(".start");
-	startBtn.style.visibility = "hidden";
-	var clearPathBtn = document.querySelector(".clearPath");
-	clearPathBtn.style.visibility = "hidden";
-
+const relax = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
+	let startNode = document.querySelector(`div[row='${x1}'][col='${y1}']`);
 	//start algorithm
-	var visited = [startNode];
-	var checker = [startNode];
-	var count = 1;
+	let visited = [startNode];
+	let checker = [startNode];
+	let count = 1;
 
 	while (checker.length != 0) {
 		checker.sort((a, b) => {
 			if (
-				parseInt(a.getAttribute("cost")) >
+				parseInt(a.getAttribute("cost")) <
 				parseInt(b.getAttribute("cost"))
 			)
 				return 1;
 			if (
-				parseInt(a.getAttribute("cost")) <
+				parseInt(a.getAttribute("cost")) >
 				parseInt(b.getAttribute("cost"))
 			)
 				return -1;
@@ -105,11 +89,14 @@ export const bellmanFord = (
 		checkUpdateNode(row, col + 1, curr, checker, visited, count);
 		count++;
 	}
+};
 
+const drawPath = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
+	let startNode = document.querySelector(`div[row='${x1}'][col='${y1}']`);
+	var endNode = document.querySelector(`div[row='${15}'][col='${32}']`);
 	//draw route
 	setTimeout(() => {
 		startNode.setAttribute("class", "pathNode");
-		let countNeg = 0;
 		while (endNode.getAttribute("parent") != "null") {
 			endNode.setAttribute("class", "chosenPath");
 			var coor = endNode.getAttribute("parent").split("|");
@@ -118,18 +105,57 @@ export const bellmanFord = (
 			endNode = document.querySelector(
 				`div[row="${prow}"][col="${pcol}"]`
 			);
-			console.log("hey");
-			countNeg++;
-			if (countNeg > 10000) {
-				alert("Negative cycle detected");
-				break;
-			}
 		}
-		endNode = document.querySelector(`div[row="${x2}"][col="${y2}`);
-		endNode.setAttribute("class", "pathNode");
-	}, count * time + 100);
+		// endNode = document.querySelector(`div[row="${x2}"][col="${y2}`);
+		// endNode.setAttribute("class", "pathNode");
+	}, 1000 * time + 100);
+};
+
+export const bellmanFord = (
+	x1 = 0,
+	y1 = 0,
+	x2 = rowSize - 1,
+	y2 = colSize - 1
+) => {
+	time = speedSlider.value;
+	time = 40 + (time - 1) * -2;
+	gridContainer.removeEventListener("mousedown", setWall);
+	gridContainer.removeEventListener("mouseover", setWall);
+
+	//disable start and refresh btn
+	var startBtn = document.querySelector(".start");
+	startBtn.style.visibility = "hidden";
+	var clearPathBtn = document.querySelector(".clearPath");
+	clearPathBtn.style.visibility = "hidden";
+
+	var relaxations = 1;
+	var run = () => {
+		setInterval(() => {
+			if (relaxations < 3) {
+				relax(
+					(x1 = 0),
+					(y1 = 0),
+					(x2 = rowSize - 1),
+					(y2 = colSize - 1)
+				);
+				relaxations++;
+			} else {
+				drawPath(
+					(x1 = 0),
+					(y1 = 0),
+					(x2 = rowSize - 1),
+					(y2 = colSize - 1)
+				);
+				clearInterval(run);
+			}
+		}, 5000);
+	};
+
+	// relax((x1 = 0), (y1 = 0), (x2 = rowSize - 1), (y2 = colSize - 1));
+
+	run();
 
 	setTimeout(() => {
 		clearPathBtn.style.visibility = "visible";
-	}, count * time + 100);
+	}, 800 * time + 100);
 };
