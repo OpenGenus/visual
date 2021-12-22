@@ -83,7 +83,7 @@ export const dfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 	let startNode = document.querySelector(`div[row='${x1}'][col='${y1}']`);
 	let endNode = document.querySelector(`div[row='${x2}'][col='${y2}']`);
 
-	//hide start and clear path buttons
+	//disable start and clear path buttons
 	let startBtn = document.querySelector(".start");
 	let clearPathBtn = document.querySelector(".clearPath");
 	startBtn.setAttribute("disabled", "true");
