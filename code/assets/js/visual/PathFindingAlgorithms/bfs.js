@@ -9,9 +9,9 @@ import { setWall } from "../Grid/createWalls.js";
 
 const gridContainer = document.querySelector("#gridContainer");
 const speedSlider = document.querySelector(".speedSlider");
+let time = speedSlider.value;
 let startBtn = document.querySelector(".start");
 let clearPathBtn = document.querySelector(".clearPath");
-let time = speedSlider.value;
 let bfsSteps = [];
 
 const changeColor = (node, count, cost) => {

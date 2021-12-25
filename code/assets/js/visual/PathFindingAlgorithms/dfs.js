@@ -102,7 +102,6 @@ export const dfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 		clearPathBtn.removeAttribute("disabled");
 		manualStart.removeAttribute("disabled");
 	}, count * time + 100);
-	return visited;
 };
 
 let isPath = true;

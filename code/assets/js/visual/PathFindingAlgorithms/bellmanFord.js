@@ -162,6 +162,7 @@ export const bellmanFord = (
 	};
 	run();
 };
+
 let isPath = true;
 export const bellmanStepper = () => {
 	if (isPath) {
