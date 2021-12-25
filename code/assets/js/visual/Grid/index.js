@@ -10,9 +10,9 @@ import { setWall } from "./createWalls.js";
 import { setObstacles } from "./generateObstacles.js";
 import { dfs, dfsStepper } from "../PathFindingAlgorithms/dfs.js";
 import { bfs, bfsStepper } from "../PathFindingAlgorithms/bfs.js";
-import { bfsIslands } from "../NoIslands/bfsIslands.js";
-import { dfsIslands } from "../NoIslands/dfsIslands.js";
-import { maxIsland } from "../NoIslands/largeIsland.js";
+import { bfsIslands } from "../Islands/bfsIslands.js";
+import { dfsIslands } from "../Islands/dfsIslands.js";
+import { maxIsland } from "../Islands/largeIsland.js";
 import {
 	bellmanFord,
 	bellmanStepper,
