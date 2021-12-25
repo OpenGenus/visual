@@ -144,7 +144,7 @@ footer a {
 	padding: 10px;
 	font-size: 15px;
 	width: 350px;
-	height: 380px;
+	min-height: 100%;
 	transition: 0.25s all ease;
 	transition-delay: 0.25s;
 	z-index: 2;
