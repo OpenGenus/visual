@@ -126,20 +126,11 @@ export const refreshBoard = () => {
 	for (var i = 0; i < rowSize; i++) {
 		for (var j = 0; j < colSize; j++) {
 			var node = document.querySelector(`div[row="${i}"][col="${j}"]`);
-			if (algorithmType.classList.contains("dijkstras")) {
-				let weight = Math.round(genRandom(5));
-				if (node.getAttribute("wall") == 1) {
-					updateNode(node, i, j, weight, 1);
-				} else {
-					updateNode(node, i, j, weight, 0);
-				}
-			} else if (algorithmType.classList.contains("bellman-ford")) {
-				let weight = Math.round(genRandomNeg(1, 5));
-				if (node.getAttribute("wall") == 1) {
-					updateNode(node, i, j, weight, 1);
-				} else {
-					updateNode(node, i, j, weight, 0);
-				}
+			var weight = parseInt(node.getAttribute("weight"));
+			if (node.getAttribute("wall") == 1) {
+				updateNode(node, i, j, weight, 1);
+			} else {
+				updateNode(node, i, j, weight, 0);
 			}
 		}
 	}
