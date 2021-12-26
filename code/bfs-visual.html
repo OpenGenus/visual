@@ -80,6 +80,7 @@
 				</div>
 				<div class="controlBtns">
 					<button class="start btn">start</button>
+					<button class="manual btn">manual</button>
 					<button class="clearPath btn">clear path</button>
 					<button class="reset btn">reload</button>
 					<select style="display: none;" class="islandsAlgo">
@@ -87,7 +88,7 @@
 					</select>
 				</div>
 				<div class="tutorialContainer">
-					<span><img class="info" src="/assets/images/icons8-info-60.png" alt=""></span>
+					<span><img class="info" src="./assets/images/icons8-info-60.png" alt=""></span>
 					<div class="tutorialContent">
 						<h4>Controls</h4>
 						<p><span>Speed</span> - increase or decrease the speed of the visualization</p>
@@ -98,6 +99,9 @@
 						</p>
 						<p><span>Start</span> - After adjusting the speed and creating obstacles, you can now start the
 							visualization to see the workings of the algorithm.</p>
+						<p><span>Manual</span> - After running the visualization normally you can run it manually to see
+							how the shortest path was obtained. After the click you can proceed with pressing enter key.
+						</p>
 						<p><span>Clear Path</span> - After visualizing, you may opt to clear the path and add more
 							obstacles.</p>
 						<p><span>Speed</span> - If the grid becomes to cluttered you can reload it and repeat the above
@@ -156,7 +160,7 @@
 						the neighbors, and etcetera. <br />
 						The algorithm can be understood as a
 						<em>"fire spreading"</em> on the graph, at the 0th step
-						only the source is on fire. At each step, the buring
+						only the source is on fire. At each step, the burning
 						fire at each vertex spreads to all its neighbors. <br />
 						The <em>ring of fire</em> is expanded at each iteration.
 						We use a <b><em>queue</em></b> data structure.
@@ -229,8 +233,8 @@
 			<span><a href="https://twitter.com/OpenGenus"> Twitter</a></span>
 		</div>
 	</footer>
-	<script src="/assets/js/common/index.js"></script>
-	<script type="module" src="/assets/js/visual/Grid/index.js"></script>
+	<script src="./assets/js/common/index.js"></script>
+	<script type="module" src="./assets/js/visual/Grid/index.js"></script>
 </body>
 
 </html>

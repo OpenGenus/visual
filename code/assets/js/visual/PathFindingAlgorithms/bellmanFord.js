@@ -1,17 +1,23 @@
 import {
 	rowSize,
 	colSize,
-	algorithmType,
 	endRow,
 	endCol,
 	startRow,
 	startCol,
+	manualStart,
+	clearPath,
 } from "../Grid/index.js";
 import { setWall } from "../Grid/createWalls.js";
 
 const gridContainer = document.querySelector("#gridContainer");
 const speedSlider = document.querySelector(".speedSlider");
+let startBtn = document.querySelector(".start");
+let clearPathBtn = document.querySelector(".clearPath");
 let time = speedSlider.value;
+let count = 1;
+let pathCount = 1;
+let bellmanSteps = [];
 
 const changeColor = (node, count, cost) => {
 	setTimeout(() => {
@@ -48,6 +54,7 @@ const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 		changeColor(curr, count, curr.getAttribute("cost"));
 		if (!visited.includes(node)) {
 			checker.push(node);
+			bellmanSteps.push([row, col, cost]);
 		}
 		visited.push(node);
 		return node;
@@ -61,7 +68,6 @@ const relax = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 	//start algorithm
 	let visited = [startNode];
 	let checker = [startNode];
-	let count = 1;
 
 	while (checker.length != 0) {
 		checker.sort((a, b) => {
@@ -80,12 +86,7 @@ const relax = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 		let curr = checker.pop();
 		let row = parseInt(curr.getAttribute("row"));
 		let col = parseInt(curr.getAttribute("col"));
-		if (
-			!algorithmType.classList.contains("bellman-ford") &&
-			row == x2 &&
-			col == y2
-		)
-			break;
+
 		let wall = parseInt(curr.getAttribute("wall"));
 		if (wall == 1) continue;
 
@@ -95,6 +96,7 @@ const relax = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 		checkUpdateNode(row, col - 1, curr, checker, visited, count);
 		checkUpdateNode(row, col + 1, curr, checker, visited, count);
 		count++;
+		pathCount++;
 	}
 };
 
@@ -117,7 +119,6 @@ const drawPath = () => {
 				`div[row="${prow}"][col="${pcol}"]`
 			);
 		}
-		endNode = document.querySelector(`div[row="${endRow}"][col="${endCol}`);
 		endNode.setAttribute("class", "pathNode");
 	}, 1000 * time + 100);
 };
@@ -133,11 +134,9 @@ export const bellmanFord = (
 	gridContainer.removeEventListener("mousedown", setWall);
 	gridContainer.removeEventListener("mouseover", setWall);
 
-	//disable start and refresh btn
-	let startBtn = document.querySelector(".start");
-	startBtn.style.visibility = "hidden";
-	let clearPathBtn = document.querySelector(".clearPath");
-	clearPathBtn.style.visibility = "hidden";
+	//disable start and clear path buttons
+	startBtn.setAttribute("disabled", "true");
+	clearPathBtn.setAttribute("disabled", "true");
 
 	let relaxations = 1;
 	let run = () => {
@@ -151,14 +150,39 @@ export const bellmanFord = (
 				);
 				relaxations++;
 			} else {
+				setTimeout(() => {
+					startBtn.removeAttribute("disabled");
+					clearPathBtn.removeAttribute("disabled");
+					manualStart.removeAttribute("disabled");
+				}, pathCount * time + 100);
 				clearInterval(run);
 			}
 			drawPath();
 		}, 5000);
 	};
 	run();
+};
 
-	setTimeout(() => {
-		clearPathBtn.style.visibility = "visible";
-	}, 800 * time + 100);
+let isPath = true;
+export const bellmanStepper = () => {
+	if (isPath) {
+		clearPath();
+		startBtn.setAttribute("disabled", "true");
+		clearPathBtn.setAttribute("disabled", "true");
+		isPath = false;
+	}
+	if (bellmanSteps.length == 0) {
+		alert("Completed Steps");
+	} else {
+		var cr = bellmanSteps[0][0];
+		var cc = bellmanSteps[0][1];
+		var cost = bellmanSteps[0][2];
+		let node = document.querySelector(`div[row='${cr}'][col='${cc}']`);
+		setTimeout(() => {
+			node.setAttribute("class", "pathColor");
+		}, 1000);
+		node.setAttribute("class", "chosenPath");
+		node.innerHTML = cost;
+		bellmanSteps.shift();
+	}
 };

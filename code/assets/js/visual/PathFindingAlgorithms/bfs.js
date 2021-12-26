@@ -1,9 +1,18 @@
-import { rowSize, colSize, weightType, algorithmType } from "../Grid/index.js";
+import {
+	rowSize,
+	colSize,
+	algorithmType,
+	manualStart,
+	clearPath,
+} from "../Grid/index.js";
 import { setWall } from "../Grid/createWalls.js";
 
 const gridContainer = document.querySelector("#gridContainer");
 const speedSlider = document.querySelector(".speedSlider");
-var time = speedSlider.value;
+let time = speedSlider.value;
+let startBtn = document.querySelector(".start");
+let clearPathBtn = document.querySelector(".clearPath");
+let bfsSteps = [];
 
 const changeColor = (node, count, cost) => {
 	setTimeout(() => {
@@ -19,7 +28,7 @@ const changeColor = (node, count, cost) => {
 
 const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 	if (row >= 0 && col >= 0 && row < rowSize && col < colSize) {
-		var node = document.querySelector(`div[row="${row}"][col="${col}"]`);
+		let node = document.querySelector(`div[row="${row}"][col="${col}"]`);
 		let wall = parseInt(node.getAttribute("wall"));
 		if (wall == 1) return;
 		let prow = parseInt(curr.getAttribute("row"));
@@ -49,6 +58,7 @@ const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 		changeColor(curr, count, curr.getAttribute("cost"));
 		if (!visited.includes(node)) {
 			checker.push(node);
+			bfsSteps.push([row, col, cost]);
 		}
 		visited.push(node);
 		return node;
@@ -63,19 +73,17 @@ export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 	time = 40 + (time - 1) * -2;
 	gridContainer.removeEventListener("mousedown", setWall);
 	gridContainer.removeEventListener("mouseover", setWall);
-	var startNode = document.querySelector(`div[row='${x1}'][col='${y1}']`);
-	var endNode = document.querySelector(`div[row='${x2}'][col='${y2}']`);
+	let startNode = document.querySelector(`div[row='${x1}'][col='${y1}']`);
+	let endNode = document.querySelector(`div[row='${x2}'][col='${y2}']`);
 
-	//disable start and refresh btn
-	var startBtn = document.querySelector(".start");
-	startBtn.style.visibility = "hidden";
-	var clearPathBtn = document.querySelector(".clearPath");
-	clearPathBtn.style.visibility = "hidden";
+	//disable start and clear path buttons
+	startBtn.setAttribute("disabled", "true");
+	clearPathBtn.setAttribute("disabled", "true");
 
 	//start algorithm
-	var visited = [startNode];
-	var checker = [startNode];
-	var count = 1;
+	let visited = [startNode];
+	let checker = [startNode];
+	let count = 1;
 
 	while (checker.length != 0) {
 		checker.sort((a, b) => {
@@ -116,9 +124,9 @@ export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 		startNode.setAttribute("class", "pathNode");
 		while (endNode.getAttribute("parent") != "null") {
 			endNode.setAttribute("class", "chosenPath");
-			var coor = endNode.getAttribute("parent").split("|");
-			var prow = parseInt(coor[0]);
-			var pcol = parseInt(coor[1]);
+			let coor = endNode.getAttribute("parent").split("|");
+			let prow = parseInt(coor[0]);
+			let pcol = parseInt(coor[1]);
 			endNode = document.querySelector(
 				`div[row="${prow}"][col="${pcol}"]`
 			);
@@ -128,6 +136,32 @@ export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 	}, count * time + 100);
 
 	setTimeout(() => {
-		clearPathBtn.style.visibility = "visible";
+		startBtn.removeAttribute("disabled");
+		clearPathBtn.removeAttribute("disabled");
+		manualStart.removeAttribute("disabled");
 	}, count * time + 100);
+};
+
+let isPath = true;
+export const bfsStepper = () => {
+	if (isPath) {
+		clearPath();
+		startBtn.setAttribute("disabled", "true");
+		clearPathBtn.setAttribute("disabled", "true");
+		isPath = false;
+	}
+	if (bfsSteps.length == 0) {
+		alert("Completed Steps");
+	} else {
+		var cr = bfsSteps[0][0];
+		var cc = bfsSteps[0][1];
+		var cost = bfsSteps[0][2];
+		let node = document.querySelector(`div[row='${cr}'][col='${cc}']`);
+		setTimeout(() => {
+			node.setAttribute("class", "pathColor");
+		}, 1000);
+		node.setAttribute("class", "chosenPath");
+		node.innerHTML = cost;
+		bfsSteps.shift();
+	}
 };
