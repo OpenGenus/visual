@@ -110,6 +110,7 @@ startBtn.addEventListener("click", startVisualization);
 
 //steps
 let stepsTitle = document.createElement("h4");
+stepsTitle.classList.add("stepsTitle");
 stepsTitle.textContent = "Algorithm Steps";
 stepsContainer.append(stepsTitle);
 
@@ -135,6 +136,7 @@ export const notification = (row, col, erow, ecol) => {
 	stepsContainer.appendChild(push);
 	stepsContainer.appendChild(explore);
 	stepsContainer.appendChild(line);
+	stepsContainer.scrollTop = stepsContainer.scrollHeight;
 };
 
 //Initialize board
