@@ -1,5 +1,12 @@
 import { setWall } from "../Grid/createWalls.js";
-import { rowSize, colSize, manualStart, clearPath } from "../Grid/index.js";
+import {
+	rowSize,
+	colSize,
+	manualStart,
+	clearPath,
+	notification,
+	stepsContainer,
+} from "../Grid/index.js";
 
 let gridContainer = document.querySelector("#gridContainer");
 let speedSlider = document.querySelector(".speedSlider");
@@ -39,10 +46,12 @@ const traverse = (node, visited, cost, endNode) => {
 		bool = true;
 		return;
 	}
+
 	let wall = parseInt(node.getAttribute("wall"));
 	if (wall == 1) return;
+
 	visited.push(node);
-	dfsSteps.push([row, col, cost]);
+	dfsSteps.push([row, col, cost, row, col]);
 	changeColor(node, cost);
 
 	// Check all sides of a node
@@ -54,6 +63,8 @@ const traverse = (node, visited, cost, endNode) => {
 		if (!visited.includes(child)) {
 			traverse(child, visited, cost + 1, endNode);
 			count++;
+		} else {
+			dfsSteps.push([row, col, cost, cr + 1, cc]);
 		}
 	}
 	if (checker(cr, cc + 1)) {
@@ -61,6 +72,8 @@ const traverse = (node, visited, cost, endNode) => {
 		if (!visited.includes(child)) {
 			traverse(child, visited, cost + 1, endNode);
 			count++;
+		} else {
+			dfsSteps.push([row, col, cost, cr, cc + 1]);
 		}
 	}
 	if (checker(cr - 1, cc)) {
@@ -68,6 +81,8 @@ const traverse = (node, visited, cost, endNode) => {
 		if (!visited.includes(child)) {
 			traverse(child, visited, cost + 1, endNode);
 			count++;
+		} else {
+			dfsSteps.push([row, col, cost, cr - 1, cc]);
 		}
 	}
 	if (checker(cr, cc - 1)) {
@@ -75,6 +90,8 @@ const traverse = (node, visited, cost, endNode) => {
 		if (!visited.includes(child)) {
 			traverse(child, visited, cost + 1, endNode);
 			count++;
+		} else {
+			dfsSteps.push([row, col, cost, cr, cc - 1]);
 		}
 	}
 };
@@ -106,24 +123,30 @@ export const dfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 
 let isPath = true;
 export const dfsStepper = () => {
+	// console.log(dfsSteps);
 	if (isPath) {
 		clearPath();
 		startBtn.setAttribute("disabled", "true");
 		clearPathBtn.setAttribute("disabled", "true");
+		stepsContainer.classList.remove("notification");
+		stepsContainer.classList.add("show");
 		isPath = false;
 	}
 	if (dfsSteps.length == 0) {
-		alert("Completed Steps");
+		alert("Stack is empty!");
 	} else {
 		var cr = dfsSteps[0][0];
 		var cc = dfsSteps[0][1];
 		var cost = dfsSteps[0][2];
+		var er = dfsSteps[0][3];
+		var ec = dfsSteps[0][4];
 		let node = document.querySelector(`div[row='${cr}'][col='${cc}']`);
 		setTimeout(() => {
 			node.setAttribute("class", "pathColor");
 		}, 1000);
 		node.setAttribute("class", "chosenPath");
 		node.innerHTML = cost;
+		notification(cr, cc, er, ec);
 		dfsSteps.shift();
 	}
 };

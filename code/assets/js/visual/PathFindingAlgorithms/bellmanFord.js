@@ -7,6 +7,8 @@ import {
 	startCol,
 	manualStart,
 	clearPath,
+	notification,
+	stepsContainer,
 } from "../Grid/index.js";
 import { setWall } from "../Grid/createWalls.js";
 
@@ -50,11 +52,14 @@ const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 			node.setAttribute("cost", cost);
 		}
 
+		let prow = parseInt(curr.getAttribute("row"));
+		let pcol = parseInt(curr.getAttribute("col"));
+
 		//change color
 		changeColor(curr, count, curr.getAttribute("cost"));
 		if (!visited.includes(node)) {
 			checker.push(node);
-			bellmanSteps.push([row, col, cost]);
+			bellmanSteps.push([row, col, cost, prow, pcol]);
 		}
 		visited.push(node);
 		return node;
@@ -169,6 +174,8 @@ export const bellmanStepper = () => {
 		clearPath();
 		startBtn.setAttribute("disabled", "true");
 		clearPathBtn.setAttribute("disabled", "true");
+		stepsContainer.classList.remove("notification");
+		stepsContainer.classList.add("show");
 		isPath = false;
 	}
 	if (bellmanSteps.length == 0) {
@@ -177,12 +184,15 @@ export const bellmanStepper = () => {
 		var cr = bellmanSteps[0][0];
 		var cc = bellmanSteps[0][1];
 		var cost = bellmanSteps[0][2];
+		var er = bellmanSteps[0][3];
+		var ec = bellmanSteps[0][4];
 		let node = document.querySelector(`div[row='${cr}'][col='${cc}']`);
 		setTimeout(() => {
 			node.setAttribute("class", "pathColor");
 		}, 1000);
 		node.setAttribute("class", "chosenPath");
-		node.innerHTML = cost;
+		node.innerHTML = cost || Infinity;
+		notification(cr, cc, er, ec);
 		bellmanSteps.shift();
 	}
 };

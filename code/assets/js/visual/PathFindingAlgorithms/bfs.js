@@ -4,6 +4,7 @@ import {
 	algorithmType,
 	manualStart,
 	clearPath,
+	notification,
 } from "../Grid/index.js";
 import { setWall } from "../Grid/createWalls.js";
 
@@ -143,21 +144,6 @@ export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 	}, count * time + 100);
 };
 
-let stepsTitle = document.createElement("h4");
-stepsTitle.textContent = "Algorithm Steps";
-stepsContainer.append(stepsTitle);
-
-const notification = (row, col, erow, ecol) => {
-	var push = document.createElement("p");
-	var explore = document.createElement("p");
-	var line = document.createElement("hr");
-	push.textContent = `Pushed node (${row}, ${col}) to queue.`;
-	explore.textContent = `Now exploring (${erow}, ${ecol}).`;
-	stepsContainer.appendChild(push);
-	stepsContainer.appendChild(explore);
-	stepsContainer.appendChild(line);
-};
-
 let isPath = true;
 export const bfsStepper = () => {
 	if (isPath) {
@@ -180,9 +166,9 @@ export const bfsStepper = () => {
 		setTimeout(() => {
 			node.setAttribute("class", "pathColor");
 		}, 1000);
-		notification(cr, cc, er, ec);
 		node.setAttribute("class", "chosenPath");
 		node.innerHTML = cost;
+		notification(cr, cc, er, ec);
 		bfsSteps.shift();
 	}
 };

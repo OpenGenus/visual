@@ -27,6 +27,7 @@ const algoBtn = document.querySelector(".algo");
 const startBtn = document.querySelector(".start");
 const wallBtn = document.querySelector(".setWalls");
 const islandAlgoBtn = document.querySelector(".islandsAlgo");
+export const stepsContainer = document.querySelector(".notification");
 export const algorithmType = document.querySelector(".algorithm");
 export var manualStart = document.querySelector(".manual");
 manualStart.setAttribute("disabled", "true");
@@ -106,6 +107,35 @@ const startVisualization = () => {
 	}
 };
 startBtn.addEventListener("click", startVisualization);
+
+//steps
+let stepsTitle = document.createElement("h4");
+stepsTitle.textContent = "Algorithm Steps";
+stepsContainer.append(stepsTitle);
+
+export const notification = (row, col, erow, ecol) => {
+	var push = document.createElement("p");
+	var explore = document.createElement("p");
+	var line = document.createElement("hr");
+	if (
+		algorithmType.classList.contains("bfs") ||
+		algorithmType.classList.contains("dijkstras") ||
+		algorithmType.classList.contains("bellman-ford")
+	) {
+		push.textContent = `Pushed (${row}, ${col}) to queue.`;
+		explore.textContent = `Now exploring (${erow}, ${ecol}).`;
+	} else if (algorithmType.classList.contains("dfs")) {
+		if (row == erow && col == ecol) {
+			push.textContent = `Pushed (${erow}, ${ecol}) to stack.`;
+			explore.textContent = `Now exploring (${erow}, ${ecol}).`;
+		} else {
+			push.textContent = `Popped (${row}, ${col}) from stack.`;
+		}
+	}
+	stepsContainer.appendChild(push);
+	stepsContainer.appendChild(explore);
+	stepsContainer.appendChild(line);
+};
 
 //Initialize board
 window.onload = () => {
