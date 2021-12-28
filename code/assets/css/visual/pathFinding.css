@@ -16,6 +16,20 @@
 	grid-column-gap: 5px;
 	margin-top: 3rem !important;
 }
+.notification {
+	display: none;
+}
+.show {
+	position: absolute;
+	top: 30%;
+	left: 50px;
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+	width: 200px;
+	max-height: 65%;
+	overflow: auto;
+}
 .beforeStart {
 	border: 1px solid #000;
 	background: transparent;
