@@ -3,18 +3,15 @@ import {
 	colSize,
 	algorithmType,
 	manualStart,
-	clearPath,
-	notification,
+	bfsSteps,
 } from "../Grid/index.js";
 import { setWall } from "../Grid/createWalls.js";
 
 const gridContainer = document.querySelector("#gridContainer");
 const speedSlider = document.querySelector(".speedSlider");
-const stepsContainer = document.querySelector(".notification");
 let time = speedSlider.value;
 let startBtn = document.querySelector(".start");
 let clearPathBtn = document.querySelector(".clearPath");
-let bfsSteps = [];
 
 const changeColor = (node, count, cost) => {
 	setTimeout(() => {
@@ -142,33 +139,4 @@ export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 		clearPathBtn.removeAttribute("disabled");
 		manualStart.removeAttribute("disabled");
 	}, count * time + 100);
-};
-
-let isPath = true;
-export const bfsStepper = () => {
-	if (isPath) {
-		clearPath();
-		startBtn.setAttribute("disabled", "true");
-		clearPathBtn.setAttribute("disabled", "true");
-		stepsContainer.classList.remove("notification");
-		stepsContainer.classList.add("show");
-		isPath = false;
-	}
-	if (bfsSteps.length == 0) {
-		alert("Completed Steps");
-	} else {
-		var cr = bfsSteps[0][0];
-		var cc = bfsSteps[0][1];
-		var cost = bfsSteps[0][2];
-		var er = bfsSteps[0][3];
-		var ec = bfsSteps[0][4];
-		let node = document.querySelector(`div[row='${cr}'][col='${cc}']`);
-		setTimeout(() => {
-			node.setAttribute("class", "pathColor");
-		}, 1000);
-		node.setAttribute("class", "chosenPath");
-		node.innerHTML = cost;
-		notification(cr, cc, er, ec);
-		bfsSteps.shift();
-	}
 };

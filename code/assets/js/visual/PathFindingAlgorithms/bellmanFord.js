@@ -6,9 +6,7 @@ import {
 	startRow,
 	startCol,
 	manualStart,
-	clearPath,
-	notification,
-	stepsContainer,
+	bellmanSteps,
 } from "../Grid/index.js";
 import { setWall } from "../Grid/createWalls.js";
 
@@ -19,7 +17,6 @@ let clearPathBtn = document.querySelector(".clearPath");
 let time = speedSlider.value;
 let count = 1;
 let pathCount = 1;
-let bellmanSteps = [];
 
 const changeColor = (node, count, cost) => {
 	setTimeout(() => {
@@ -166,33 +163,4 @@ export const bellmanFord = (
 		}, 5000);
 	};
 	run();
-};
-
-let isPath = true;
-export const bellmanStepper = () => {
-	if (isPath) {
-		clearPath();
-		startBtn.setAttribute("disabled", "true");
-		clearPathBtn.setAttribute("disabled", "true");
-		stepsContainer.classList.remove("notification");
-		stepsContainer.classList.add("show");
-		isPath = false;
-	}
-	if (bellmanSteps.length == 0) {
-		alert("Completed Steps");
-	} else {
-		var cr = bellmanSteps[0][0];
-		var cc = bellmanSteps[0][1];
-		var cost = bellmanSteps[0][2];
-		var er = bellmanSteps[0][3];
-		var ec = bellmanSteps[0][4];
-		let node = document.querySelector(`div[row='${cr}'][col='${cc}']`);
-		setTimeout(() => {
-			node.setAttribute("class", "pathColor");
-		}, 1000);
-		node.setAttribute("class", "chosenPath");
-		node.innerHTML = cost || Infinity;
-		notification(cr, cc, er, ec);
-		bellmanSteps.shift();
-	}
 };

@@ -1,12 +1,5 @@
 import { setWall } from "../Grid/createWalls.js";
-import {
-	rowSize,
-	colSize,
-	manualStart,
-	clearPath,
-	notification,
-	stepsContainer,
-} from "../Grid/index.js";
+import { rowSize, colSize, manualStart, dfsSteps } from "../Grid/index.js";
 
 let gridContainer = document.querySelector("#gridContainer");
 let speedSlider = document.querySelector(".speedSlider");
@@ -15,7 +8,6 @@ let clearPathBtn = document.querySelector(".clearPath");
 let time = speedSlider.value;
 let bool = false;
 let count = 1;
-let dfsSteps = [];
 
 const checker = (row, col) => {
 	if (row >= 0 && col >= 0 && row < rowSize && col < colSize) return true;
@@ -119,34 +111,4 @@ export const dfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 		clearPathBtn.removeAttribute("disabled");
 		manualStart.removeAttribute("disabled");
 	}, count * time + 100);
-};
-
-let isPath = true;
-export const dfsStepper = () => {
-	// console.log(dfsSteps);
-	if (isPath) {
-		clearPath();
-		startBtn.setAttribute("disabled", "true");
-		clearPathBtn.setAttribute("disabled", "true");
-		stepsContainer.classList.remove("notification");
-		stepsContainer.classList.add("show");
-		isPath = false;
-	}
-	if (dfsSteps.length == 0) {
-		alert("Stack is empty!");
-	} else {
-		var cr = dfsSteps[0][0];
-		var cc = dfsSteps[0][1];
-		var cost = dfsSteps[0][2];
-		var er = dfsSteps[0][3];
-		var ec = dfsSteps[0][4];
-		let node = document.querySelector(`div[row='${cr}'][col='${cc}']`);
-		setTimeout(() => {
-			node.setAttribute("class", "pathColor");
-		}, 1000);
-		node.setAttribute("class", "chosenPath");
-		node.innerHTML = cost;
-		notification(cr, cc, er, ec);
-		dfsSteps.shift();
-	}
 };

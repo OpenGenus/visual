@@ -8,15 +8,12 @@ import {
 } from "./createGrid.js";
 import { setWall } from "./createWalls.js";
 import { setObstacles } from "./generateObstacles.js";
-import { dfs, dfsStepper } from "../PathFindingAlgorithms/dfs.js";
-import { bfs, bfsStepper } from "../PathFindingAlgorithms/bfs.js";
+import { dfs } from "../PathFindingAlgorithms/dfs.js";
+import { bfs } from "../PathFindingAlgorithms/bfs.js";
 import { bfsIslands } from "../Islands/bfsIslands.js";
 import { dfsIslands } from "../Islands/dfsIslands.js";
 import { maxIsland } from "../Islands/largeIsland.js";
-import {
-	bellmanFord,
-	bellmanStepper,
-} from "../PathFindingAlgorithms/bellmanFord.js";
+import { bellmanFord } from "../PathFindingAlgorithms/bellmanFord.js";
 
 // get dom elements
 const gridContainer = document.querySelector("#gridContainer");
@@ -43,6 +40,11 @@ export var weightType = weightBtn.options[weightBtn.selectedIndex].value;
 export var algorithm = algoBtn.options[algoBtn.selectedIndex].value;
 export var islandAlgo =
 	islandAlgoBtn.options[islandAlgoBtn.selectedIndex].value;
+
+//steps arrays
+export let bfsSteps = [];
+export let dfsSteps = [];
+export let bellmanSteps = [];
 
 //event listeners
 gridContainer.addEventListener("mousedown", () => {
@@ -83,32 +85,7 @@ export const clearPath = () => {
 resetBtn.addEventListener("click", () => location.reload());
 clearPathBtn.addEventListener("click", clearPath);
 
-const startVisualization = () => {
-	if (algorithmType.classList.contains("bfs")) {
-		bfs(startRow, startCol, endRow, endCol);
-		manualStart.addEventListener("click", bfsStepper);
-	} else if (algorithmType.classList.contains("dfs")) {
-		dfs(startRow, startCol, endRow, endCol);
-		manualStart.addEventListener("click", dfsStepper);
-	} else if (algorithmType.classList.contains("dijkstras")) {
-		bfs(startRow, startCol, endRow, endCol);
-		manualStart.addEventListener("click", bfsStepper);
-	} else if (algorithmType.classList.contains("bellman-ford")) {
-		bellmanFord(startRow, startCol, endRow, endCol);
-		manualStart.addEventListener("click", bellmanStepper);
-	} else if (algorithmType.classList.contains("numIslands")) {
-		if (islandAlgo === "bfs") {
-			bfsIslands();
-		} else if (islandAlgo === "dfs") {
-			dfsIslands();
-		}
-	} else if (algorithmType.classList.contains("maxIsland")) {
-		maxIsland();
-	}
-};
-startBtn.addEventListener("click", startVisualization);
-
-//steps
+//display steps
 let stepsTitle = document.createElement("h4");
 stepsTitle.classList.add("stepsTitle");
 stepsTitle.textContent = "Algorithm Steps";
@@ -138,6 +115,69 @@ export const notification = (row, col, erow, ecol) => {
 	stepsContainer.appendChild(line);
 	stepsContainer.scrollTop = stepsContainer.scrollHeight;
 };
+
+// step by step visualization
+let isPath = true;
+export const stepper = (steps) => {
+	if (isPath) {
+		clearPath();
+		startBtn.setAttribute("disabled", "true");
+		clearPathBtn.setAttribute("disabled", "true");
+		stepsContainer.classList.remove("notification");
+		stepsContainer.classList.add("show");
+		isPath = false;
+	}
+	if (steps.length == 0) {
+		alert("Completed Steps");
+	} else {
+		var cr = steps[0][0];
+		var cc = steps[0][1];
+		var cost = steps[0][2];
+		var er = steps[0][3];
+		var ec = steps[0][4];
+		let node = document.querySelector(`div[row='${cr}'][col='${cc}']`);
+		setTimeout(() => {
+			node.setAttribute("class", "pathColor");
+		}, 1000);
+		node.setAttribute("class", "chosenPath");
+		node.innerHTML = cost || "inf";
+		notification(cr, cc, er, ec);
+		steps.shift();
+	}
+};
+
+const startVisualization = () => {
+	if (algorithmType.classList.contains("bfs")) {
+		bfs(startRow, startCol, endRow, endCol);
+		manualStart.addEventListener("click", () => {
+			stepper(bfsSteps);
+		});
+	} else if (algorithmType.classList.contains("dfs")) {
+		dfs(startRow, startCol, endRow, endCol);
+		manualStart.addEventListener("click", () => {
+			stepper(dfsSteps);
+		});
+	} else if (algorithmType.classList.contains("dijkstras")) {
+		bfs(startRow, startCol, endRow, endCol);
+		manualStart.addEventListener("click", () => {
+			stepper(bfsSteps);
+		});
+	} else if (algorithmType.classList.contains("bellman-ford")) {
+		bellmanFord(startRow, startCol, endRow, endCol);
+		manualStart.addEventListener("click", () => {
+			stepper(bellmanSteps);
+		});
+	} else if (algorithmType.classList.contains("numIslands")) {
+		if (islandAlgo === "bfs") {
+			bfsIslands();
+		} else if (islandAlgo === "dfs") {
+			dfsIslands();
+		}
+	} else if (algorithmType.classList.contains("maxIsland")) {
+		maxIsland();
+	}
+};
+startBtn.addEventListener("click", startVisualization);
 
 //Initialize board
 window.onload = () => {
