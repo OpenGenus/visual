@@ -45,6 +45,7 @@ export var islandAlgo =
 export let bfsSteps = [];
 export let dfsSteps = [];
 export let bellmanSteps = [];
+export let dijkstrasPath = [];
 
 //event listeners
 gridContainer.addEventListener("mousedown", () => {
@@ -95,17 +96,23 @@ export const notification = (row, col, erow, ecol) => {
 	var push = document.createElement("p");
 	var explore = document.createElement("p");
 	var line = document.createElement("hr");
-	if (
-		algorithmType.classList.contains("bfs") ||
-		algorithmType.classList.contains("dijkstras") ||
-		algorithmType.classList.contains("bellman-ford")
-	) {
+	if (algorithmType.classList.contains("bellman-ford")) {
 		push.textContent = `Pushed (${row}, ${col}) to queue.`;
-		explore.textContent = `Now exploring (${erow}, ${ecol}).`;
+		explore.textContent = `Exploring (${erow}, ${ecol}).`;
+	} else if (
+		algorithmType.classList.contains("dijkstras") ||
+		algorithmType.classList.contains("bfs")
+	) {
+		if (bfsSteps.length == 0) {
+			push.textContent = `Selected (${row}, ${col}) as path.`;
+		} else {
+			push.textContent = `Pushed (${row}, ${col}) to array.`;
+			explore.textContent = `Processing (${erow}, ${ecol}).`;
+		}
 	} else if (algorithmType.classList.contains("dfs")) {
 		if (row == erow && col == ecol) {
 			push.textContent = `Pushed (${erow}, ${ecol}) to stack.`;
-			explore.textContent = `Now exploring (${erow}, ${ecol}).`;
+			explore.textContent = `Exploring (${erow}, ${ecol}).`;
 		} else {
 			push.textContent = `Popped (${row}, ${col}) from stack.`;
 		}
@@ -128,7 +135,26 @@ export const stepper = (steps) => {
 		isPath = false;
 	}
 	if (steps.length == 0) {
-		alert("Completed Steps");
+		if (
+			algorithmType.classList.contains("dijkstras") ||
+			algorithmType.classList.contains("bfs")
+		) {
+			if (dijkstrasPath.length == 0) {
+				alert("Steps completed!");
+			} else {
+				//draw path
+				var pcol = dijkstrasPath[0][0];
+				var prow = dijkstrasPath[0][1];
+				let node = document.querySelector(
+					`div[row='${pcol}'][col='${prow}']`
+				);
+				node.setAttribute("class", "chosenPath");
+				notification(pcol, prow, 0, 0);
+				dijkstrasPath.shift();
+			}
+		} else {
+			alert("Completed Steps");
+		}
 	} else {
 		var cr = steps[0][0];
 		var cc = steps[0][1];

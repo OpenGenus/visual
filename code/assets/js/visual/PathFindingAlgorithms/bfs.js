@@ -4,6 +4,7 @@ import {
 	algorithmType,
 	manualStart,
 	bfsSteps,
+	dijkstrasPath,
 } from "../Grid/index.js";
 import { setWall } from "../Grid/createWalls.js";
 
@@ -129,6 +130,7 @@ export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 			endNode = document.querySelector(
 				`div[row="${prow}"][col="${pcol}"]`
 			);
+			dijkstrasPath.push([parseInt(prow), parseInt(pcol)]);
 		}
 		endNode = document.querySelector(`div[row="${x2}"][col="${y2}`);
 		endNode.setAttribute("class", "pathNode");
