@@ -8,15 +8,12 @@ import {
 } from "./createGrid.js";
 import { setWall } from "./createWalls.js";
 import { setObstacles } from "./generateObstacles.js";
-import { dfs, dfsStepper } from "../PathFindingAlgorithms/dfs.js";
-import { bfs, bfsStepper } from "../PathFindingAlgorithms/bfs.js";
+import { dfs } from "../PathFindingAlgorithms/dfs.js";
+import { bfs } from "../PathFindingAlgorithms/bfs.js";
 import { bfsIslands } from "../Islands/bfsIslands.js";
 import { dfsIslands } from "../Islands/dfsIslands.js";
 import { maxIsland } from "../Islands/largeIsland.js";
-import {
-	bellmanFord,
-	bellmanStepper,
-} from "../PathFindingAlgorithms/bellmanFord.js";
+import { bellmanFord } from "../PathFindingAlgorithms/bellmanFord.js";
 
 // get dom elements
 const gridContainer = document.querySelector("#gridContainer");
@@ -27,6 +24,7 @@ const algoBtn = document.querySelector(".algo");
 const startBtn = document.querySelector(".start");
 const wallBtn = document.querySelector(".setWalls");
 const islandAlgoBtn = document.querySelector(".islandsAlgo");
+export const stepsContainer = document.querySelector(".notification");
 export const algorithmType = document.querySelector(".algorithm");
 export var manualStart = document.querySelector(".manual");
 manualStart.setAttribute("disabled", "true");
@@ -42,6 +40,12 @@ export var weightType = weightBtn.options[weightBtn.selectedIndex].value;
 export var algorithm = algoBtn.options[algoBtn.selectedIndex].value;
 export var islandAlgo =
 	islandAlgoBtn.options[islandAlgoBtn.selectedIndex].value;
+
+//steps arrays
+export let bfsSteps = [];
+export let dfsSteps = [];
+export let bellmanSteps = [];
+export let dijkstrasPath = [];
 
 //event listeners
 gridContainer.addEventListener("mousedown", () => {
@@ -82,19 +86,113 @@ export const clearPath = () => {
 resetBtn.addEventListener("click", () => location.reload());
 clearPathBtn.addEventListener("click", clearPath);
 
+//display steps
+let stepsTitle = document.createElement("h4");
+stepsTitle.classList.add("stepsTitle");
+stepsTitle.textContent = "Algorithm Steps";
+stepsContainer.append(stepsTitle);
+
+export const notification = (row, col, erow, ecol) => {
+	var push = document.createElement("p");
+	var explore = document.createElement("p");
+	var line = document.createElement("hr");
+	if (algorithmType.classList.contains("bellman-ford")) {
+		push.textContent = `Pushed (${row}, ${col}) to queue.`;
+		explore.textContent = `Exploring (${erow}, ${ecol}).`;
+	} else if (
+		algorithmType.classList.contains("dijkstras") ||
+		algorithmType.classList.contains("bfs")
+	) {
+		if (bfsSteps.length == 0) {
+			push.textContent = `Selected (${row}, ${col}) as path.`;
+		} else {
+			push.textContent = `Pushed (${row}, ${col}) to array.`;
+			explore.textContent = `Processing (${erow}, ${ecol}).`;
+		}
+	} else if (algorithmType.classList.contains("dfs")) {
+		if (row == erow && col == ecol) {
+			push.textContent = `Pushed (${erow}, ${ecol}) to stack.`;
+			explore.textContent = `Exploring (${erow}, ${ecol}).`;
+		} else {
+			push.textContent = `Popped (${row}, ${col}) from stack.`;
+		}
+	}
+	stepsContainer.appendChild(push);
+	stepsContainer.appendChild(explore);
+	stepsContainer.appendChild(line);
+	stepsContainer.scrollTop = stepsContainer.scrollHeight;
+};
+
+// step by step visualization
+let isPath = true;
+export const stepper = (steps) => {
+	if (isPath) {
+		clearPath();
+		startBtn.setAttribute("disabled", "true");
+		clearPathBtn.setAttribute("disabled", "true");
+		stepsContainer.classList.remove("notification");
+		stepsContainer.classList.add("show");
+		isPath = false;
+	}
+	if (steps.length == 0) {
+		if (
+			algorithmType.classList.contains("dijkstras") ||
+			algorithmType.classList.contains("bfs")
+		) {
+			if (dijkstrasPath.length == 0) {
+				alert("Steps completed!");
+			} else {
+				//draw path
+				var pcol = dijkstrasPath[0][0];
+				var prow = dijkstrasPath[0][1];
+				let node = document.querySelector(
+					`div[row='${pcol}'][col='${prow}']`
+				);
+				node.setAttribute("class", "chosenPath");
+				notification(pcol, prow, 0, 0);
+				dijkstrasPath.shift();
+			}
+		} else {
+			alert("Completed Steps");
+		}
+	} else {
+		var cr = steps[0][0];
+		var cc = steps[0][1];
+		var cost = steps[0][2];
+		var er = steps[0][3];
+		var ec = steps[0][4];
+		let node = document.querySelector(`div[row='${cr}'][col='${cc}']`);
+		setTimeout(() => {
+			node.setAttribute("class", "pathColor");
+		}, 1000);
+		node.setAttribute("class", "chosenPath");
+		node.innerHTML = cost || "inf";
+		notification(cr, cc, er, ec);
+		steps.shift();
+	}
+};
+
 const startVisualization = () => {
 	if (algorithmType.classList.contains("bfs")) {
 		bfs(startRow, startCol, endRow, endCol);
-		manualStart.addEventListener("click", bfsStepper);
+		manualStart.addEventListener("click", () => {
+			stepper(bfsSteps);
+		});
 	} else if (algorithmType.classList.contains("dfs")) {
 		dfs(startRow, startCol, endRow, endCol);
-		manualStart.addEventListener("click", dfsStepper);
+		manualStart.addEventListener("click", () => {
+			stepper(dfsSteps);
+		});
 	} else if (algorithmType.classList.contains("dijkstras")) {
 		bfs(startRow, startCol, endRow, endCol);
-		manualStart.addEventListener("click", bfsStepper);
+		manualStart.addEventListener("click", () => {
+			stepper(bfsSteps);
+		});
 	} else if (algorithmType.classList.contains("bellman-ford")) {
 		bellmanFord(startRow, startCol, endRow, endCol);
-		manualStart.addEventListener("click", bellmanStepper);
+		manualStart.addEventListener("click", () => {
+			stepper(bellmanSteps);
+		});
 	} else if (algorithmType.classList.contains("numIslands")) {
 		if (islandAlgo === "bfs") {
 			bfsIslands();

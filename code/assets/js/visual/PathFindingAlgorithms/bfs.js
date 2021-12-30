@@ -3,7 +3,8 @@ import {
 	colSize,
 	algorithmType,
 	manualStart,
-	clearPath,
+	bfsSteps,
+	dijkstrasPath,
 } from "../Grid/index.js";
 import { setWall } from "../Grid/createWalls.js";
 
@@ -12,7 +13,6 @@ const speedSlider = document.querySelector(".speedSlider");
 let time = speedSlider.value;
 let startBtn = document.querySelector(".start");
 let clearPathBtn = document.querySelector(".clearPath");
-let bfsSteps = [];
 
 const changeColor = (node, count, cost) => {
 	setTimeout(() => {
@@ -58,7 +58,7 @@ const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 		changeColor(curr, count, curr.getAttribute("cost"));
 		if (!visited.includes(node)) {
 			checker.push(node);
-			bfsSteps.push([row, col, cost]);
+			bfsSteps.push([row, col, cost, prow, pcol]);
 		}
 		visited.push(node);
 		return node;
@@ -130,6 +130,7 @@ export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 			endNode = document.querySelector(
 				`div[row="${prow}"][col="${pcol}"]`
 			);
+			dijkstrasPath.push([parseInt(prow), parseInt(pcol)]);
 		}
 		endNode = document.querySelector(`div[row="${x2}"][col="${y2}`);
 		endNode.setAttribute("class", "pathNode");
@@ -140,28 +141,4 @@ export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 		clearPathBtn.removeAttribute("disabled");
 		manualStart.removeAttribute("disabled");
 	}, count * time + 100);
-};
-
-let isPath = true;
-export const bfsStepper = () => {
-	if (isPath) {
-		clearPath();
-		startBtn.setAttribute("disabled", "true");
-		clearPathBtn.setAttribute("disabled", "true");
-		isPath = false;
-	}
-	if (bfsSteps.length == 0) {
-		alert("Completed Steps");
-	} else {
-		var cr = bfsSteps[0][0];
-		var cc = bfsSteps[0][1];
-		var cost = bfsSteps[0][2];
-		let node = document.querySelector(`div[row='${cr}'][col='${cc}']`);
-		setTimeout(() => {
-			node.setAttribute("class", "pathColor");
-		}, 1000);
-		node.setAttribute("class", "chosenPath");
-		node.innerHTML = cost;
-		bfsSteps.shift();
-	}
 };
