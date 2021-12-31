@@ -144,6 +144,10 @@ let isPath = true;
 export const stepper = (steps) => {
 	if (isPath) {
 		clearPath();
+		bellmanFordPath.splice(
+			0,
+			bellmanFordPath.length - bellmanFordPath.length / 5
+		);
 		startBtn.setAttribute("disabled", "true");
 		clearPathBtn.setAttribute("disabled", "true");
 		stepsContainer.classList.remove("notification");
