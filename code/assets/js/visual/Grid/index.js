@@ -13,7 +13,11 @@ import { bfs } from "../PathFindingAlgorithms/bfs.js";
 import { bfsIslands } from "../Islands/bfsIslands.js";
 import { dfsIslands } from "../Islands/dfsIslands.js";
 import { maxIsland } from "../Islands/largeIsland.js";
-import { bellmanFord } from "../PathFindingAlgorithms/bellmanFord.js";
+import {
+	bellmanFord,
+	relaxations,
+	bellmanStepsLength,
+} from "../PathFindingAlgorithms/bellmanFord.js";
 
 // get dom elements
 const gridContainer = document.querySelector("#gridContainer");
@@ -92,13 +96,20 @@ stepsTitle.classList.add("stepsTitle");
 stepsTitle.textContent = "Algorithm Steps";
 stepsContainer.append(stepsTitle);
 
-export const notification = (row, col, erow, ecol) => {
+export const notification = (row, col, erow, ecol, cost, prevCost) => {
 	var push = document.createElement("p");
 	var explore = document.createElement("p");
 	var line = document.createElement("hr");
 	if (algorithmType.classList.contains("bellman-ford")) {
-		push.textContent = `Pushed (${row}, ${col}) to queue.`;
-		explore.textContent = `Exploring (${erow}, ${ecol}).`;
+		if (
+			bellmanSteps.length <=
+			bellmanStepsLength - bellmanStepsLength / relaxations
+		) {
+			push.textContent = `Relaxing (${row}, ${col}): current cost ${prevCost}, updated cost ${cost}.`;
+		} else {
+			push.textContent = `Pushed (${row}, ${col}) to dist[] array.`;
+			explore.textContent = `Exploring (${erow}, ${ecol}).`;
+		}
 	} else if (
 		algorithmType.classList.contains("dijkstras") ||
 		algorithmType.classList.contains("bfs")
@@ -166,8 +177,10 @@ export const stepper = (steps) => {
 			node.setAttribute("class", "pathColor");
 		}, 1000);
 		node.setAttribute("class", "chosenPath");
+		//relaxation for bellman ford nodes
+		let prevCost = node.innerHTML;
 		node.innerHTML = cost || "inf";
-		notification(cr, cc, er, ec);
+		notification(cr, cc, er, ec, cost, prevCost);
 		steps.shift();
 	}
 };

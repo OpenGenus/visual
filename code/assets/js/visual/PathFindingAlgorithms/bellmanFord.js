@@ -17,6 +17,7 @@ let clearPathBtn = document.querySelector(".clearPath");
 let time = speedSlider.value;
 let count = 1;
 let pathCount = 1;
+export const relaxations = 5;
 
 const changeColor = (node, count, cost) => {
 	setTimeout(() => {
@@ -125,6 +126,7 @@ const drawPath = () => {
 	}, 1000 * time + 100);
 };
 
+export let bellmanStepsLength = 0;
 export const bellmanFord = (
 	x1 = 0,
 	y1 = 0,
@@ -140,17 +142,18 @@ export const bellmanFord = (
 	startBtn.setAttribute("disabled", "true");
 	clearPathBtn.setAttribute("disabled", "true");
 
-	let relaxations = 1;
+	let i = 0;
 	let run = () => {
 		setInterval(() => {
-			if (relaxations < 6) {
+			if (i < relaxations) {
 				relax(
 					(x1 = 0),
 					(y1 = 0),
 					(x2 = rowSize - 1),
 					(y2 = colSize - 1)
 				);
-				relaxations++;
+				bellmanStepsLength = bellmanSteps.length;
+				i++;
 			} else {
 				setTimeout(() => {
 					startBtn.removeAttribute("disabled");
