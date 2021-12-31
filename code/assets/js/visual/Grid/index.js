@@ -100,6 +100,7 @@ stepsContainer.append(stepsTitle);
 export const notification = (row, col, erow, ecol, cost, prevCost) => {
 	var push = document.createElement("p");
 	var explore = document.createElement("p");
+	var costText = document.createElement("p");
 	var line = document.createElement("hr");
 	if (algorithmType.classList.contains("bellman-ford")) {
 		if (bellmanSteps.length == 0) {
@@ -124,6 +125,7 @@ export const notification = (row, col, erow, ecol, cost, prevCost) => {
 		} else {
 			push.textContent = `Pushed (${row}, ${col}) to array.`;
 			explore.textContent = `Processing (${erow}, ${ecol}).`;
+			costText.textContent = `Cost from source is ${cost}`;
 		}
 	} else if (algorithmType.classList.contains("dfs")) {
 		if (row == erow && col == ecol) {
@@ -135,6 +137,7 @@ export const notification = (row, col, erow, ecol, cost, prevCost) => {
 	}
 	stepsContainer.appendChild(push);
 	stepsContainer.appendChild(explore);
+	stepsContainer.appendChild(costText);
 	stepsContainer.appendChild(line);
 	stepsContainer.scrollTop = stepsContainer.scrollHeight;
 };
