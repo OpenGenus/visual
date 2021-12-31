@@ -8,18 +8,20 @@ import {
 	manualStart,
 	bellmanSteps,
 	bellmanFordPath,
+	startBtn,
+	clearPathBtn,
+	wallBtn,
+	gridContainer,
 } from "../Grid/index.js";
 import { setWall } from "../Grid/createWalls.js";
 
-const gridContainer = document.querySelector("#gridContainer");
 const speedSlider = document.querySelector(".speedSlider");
-let startBtn = document.querySelector(".start");
-let clearPathBtn = document.querySelector(".clearPath");
 let time = speedSlider.value;
 let count = 1;
 let pathCount = 1;
 export const relaxations = 5;
 
+//change color of a node during and after traversal
 const changeColor = (node, count, cost) => {
 	setTimeout(() => {
 		node.setAttribute("class", "chosenPath");
@@ -32,6 +34,7 @@ const changeColor = (node, count, cost) => {
 	}, count * time + 100);
 };
 
+//update node color an cost during traversal
 const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 	if (row >= 0 && col >= 0 && row < rowSize && col < colSize) {
 		let node = document.querySelector(`div[row="${row}"][col="${col}"]`);
@@ -67,6 +70,7 @@ const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 	}
 };
 
+//relax nodes bellman ford algorithm
 const relax = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 	let startNode = document.querySelector(`div[row='${x1}'][col='${y1}']`);
 	//start algorithm
@@ -104,6 +108,7 @@ const relax = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 	}
 };
 
+//highlight shortest path
 const drawPath = () => {
 	let startNode = document.querySelector(
 		`div[row='${startRow}'][col='${startCol}']`
@@ -128,7 +133,10 @@ const drawPath = () => {
 	}, 1000 * time + 100);
 };
 
+//original number of steps
 export let bellmanStepsLength = 0;
+
+//bellman ford algorithm function
 export const bellmanFord = (
 	x1 = 0,
 	y1 = 0,
@@ -143,6 +151,7 @@ export const bellmanFord = (
 	//disable start and clear path buttons
 	startBtn.setAttribute("disabled", "true");
 	clearPathBtn.setAttribute("disabled", "true");
+	wallBtn.setAttribute("disabled", "true");
 
 	let i = 0;
 	let run = () => {
@@ -161,6 +170,7 @@ export const bellmanFord = (
 					startBtn.removeAttribute("disabled");
 					clearPathBtn.removeAttribute("disabled");
 					manualStart.removeAttribute("disabled");
+					wallBtn.removeAttribute("disabled");
 				}, pathCount * time + 100);
 				clearInterval(run);
 			}

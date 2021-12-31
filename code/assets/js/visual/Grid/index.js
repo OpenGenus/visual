@@ -20,19 +20,21 @@ import {
 } from "../PathFindingAlgorithms/bellmanFord.js";
 
 // get dom elements
-const gridContainer = document.querySelector("#gridContainer");
-const clearPathBtn = document.querySelector(".clearPath");
-const resetBtn = document.querySelector(".reset");
+export const gridContainer = document.querySelector("#gridContainer");
+export const clearPathBtn = document.querySelector(".clearPath");
+export const resetBtn = document.querySelector(".reset");
 const weightBtn = document.querySelector(".weight");
 const algoBtn = document.querySelector(".algo");
-const startBtn = document.querySelector(".start");
-const wallBtn = document.querySelector(".setWalls");
+export const startBtn = document.querySelector(".start");
+export const wallBtn = document.querySelector(".setWalls");
+export const speedSlider = document.querySelector(".speedSlider");
 const islandAlgoBtn = document.querySelector(".islandsAlgo");
 export const stepsContainer = document.querySelector(".notification");
 export const algorithmType = document.querySelector(".algorithm");
 export var manualStart = document.querySelector(".manual");
 manualStart.setAttribute("disabled", "true");
 
+//global variables
 export var rowSize = 20;
 export var colSize = 40;
 export var startRow = 4;
@@ -68,6 +70,7 @@ islandAlgoBtn.addEventListener("change", () => {
 	window.location.reload();
 });
 
+//clear path after traversal
 export const clearPath = () => {
 	gridContainer.addEventListener("mousedown", setWall);
 	gridContainer.addEventListener("mouseup", setWall);
@@ -97,6 +100,7 @@ stepsTitle.classList.add("stepsTitle");
 stepsTitle.textContent = "Algorithm Steps";
 stepsContainer.append(stepsTitle);
 
+//log steps for algorithm
 export const notification = (row, col, erow, ecol, cost, prevCost) => {
 	var push = document.createElement("p");
 	var explore = document.createElement("p");
@@ -145,6 +149,9 @@ export const notification = (row, col, erow, ecol, cost, prevCost) => {
 // step by step visualization
 let isPath = true;
 export const stepper = (steps) => {
+	gridContainer.removeEventListener("mousedown", setWall);
+	gridContainer.removeEventListener("mouseover", setWall);
+	wallBtn.setAttribute("disabled", true);
 	if (isPath) {
 		clearPath();
 		bellmanFordPath.splice(
@@ -211,6 +218,7 @@ export const stepper = (steps) => {
 	}
 };
 
+//run normal visualization
 const startVisualization = () => {
 	if (algorithmType.classList.contains("bfs")) {
 		bfs(startRow, startCol, endRow, endCol);

@@ -1,14 +1,21 @@
 import { setWall } from "../Grid/createWalls.js";
-import { rowSize, colSize, manualStart, dfsSteps } from "../Grid/index.js";
+import {
+	rowSize,
+	colSize,
+	manualStart,
+	dfsSteps,
+	startBtn,
+	clearPathBtn,
+	wallBtn,
+	gridContainer,
+} from "../Grid/index.js";
 
-let gridContainer = document.querySelector("#gridContainer");
 let speedSlider = document.querySelector(".speedSlider");
-let startBtn = document.querySelector(".start");
-let clearPathBtn = document.querySelector(".clearPath");
 let time = speedSlider.value;
 let bool = false;
 let count = 1;
 
+//check edge cases
 const checker = (row, col) => {
 	if (row >= 0 && col >= 0 && row < rowSize && col < colSize) return true;
 	return false;
@@ -88,6 +95,7 @@ const traverse = (node, visited, cost, endNode) => {
 	}
 };
 
+//depth first search algorithm
 export const dfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 	time = speedSlider.value;
 	time = 40 + (time - 1) * -2;
@@ -99,6 +107,7 @@ export const dfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 	//disable start and clear path buttons
 	startBtn.setAttribute("disabled", "true");
 	clearPathBtn.setAttribute("disabled", "true");
+	wallBtn.setAttribute("disabled", "true");
 
 	let visited = [];
 	let cost = 1;
@@ -106,9 +115,11 @@ export const dfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 
 	traverse(startNode, visited, cost, endNode);
 
+	// re-enable disabled buttons
 	setTimeout(() => {
 		startBtn.removeAttribute("disabled");
 		clearPathBtn.removeAttribute("disabled");
 		manualStart.removeAttribute("disabled");
+		wallBtn.removeAttribute("disabled");
 	}, count * time + 100);
 };
