@@ -102,10 +102,11 @@ stepsContainer.append(stepsTitle);
 
 //log steps for algorithm
 export const notification = (row, col, erow, ecol, cost, prevCost) => {
+	var step = document.createElement("div");
+	step.classList.add("step");
 	var push = document.createElement("p");
 	var explore = document.createElement("p");
 	var costText = document.createElement("p");
-	var line = document.createElement("hr");
 	if (algorithmType.classList.contains("bellman-ford")) {
 		if (bellmanSteps.length == 0) {
 			push.textContent = `Selected (${row}, ${col}) as path.`;
@@ -139,11 +140,23 @@ export const notification = (row, col, erow, ecol, cost, prevCost) => {
 			push.textContent = `Popped (${row}, ${col}) from stack.`;
 		}
 	}
-	stepsContainer.appendChild(push);
-	stepsContainer.appendChild(explore);
-	stepsContainer.appendChild(costText);
-	stepsContainer.appendChild(line);
+	step.appendChild(push);
+	step.appendChild(explore);
+	step.appendChild(costText);
+	stepsContainer.append(step);
 	stepsContainer.scrollTop = stepsContainer.scrollHeight;
+
+	step.addEventListener("click", () => {
+		let html = step.innerHTML;
+		let parsedHtml = html.replace(/\D/g, "");
+		let node = document.querySelector(
+			`div[row='${parsedHtml[0]}'][col='${parsedHtml[1]}']`
+		);
+		setTimeout(() => {
+			node.setAttribute("class", "pathColor");
+		}, 1000);
+		node.setAttribute("class", "chosenPath");
+	});
 };
 
 // step by step visualization
@@ -175,9 +188,9 @@ export const stepper = (steps) => {
 				//draw path
 				var pcol = dijkstrasPath[0][0];
 				var prow = dijkstrasPath[0][1];
-				let node = document.querySelector(
-					`div[row='${pcol}'][col='${prow}']`
-				);
+				setTimeout(() => {
+					node.setAttribute("class", "pathColor");
+				}, 1000);
 				node.setAttribute("class", "chosenPath");
 				notification(pcol, prow, 0, 0);
 				dijkstrasPath.shift();
