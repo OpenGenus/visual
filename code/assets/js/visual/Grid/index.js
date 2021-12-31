@@ -50,6 +50,7 @@ export let bfsSteps = [];
 export let dfsSteps = [];
 export let bellmanSteps = [];
 export let dijkstrasPath = [];
+export let bellmanFordPath = [];
 
 //event listeners
 gridContainer.addEventListener("mousedown", () => {
@@ -101,14 +102,18 @@ export const notification = (row, col, erow, ecol, cost, prevCost) => {
 	var explore = document.createElement("p");
 	var line = document.createElement("hr");
 	if (algorithmType.classList.contains("bellman-ford")) {
-		if (
-			bellmanSteps.length <=
-			bellmanStepsLength - bellmanStepsLength / relaxations
-		) {
-			push.textContent = `Relaxing (${row}, ${col}): current cost ${prevCost}, updated cost ${cost}.`;
+		if (bellmanSteps.length == 0) {
+			push.textContent = `Selected (${row}, ${col}) as path.`;
 		} else {
-			push.textContent = `Pushed (${row}, ${col}) to dist[] array.`;
-			explore.textContent = `Exploring (${erow}, ${ecol}).`;
+			if (
+				bellmanSteps.length <=
+				bellmanStepsLength - bellmanStepsLength / relaxations
+			) {
+				push.textContent = `Relaxing (${row}, ${col}): current cost ${prevCost}, updated cost ${cost}.`;
+			} else {
+				push.textContent = `Pushed (${row}, ${col}) to dist[] array.`;
+				explore.textContent = `Exploring (${erow}, ${ecol}).`;
+			}
 		}
 	} else if (
 		algorithmType.classList.contains("dijkstras") ||
@@ -162,6 +167,20 @@ export const stepper = (steps) => {
 				node.setAttribute("class", "chosenPath");
 				notification(pcol, prow, 0, 0);
 				dijkstrasPath.shift();
+			}
+		} else if (algorithmType.classList.contains("bellman-ford")) {
+			if (bellmanFordPath.length == 0) {
+				alert("Bellman ford steps completed!");
+			} else {
+				//draw path
+				var pcol = bellmanFordPath[0][0];
+				var prow = bellmanFordPath[0][1];
+				let node = document.querySelector(
+					`div[row='${pcol}'][col='${prow}']`
+				);
+				node.setAttribute("class", "chosenPath");
+				notification(pcol, prow, 0, 0);
+				bellmanFordPath.shift();
 			}
 		} else {
 			alert("Completed Steps");

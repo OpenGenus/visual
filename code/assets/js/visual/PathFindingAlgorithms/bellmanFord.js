@@ -7,6 +7,7 @@ import {
 	startCol,
 	manualStart,
 	bellmanSteps,
+	bellmanFordPath,
 } from "../Grid/index.js";
 import { setWall } from "../Grid/createWalls.js";
 
@@ -121,6 +122,7 @@ const drawPath = () => {
 			endNode = document.querySelector(
 				`div[row="${prow}"][col="${pcol}"]`
 			);
+			bellmanFordPath.push([parseInt(prow), parseInt(pcol)]);
 		}
 		endNode.setAttribute("class", "pathNode");
 	}, 1000 * time + 100);
