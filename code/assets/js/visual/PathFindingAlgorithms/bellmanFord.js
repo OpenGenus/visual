@@ -119,6 +119,7 @@ const drawPath = () => {
 	//draw route
 	setTimeout(() => {
 		startNode.setAttribute("class", "pathNode");
+		startNode.innerHTML = 0;
 		while (endNode.getAttribute("parent") != "null") {
 			endNode.setAttribute("class", "chosenPath");
 			let coor = endNode.getAttribute("parent").split("|");

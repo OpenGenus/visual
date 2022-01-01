@@ -74,13 +74,6 @@ header {
 	align-items: center;
 	margin-bottom: 1rem;
 }
-.heading hr {
-	background-color: #5a46cd;
-	width: 20%;
-	height: 4px;
-	border-radius: 20px;
-	border: none;
-}
 /* end header styling */
 
 /* footer styling */

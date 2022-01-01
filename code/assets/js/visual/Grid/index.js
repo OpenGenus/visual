@@ -115,7 +115,9 @@ export const notification = (row, col, erow, ecol, cost, prevCost) => {
 				bellmanSteps.length <=
 				bellmanStepsLength - bellmanStepsLength / relaxations
 			) {
-				push.textContent = `Relaxing (${row}, ${col}): current cost ${prevCost}, updated cost ${cost}.`;
+				push.textContent = `Relaxing (${row}, ${col}): current cost ${prevCost}, updated cost ${
+					cost || "inf"
+				}.`;
 			} else {
 				push.textContent = `Pushed (${row}, ${col}) to dist[] array.`;
 				explore.textContent = `Exploring (${erow}, ${ecol}).`;
@@ -147,15 +149,14 @@ export const notification = (row, col, erow, ecol, cost, prevCost) => {
 	stepsContainer.scrollTop = stepsContainer.scrollHeight;
 
 	step.addEventListener("click", () => {
-		let html = step.innerHTML;
-		let parsedHtml = html.replace(/\D/g, "");
-		let node = document.querySelector(
-			`div[row='${parsedHtml[0]}'][col='${parsedHtml[1]}']`
-		);
+		let node = document.querySelector(`div[row='${row}'][col='${col}']`);
+		let node1 = document.querySelector(`div[row='${erow}'][col='${ecol}']`);
 		setTimeout(() => {
 			node.setAttribute("class", "pathColor");
+			// node1.setAttribute("class", "pathColor");
 		}, 1000);
 		node.setAttribute("class", "chosenPath");
+		// node1.setAttribute("class", "chosenPath");
 	});
 };
 
@@ -164,7 +165,7 @@ let isPath = true;
 export const stepper = (steps) => {
 	gridContainer.removeEventListener("mousedown", setWall);
 	gridContainer.removeEventListener("mouseover", setWall);
-	wallBtn.setAttribute("disabled", true);
+	// wallBtn.setAttribute("disabled", true);
 	if (isPath) {
 		clearPath();
 		bellmanFordPath.splice(
@@ -175,6 +176,7 @@ export const stepper = (steps) => {
 		clearPathBtn.setAttribute("disabled", "true");
 		stepsContainer.classList.remove("notification");
 		stepsContainer.classList.add("show");
+		wallBtn.setAttribute("disabled", "true");
 		isPath = false;
 	}
 	if (steps.length == 0) {
