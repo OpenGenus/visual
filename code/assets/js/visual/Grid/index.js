@@ -118,6 +118,7 @@ export const notification = (row, col, erow, ecol, cost, prevCost) => {
 				push.textContent = `Relaxing (${row}, ${col}): current cost ${prevCost}, updated cost ${
 					cost || "inf"
 				}.`;
+				explore.textContent = `Processing (${erow}, ${ecol}).`;
 			} else {
 				push.textContent = `Pushed (${row}, ${col}) to dist[] array.`;
 				explore.textContent = `Exploring (${erow}, ${ecol}).`;
