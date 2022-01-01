@@ -153,10 +153,10 @@ export const notification = (row, col, erow, ecol, cost, prevCost) => {
 		let node1 = document.querySelector(`div[row='${erow}'][col='${ecol}']`);
 		setTimeout(() => {
 			node.setAttribute("class", "pathColor");
-			// node1.setAttribute("class", "pathColor");
+			node1.setAttribute("class", "pathColor");
 		}, 1000);
+		node1.setAttribute("class", "manualStep");
 		node.setAttribute("class", "chosenPath");
-		// node1.setAttribute("class", "chosenPath");
 	});
 };
 
