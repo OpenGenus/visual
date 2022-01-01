@@ -5,15 +5,18 @@ import {
 	manualStart,
 	bfsSteps,
 	dijkstrasPath,
+	startBtn,
+	clearPathBtn,
+	wallBtn,
+	gridContainer,
 } from "../Grid/index.js";
 import { setWall } from "../Grid/createWalls.js";
 
-const gridContainer = document.querySelector("#gridContainer");
+//timing of the visualization
 const speedSlider = document.querySelector(".speedSlider");
 let time = speedSlider.value;
-let startBtn = document.querySelector(".start");
-let clearPathBtn = document.querySelector(".clearPath");
 
+//change color of a node during and after traversal
 const changeColor = (node, count, cost) => {
 	setTimeout(() => {
 		node.setAttribute("class", "chosenPath");
@@ -26,6 +29,7 @@ const changeColor = (node, count, cost) => {
 	}, count * time + 100);
 };
 
+//update node color an cost during traversal
 const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 	if (row >= 0 && col >= 0 && row < rowSize && col < colSize) {
 		let node = document.querySelector(`div[row="${row}"][col="${col}"]`);
@@ -67,7 +71,7 @@ const checkUpdateNode = (row, col, curr, checker, visited, count) => {
 	}
 };
 
-//algorithm implementation - bfs for unweighted, dijkstras for weighted
+//algorithm implementation - bfs for unweighted, dijkstras for weighted graphs
 export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 	time = speedSlider.value;
 	time = 40 + (time - 1) * -2;
@@ -79,6 +83,7 @@ export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 	//disable start and clear path buttons
 	startBtn.setAttribute("disabled", "true");
 	clearPathBtn.setAttribute("disabled", "true");
+	wallBtn.setAttribute("disabled", "true");
 
 	//start algorithm
 	let visited = [startNode];
@@ -119,7 +124,7 @@ export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 		count++;
 	}
 
-	//draw route
+	//highlight path after traversal
 	setTimeout(() => {
 		startNode.setAttribute("class", "pathNode");
 		while (endNode.getAttribute("parent") != "null") {
@@ -136,9 +141,11 @@ export const bfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
 		endNode.setAttribute("class", "pathNode");
 	}, count * time + 100);
 
+	//re-enable disabled buttons
 	setTimeout(() => {
 		startBtn.removeAttribute("disabled");
 		clearPathBtn.removeAttribute("disabled");
 		manualStart.removeAttribute("disabled");
+		wallBtn.removeAttribute("disabled");
 	}, count * time + 100);
 };

@@ -13,22 +13,28 @@ import { bfs } from "../PathFindingAlgorithms/bfs.js";
 import { bfsIslands } from "../Islands/bfsIslands.js";
 import { dfsIslands } from "../Islands/dfsIslands.js";
 import { maxIsland } from "../Islands/largeIsland.js";
-import { bellmanFord } from "../PathFindingAlgorithms/bellmanFord.js";
+import {
+	bellmanFord,
+	relaxations,
+	bellmanStepsLength,
+} from "../PathFindingAlgorithms/bellmanFord.js";
 
 // get dom elements
-const gridContainer = document.querySelector("#gridContainer");
-const clearPathBtn = document.querySelector(".clearPath");
-const resetBtn = document.querySelector(".reset");
+export const gridContainer = document.querySelector("#gridContainer");
+export const clearPathBtn = document.querySelector(".clearPath");
+export const resetBtn = document.querySelector(".reset");
 const weightBtn = document.querySelector(".weight");
 const algoBtn = document.querySelector(".algo");
-const startBtn = document.querySelector(".start");
-const wallBtn = document.querySelector(".setWalls");
+export const startBtn = document.querySelector(".start");
+export const wallBtn = document.querySelector(".setWalls");
+export const speedSlider = document.querySelector(".speedSlider");
 const islandAlgoBtn = document.querySelector(".islandsAlgo");
 export const stepsContainer = document.querySelector(".notification");
 export const algorithmType = document.querySelector(".algorithm");
 export var manualStart = document.querySelector(".manual");
 manualStart.setAttribute("disabled", "true");
 
+//global variables
 export var rowSize = 20;
 export var colSize = 40;
 export var startRow = 4;
@@ -46,6 +52,7 @@ export let bfsSteps = [];
 export let dfsSteps = [];
 export let bellmanSteps = [];
 export let dijkstrasPath = [];
+export let bellmanFordPath = [];
 
 //event listeners
 gridContainer.addEventListener("mousedown", () => {
@@ -63,6 +70,7 @@ islandAlgoBtn.addEventListener("change", () => {
 	window.location.reload();
 });
 
+//clear path after traversal
 export const clearPath = () => {
 	gridContainer.addEventListener("mousedown", setWall);
 	gridContainer.addEventListener("mouseup", setWall);
@@ -92,13 +100,30 @@ stepsTitle.classList.add("stepsTitle");
 stepsTitle.textContent = "Algorithm Steps";
 stepsContainer.append(stepsTitle);
 
-export const notification = (row, col, erow, ecol) => {
+//log steps for algorithm
+export const notification = (row, col, erow, ecol, cost, prevCost) => {
+	var step = document.createElement("div");
+	step.classList.add("step");
 	var push = document.createElement("p");
 	var explore = document.createElement("p");
-	var line = document.createElement("hr");
+	var costText = document.createElement("p");
 	if (algorithmType.classList.contains("bellman-ford")) {
-		push.textContent = `Pushed (${row}, ${col}) to queue.`;
-		explore.textContent = `Exploring (${erow}, ${ecol}).`;
+		if (bellmanSteps.length == 0) {
+			push.textContent = `Selected (${row}, ${col}) as path.`;
+		} else {
+			if (
+				bellmanSteps.length <=
+				bellmanStepsLength - bellmanStepsLength / relaxations
+			) {
+				push.textContent = `Relaxing (${row}, ${col}): current cost ${prevCost}, updated cost ${
+					cost || "inf"
+				}.`;
+				explore.textContent = `Processing (${erow}, ${ecol}).`;
+			} else {
+				push.textContent = `Pushed (${row}, ${col}) to dist[] array.`;
+				explore.textContent = `Exploring (${erow}, ${ecol}).`;
+			}
+		}
 	} else if (
 		algorithmType.classList.contains("dijkstras") ||
 		algorithmType.classList.contains("bfs")
@@ -108,6 +133,7 @@ export const notification = (row, col, erow, ecol) => {
 		} else {
 			push.textContent = `Pushed (${row}, ${col}) to array.`;
 			explore.textContent = `Processing (${erow}, ${ecol}).`;
+			costText.textContent = `Cost from source is ${cost}`;
 		}
 	} else if (algorithmType.classList.contains("dfs")) {
 		if (row == erow && col == ecol) {
@@ -117,21 +143,41 @@ export const notification = (row, col, erow, ecol) => {
 			push.textContent = `Popped (${row}, ${col}) from stack.`;
 		}
 	}
-	stepsContainer.appendChild(push);
-	stepsContainer.appendChild(explore);
-	stepsContainer.appendChild(line);
+	step.appendChild(push);
+	step.appendChild(explore);
+	step.appendChild(costText);
+	stepsContainer.append(step);
 	stepsContainer.scrollTop = stepsContainer.scrollHeight;
+
+	step.addEventListener("click", () => {
+		let node = document.querySelector(`div[row='${row}'][col='${col}']`);
+		let node1 = document.querySelector(`div[row='${erow}'][col='${ecol}']`);
+		setTimeout(() => {
+			node.setAttribute("class", "pathColor");
+			node1.setAttribute("class", "pathColor");
+		}, 1000);
+		node1.setAttribute("class", "manualStep");
+		node.setAttribute("class", "chosenPath");
+	});
 };
 
 // step by step visualization
 let isPath = true;
 export const stepper = (steps) => {
+	gridContainer.removeEventListener("mousedown", setWall);
+	gridContainer.removeEventListener("mouseover", setWall);
+	// wallBtn.setAttribute("disabled", true);
 	if (isPath) {
 		clearPath();
+		bellmanFordPath.splice(
+			0,
+			bellmanFordPath.length - bellmanFordPath.length / 5
+		);
 		startBtn.setAttribute("disabled", "true");
 		clearPathBtn.setAttribute("disabled", "true");
 		stepsContainer.classList.remove("notification");
 		stepsContainer.classList.add("show");
+		wallBtn.setAttribute("disabled", "true");
 		isPath = false;
 	}
 	if (steps.length == 0) {
@@ -145,12 +191,26 @@ export const stepper = (steps) => {
 				//draw path
 				var pcol = dijkstrasPath[0][0];
 				var prow = dijkstrasPath[0][1];
+				setTimeout(() => {
+					node.setAttribute("class", "pathColor");
+				}, 1000);
+				node.setAttribute("class", "chosenPath");
+				notification(pcol, prow, 0, 0);
+				dijkstrasPath.shift();
+			}
+		} else if (algorithmType.classList.contains("bellman-ford")) {
+			if (bellmanFordPath.length == 0) {
+				alert("Bellman ford steps completed!");
+			} else {
+				//draw path
+				var pcol = bellmanFordPath[0][0];
+				var prow = bellmanFordPath[0][1];
 				let node = document.querySelector(
 					`div[row='${pcol}'][col='${prow}']`
 				);
 				node.setAttribute("class", "chosenPath");
 				notification(pcol, prow, 0, 0);
-				dijkstrasPath.shift();
+				bellmanFordPath.shift();
 			}
 		} else {
 			alert("Completed Steps");
@@ -166,12 +226,15 @@ export const stepper = (steps) => {
 			node.setAttribute("class", "pathColor");
 		}, 1000);
 		node.setAttribute("class", "chosenPath");
+		//relaxation for bellman ford nodes
+		let prevCost = node.innerHTML;
 		node.innerHTML = cost || "inf";
-		notification(cr, cc, er, ec);
+		notification(cr, cc, er, ec, cost, prevCost);
 		steps.shift();
 	}
 };
 
+//run normal visualization
 const startVisualization = () => {
 	if (algorithmType.classList.contains("bfs")) {
 		bfs(startRow, startCol, endRow, endCol);
