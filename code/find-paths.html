@@ -5,16 +5,16 @@
 	<meta charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta name="description" content="depth first search, breadth first search, number of islands" />
+	<meta name="description" content="depth first search path finding algorithm">
 	<meta name="keywords"
-		content="breadth first search, breadth first algorithm, depth first search, depth first traversal, breadth first traversal, path finding, graph algorithms, graphs, algorithms, visualization, visual, graphs, graph traversal, traversal" />
-	<meta name="author" content="lumunge" />
+		content="depth first search, finding all paths, depth first algorithm, depth first traversal, path finding, graph algorithms, algorithms, visualization, visual, graphs, graph traversal, traversal">
+	<meta name="author" content="lumunge">
 	<meta name="HandheldFriendly" content="True" />
 	<meta property="og:site_name" content="OpenGenus IQ: Computing Expertise &amp; Legacy" />
 	<meta property="og:type" content="article" />
-	<meta property="og:title" content="Number of islands visualization" />
+	<meta property="og:title" content="Find paths between two vertices DFS Visualization" />
 	<meta property="og:description"
-		content="data structures and algorithms visualization, number of islands visualization, count islands on a graph, path finding algorithms, graph algorithms visualization, visual, graphs, graph traversal, traversal" />
+		content="find all paths from source to destination depth first search visualization,data structures and algorithms visualization, path finding algorithms, graph algorithms visualization, visual, graphs, graph traversal, traversal" />
 	<meta property="og:url" content="https://iq.opengenus.org/algorithm-visualization/" />
 	<meta property="article:published_time" content="2021-12-08T10:39:05.000Z" />
 	<meta property="article:modified_time" content="2021-12-08T19:39:45.000Z" />
@@ -24,7 +24,7 @@
 	<meta property="article:publisher" content="https://www.facebook.com/opengenus" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:title" content="Visualization" />
-	<meta name="twitter:description" content="Number of islands algorithm visualization, counting islands on a graph" />
+	<meta name="twitter:description" content="A visualization for finding all paths from source to destination using depth first search algorithm." />
 	<meta name="twitter:url" content="https://iq.opengenus.org/algorithm-visualization/" />
 	<meta name="twitter:label1" content="Written by" />
 	<meta name="twitter:data1" content="Erick Lumunge" />
@@ -34,7 +34,7 @@
 	<link rel="shortcut icon" type="image/png" href="./assets/images/fav1.ico" />
 	<link rel="stylesheet" href="./assets/css/visual/index.css">
 	<link rel="stylesheet" href="./assets/css/visual/pathFinding.css">
-	<title>Number of islands.</title>
+	<title>Finding all paths between two vertices in a graph.</title>
 </head>
 
 <body>
@@ -50,6 +50,7 @@
 				<a href="/bellman-ford-visual">bellman-ford's</a>
 				<a href="/islands-visual">num islands</a>
 				<a href="/max-Island-visual">max island</a>
+                <a href="/find-paths">max island</a>
 			</div>
 		</div>
 		<div class="hamburger">
@@ -60,8 +61,7 @@
 	</div>
 	<header>
 		<div class="heading">
-			<h2 class="algorithm numIslands">Number of islands visualization</h2>
-			<hr />
+			<h2 class="algorithm findPaths">Find all paths between two vertices - dpeth first search visualization</h2>
 		</div>
 		<div class="controlsContainer">
 			<div class="visualControls">
@@ -70,34 +70,40 @@
 					<input type="range" min="1" max="20" value="10" class="speedSlider" />
 				</div>
 				<div class="obstacles">
-					<p>Create islands</p>
+					<p>Obstacles</p>
 					<div class="obstaclesElements">
 						<input type="range" min="1" value="50" class="obstacleSlider" />
 						&nbsp;
-						<button class="setWalls btn">islands</button>
+						<button class="setWalls btn">walls</button>
 					</div>
 				</div>
 				<div class="controlBtns">
-					<button class="clearPath btn" style="display: none">clear path</button>
-					<select name="" class="islandsAlgo">
-						<option value="bfs">BFS</option>
-						<option value="dfs">DFS</option>
-					</select>
 					<button class="start btn">start</button>
-					<button class="manual btn" style="display: none">manual</button>
+					<button class="findNext btn">find next</button>
+					<button class="manual btn">manual</button>
+					<button class="clearPath btn">clear path</button>
 					<button class="reset btn">reload</button>
+					<select style="display: none;" class="islandsAlgo">
+						<option></option>
+					</select>
 				</div>
 				<div class="tutorialContainer">
 					<span><img class="info" src="./assets/images/icons8-info-60.png" alt=""></span>
 					<div class="tutorialContent">
 						<h4>Controls</h4>
 						<p><span>Speed</span> - increase or decrease the speed of the visualization</p>
-						<p><span>Islands-</span> - create islands on the grid.
-							<br /> You can adjust the number of islands generated per click.
-							<br /> - You can also click on the grid cells to create an island.
+						<p><span>Obstacles-</span> - create walls/obstacles, on a map these can be buildings or
+							structures which hinder a path. You can adjust the number of obstacles generated per click.
+							<br /> - You can also click on the grid cells to create
+							obstacles.
 						</p>
-						<p><span>Start</span> - After adjusting the speed and creating islands, you can now start the
+						<p><span>Start</span> - After adjusting the speed and creating obstacles, you can now start the
 							visualization to see the workings of the algorithm.</p>
+						<p><span>Manual</span> - After running the visualization normally you can run it manually to see
+							how the shortest path was obtained. After the click you can proceed with pressing enter key.
+						</p>
+						<p><span>Clear Path</span> - After visualizing, you may opt to clear the path and add more
+							obstacles.</p>
 						<p><span>Speed</span> - If the grid becomes to cluttered you can reload it and repeat the above
 							steps.</p>
 					</div>
@@ -117,37 +123,51 @@
 	<main>
 		<div class="visualizationContainer">
 			<div id="gridContainer"></div>
-			<div class="notification" style="display: none;"></div>
+			<div class="notification"></div>
 			<div class="tutorials">
 				<div class="tutorial">
 					<div class="emptyPath"></div>&nbsp;
-					<div>This is represents an empty area without any islands.</div>
+					<div>This is an empty path without any walls, you can click is to add obstacles/walls.</div>
+				</div>
+				<div class="tutorial">
+					<div class="stedimg"><span class="txt">A</span></div>&nbsp;
+					<div>Start Node -> this is the starting point(source),
+						search for a path starts here.</div>
+				</div>
+				<div class="tutorial">
+					<div class="stedimg"><span class="txt">B</span></div>&nbsp;
+					<div>End Node -> where the search stops when a path to destination has been found</div>
 				</div>
 				<div class="tutorial">
 					<div class="obstacle"></div>&nbsp;
-					<div>These are islands, which we are to count. The definition of an island is described in the
-						algorithm section below.</div>
+					<div>These act as obstacles, walls. On a real map these may be buildings or structures that may
+						block
+						a shorter path to a destination.</div>
 				</div>
 				<div class="tutorial">
-					<div class="selectedPath islands"></div>&nbsp;
-					<div>This highlights how the algorithm traverses the grid looking fr islands, after the algorithm is
-						complete, we have finished counting the number of islands.</div>
+					<div class="selectedPath"><span class="txt">7</span></div>&nbsp;
+					<div>After the algorithm is complete, we have arrived at the destination, now the shortest path is
+						highlighted in green with the cost of path written written in black inside the path.</div>
 				</div>
 			</div>
 			<div class="algoInfo">
 				<div>
 					<div class="infoHeading">
-						<h3 class="title">Number of islands</h3>
+						<h3 class="title">Depth first traversal.</h3>
 					</div>
 					<div class="description">
 						<p>
-							We are given a grid map of '1's and '0's(water). We
-							are to count the number of islands on the grid.<br.>
-								An island is surrounded by water and formed by
-								connecting adjacent land horizontally or vertocally.
-								In other words an island is a group of connected '1's.
-								We assume all four edges of the whole grid are
-								surrounded by water.
+							This algorithm starts its search at the root and
+							explores one of its children's subtree and then moves
+							on to the next child's subtree and etcetera <br />
+							The idea used is to go as deep into the graph as
+							possible and backtrack once we reach a vertex with
+							unvisited neighbors. <br />
+							That is, start search at one vertex, after visiting
+							the vertex, perform dfs for each unvisited adjacent
+							vertex. In this way we visit all vertices reachable
+							from the starting vertex. <br />
+							We use a <b><em>stack</em></b> data structure.
 						</p>
 					</div>
 					<div class="algo-steps">
@@ -157,39 +177,38 @@
 							current node is the root node).
 						</p>
 						<p>
-							2. Check if current node is the goal, If so,
+							2. Check if current node is the end node, If so,
 							then return it.
 						</p>
 						<p>
-							1. Iterate over children nodes of current node,
+							3. Iterate over children nodes of current node,
 							and do the following:
 						</p>
 						<p class="nest1">
-							2. Check if a child node is not visited.
+							1. Check if a child node is not visited.
 						</p>
 						<p class="nest1">
-							1.If so, then, mark it as visited.
+							2.If so, then, mark it as visited.
 						</p>
 						<p class="nest1">
-							3. Go to it's sub tree recursively until you
-							find the goal node(In other words, do the same
+							3. Go to it's sub graph recursively until you
+							find the end node(In other words, do the same
 							steps here passing the child node as the current
 							node in the next recursive call).
 						</p>
 						<p class="nest1">
-							4. If the child node has the goal node in this
-							sub tree, then, return it.
+							4. If the child node has the end node in this
+							sub graph, then, return it.
 						</p>
 						<p>
-							3. If goal node is not found, then goal node is
-							not in the tree!
+							4. If end node is not found, then end node is
+							not in the graph!
 						</p>
 					</div>
 					<div class="complexity">
 						<p class="subtitle">Computational complexity</p>
-						This algorithm takes <b><em>O(M + N)</em></b> where
-						M is the number of rows and E is the number of
-						columns.
+						This algorithm takes <b><em>O(V + E)</em></b> where v is the number of
+						vertices and e is the number of edges.
 					</div>
 					<div class="applications">
 						<p class="subtitle">Applications</p>
@@ -206,7 +225,7 @@
 					</div>
 					<div class="reference">
 						<p>References</p>
-						<a href="https://iq.opengenus.org/number-of-islands/">number of islands</a>
+						<a href="https://iq.opengenus.org/bfs-graph-traversal/">dfs</a>
 					</div>
 				</div>
 			</div>

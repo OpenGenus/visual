@@ -4,38 +4,19 @@ import {
   colSize,
   manualStart,
   dfsSteps,
+  visitedPaths,
   startBtn,
   clearPathBtn,
   wallBtn,
   gridContainer,
+  findNextPath,
 } from "../Grid/index.js";
+import { changeColor, checker } from "./dfs.js";
 
 let speedSlider = document.querySelector(".speedSlider");
 let time = speedSlider.value;
 let bool = false;
 let count = 1;
-
-//check edge cases
-export const checker = (row, col) => {
-  if (row >= 0 && col >= 0 && row < rowSize && col < colSize) return true;
-  return false;
-};
-
-// visualize algorithm
-export const changeColor = (node, cost) => {
-  setTimeout(() => {
-    node.setAttribute("class", "chosenPath");
-    node.innerHTML = cost;
-  }, cost * time);
-  // draw path blue
-  setTimeout(() => {
-    node.setAttribute("class", "pathColor");
-  }, cost * time + 100);
-  //draw path green
-  setTimeout(() => {
-    node.setAttribute("class", "chosenPath");
-  }, cost * time + 1000);
-};
 
 //traverse grid
 const traverse = (node, visited, cost, endNode) => {
@@ -50,6 +31,7 @@ const traverse = (node, visited, cost, endNode) => {
   if (wall == 1) return;
 
   visited.push(node);
+  visitedPaths.push([row, col]);
   dfsSteps.push([row, col, cost, row, col]);
   changeColor(node, cost);
 
@@ -96,7 +78,12 @@ const traverse = (node, visited, cost, endNode) => {
 };
 
 //depth first search algorithm
-export const dfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
+export const findPaths = (
+  x1 = 0,
+  y1 = 0,
+  x2 = rowSize - 1,
+  y2 = colSize - 1
+) => {
   time = speedSlider.value;
   time = 40 + (time - 1) * -2;
   gridContainer.removeEventListener("mousedown", setWall);
@@ -120,6 +107,7 @@ export const dfs = (x1 = 0, y1 = 0, x2 = rowSize - 1, y2 = colSize - 1) => {
     startBtn.removeAttribute("disabled");
     clearPathBtn.removeAttribute("disabled");
     manualStart.removeAttribute("disabled");
+    findNextPath.removeAttribute("disabled");
     wallBtn.removeAttribute("disabled");
   }, count * time + 100);
 };
