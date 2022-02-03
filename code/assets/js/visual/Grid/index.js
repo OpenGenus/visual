@@ -27,14 +27,16 @@ export const resetBtn = document.querySelector(".reset");
 const weightBtn = document.querySelector(".weight");
 const algoBtn = document.querySelector(".algo");
 export const startBtn = document.querySelector(".start");
-const findNextPath = document.querySelector(".findNext");
+export const findNextPath = document.querySelector(".findNext");
 export const wallBtn = document.querySelector(".setWalls");
 export const speedSlider = document.querySelector(".speedSlider");
 const islandAlgoBtn = document.querySelector(".islandsAlgo");
 export const stepsContainer = document.querySelector(".notification");
 export const algorithmType = document.querySelector(".algorithm");
 export var manualStart = document.querySelector(".manual");
+
 manualStart.setAttribute("disabled", "true");
+findNextPath.setAttribute("disabled", "true");
 
 //global variables
 export var rowSize = 20;
@@ -83,6 +85,7 @@ export const clearPath = () => {
     algorithmType.classList.contains("dfs") ||
     algorithmType.classList.contains("numIslands") ||
     algorithmType.classList.contains("maxIsland") ||
+    algorithmType.classList.contains("findPaths") ||
     algorithmType.classList.contains("findPaths")
   ) {
     refreshEmptyBoard();
@@ -243,12 +246,14 @@ const findNextPathFunc = (nodes) => {
   let node = document.querySelector(
     `div[row='${startNextRow}'][col='${startNextCol}']`
   );
-  dfs(startRow, startCol, endRow, endCol);
   nodes.pop();
   clearPath();
+  dfs(startRow, startCol, endRow, endCol);
+  console.log(startNextRow + " " + startNextCol);
   if (parseInt(node.getAttribute("wall")) == 0) {
     node.setAttribute("wall", 1);
   }
+  console.log(nodes);
 };
 
 //run normal visualization
@@ -286,9 +291,9 @@ const startVisualization = () => {
     findNextPath.addEventListener("click", () => {
       findNextPathFunc(visitedPaths);
     });
-    manualStart.addEventListener("click", () => {
-      stepper(dfsSteps);
-    });
+    // manualStart.addEventListener("click", () => {
+    //   stepper(dfsSteps);
+    // });
   }
 };
 startBtn.addEventListener("click", startVisualization);
