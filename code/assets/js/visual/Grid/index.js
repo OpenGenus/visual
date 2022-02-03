@@ -249,11 +249,9 @@ const findNextPathFunc = (nodes) => {
   nodes.pop();
   clearPath();
   dfs(startRow, startCol, endRow, endCol);
-  console.log(startNextRow + " " + startNextCol);
   if (parseInt(node.getAttribute("wall")) == 0) {
     node.setAttribute("wall", 1);
   }
-  console.log(nodes);
 };
 
 //run normal visualization

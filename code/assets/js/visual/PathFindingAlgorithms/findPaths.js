@@ -109,6 +109,5 @@ export const findPaths = (
     manualStart.removeAttribute("disabled");
     findNextPath.removeAttribute("disabled");
     wallBtn.removeAttribute("disabled");
-    console.log(visitedPaths);
   }, count * time + 100);
 };
